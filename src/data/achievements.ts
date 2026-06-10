@@ -1,0 +1,28 @@
+import type { Achievement } from '../types'
+
+export const ACHIEVEMENTS: Achievement[] = [
+  { id: 'escriba', name: 'Escriba del Nilo', ico: '📜', type: 'papiro', secret: false, title: 'Guardián de la Sabiduría', desc: 'Completar el juego sin perder 2 puzzles' },
+  { id: 'equilibrio', name: 'Equilibrio Perfecto', ico: '⚖️', type: 'ankh', secret: false, title: 'El Balanceador', desc: 'Todos los stats entre 40-60 durante toda la partida' },
+  { id: 'conquistador', name: 'Conquistador del Desierto', ico: '⚔️', type: 'papiro', secret: false, title: 'Señor de los Ejércitos', desc: 'Terminar con Influencia > 68' },
+  { id: 'artesano', name: 'Artesano de Amón', ico: '🎨', type: 'papiro', secret: false, title: 'Patrón de las Artes', desc: 'Terminar con Cultura > 72' },
+  { id: 'mercader', name: 'Mercader del Oro', ico: '💰', type: 'papiro', secret: false, title: 'El Próspero', desc: 'Terminar con Riqueza > 68' },
+  { id: 'guardian', name: 'Guardián del Orden', ico: '🛡️', type: 'papiro', secret: false, title: 'Protector del Equilibrio', desc: 'Terminar con Estabilidad > 72' },
+  { id: 'puzzlemaster', name: 'Puzzle Master', ico: '🧩', type: 'ankh', secret: false, title: 'Maestro de Jeroglíficos', desc: 'Acertar los 5 puzzles sin errores' },
+  { id: 'speedrun', name: 'Speed Runner del Nilo', ico: '⏱️', type: 'papiro', secret: false, title: 'Viajero Veloz', desc: 'Completar en menos de 1 hora' },
+  { id: 'tragedia', name: 'No Hay Opción Buena', ico: '🪲', type: 'escarabajo', secret: true, title: 'Portador de Tragedia', desc: 'Elegir 3 opciones crueles' },
+  { id: 'resurrector', name: 'Resurrector', ico: '💀', type: 'ankh', secret: true, title: 'Renacido de Duat', desc: 'Recuperar un stat de 0 a 50+' },
+  { id: 'ra_solar', name: 'Círculo Celestial', ico: '☀️', type: 'corona', secret: false, god: 'ra', title: 'Sol Radiante', desc: 'Todos los stats > 70 al final (RA)' },
+  { id: 'ra_fuego', name: 'Fuego Divino', ico: '🔥', type: 'corona', secret: false, god: 'ra', title: 'Fuego Eterno', desc: '10 eventos consecutivos sin perder stats (RA)' },
+  { id: 'osiris_cosecha', name: 'Cosecha Abundante', ico: '🌾', type: 'corona', secret: false, god: 'osiris', title: 'Señor de la Fertilidad', desc: 'Riqueza > 70 y Estabilidad > 68 (OSIRIS)' },
+  { id: 'osiris_renacer', name: 'Renacimiento', ico: '🌱', type: 'corona', secret: false, god: 'osiris', title: 'Resucitado', desc: 'Recuperar Estabilidad de 20 a 70+ (OSIRIS)' },
+  { id: 'thoth_ibis', name: 'Ibis Sagrado', ico: '🦉', type: 'corona', secret: false, god: 'thoth', title: 'Escriba Inmortal', desc: 'Cultura > 75 al final (THOTH)' },
+  { id: 'horus_halcon', name: 'Halcón Victorioso', ico: '🦅', type: 'corona', secret: false, god: 'horus', title: 'Amo de Batalla', desc: 'Influencia > 75 al final (HORUS)' },
+  { id: 'horus_vengador', name: 'Vengador', ico: '⚡', type: 'corona', secret: false, god: 'horus', title: 'Ojos de Halcón', desc: '5 eventos con opción militar (HORUS)' },
+  { id: 'hathor_armonia', name: 'Celestial Armoniosa', ico: '🌸', type: 'corona', secret: false, god: 'hathor', title: 'Diosa de la Armonía', desc: '2+ stats > 62 al final (HATHOR)' },
+  { id: 'hathor_amor', name: 'Corazón Compasivo', ico: '❤️', type: 'corona', secret: false, god: 'hathor', title: 'Portadora de Amor', desc: '70% de decisiones pacíficas (HATHOR)' },
+  { id: 'sekhmet_leona', name: 'Leona Dorada', ico: '🦁', type: 'corona', secret: false, god: 'sekhmet', title: 'Ojo del Poder', desc: 'Influencia > 70 y Riqueza > 62 (SEKHMET)' },
+  { id: 'anubis_guardian', name: 'Guardián de Duat', ico: '⚖️', type: 'corona', secret: false, god: 'anubis', title: 'Señor del Más Allá', desc: 'Cultura > 68 (ANUBIS)' },
+  { id: 'anubis_guia', name: 'Psicopompo', ico: '🌑', type: 'corona', secret: false, god: 'anubis', title: 'Guía de Almas', desc: 'Completar con Influencia nunca > 50 (ANUBIS)' },
+  { id: 'bastet_gato', name: 'Gato Protector', ico: '🐱', type: 'corona', secret: false, god: 'bastet', title: 'Guardiana Eterna', desc: 'Estabilidad > 70 durante 20+ eventos (BASTET)' },
+  { id: 'bastet_gracia', name: 'Gracia Felina', ico: '✨', type: 'corona', secret: false, god: 'bastet', title: 'Protectora de Ciudades', desc: 'Influencia > 62 y Estabilidad > 68 (BASTET)' },
+]
