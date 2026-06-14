@@ -647,3 +647,44 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ── FULLSCREEN ── */
 :fullscreen #root, .game { width: 100%; height: 100%; }
+
+/* ── GLOSARIO TAB (Papiros) ── */
+.gloss-tab { display: flex; flex-direction: column; gap: 12px; }
+.gloss-cats {
+  display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 4px;
+}
+.gloss-cat-btn {
+  background: var(--stone-m); border: 1px solid var(--stone-l);
+  color: var(--dim); border-radius: 20px; padding: 4px 12px;
+  font-size: .78rem; font-family: 'Cinzel', serif; letter-spacing: .04em;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.gloss-cat-btn.active, .gloss-cat-btn:hover {
+  background: var(--gold-d); border-color: var(--gold); color: var(--stone);
+}
+.gloss-entries {
+  display: flex; flex-direction: column; gap: 8px;
+  max-height: 52vh; overflow-y: auto; padding-right: 4px;
+}
+.gloss-entries::-webkit-scrollbar { width: 4px; }
+.gloss-entries::-webkit-scrollbar-track { background: transparent; }
+.gloss-entries::-webkit-scrollbar-thumb { background: var(--gold-d); border-radius: 4px; }
+.gloss-entry {
+  background: var(--stone-m); border: 1px solid var(--stone-l);
+  border-radius: 8px; padding: 10px 14px;
+}
+.gloss-entry-hd {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  margin-bottom: 4px;
+}
+.gloss-entry-word {
+  font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold-l);
+  text-transform: capitalize;
+}
+.gloss-entry-cat {
+  font-size: .68rem; color: var(--nile-l); white-space: nowrap;
+  letter-spacing: .06em;
+}
+.gloss-entry-def {
+  font-size: .86rem; color: var(--txt); line-height: 1.5;
+}

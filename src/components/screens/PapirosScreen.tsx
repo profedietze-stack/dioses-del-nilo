@@ -5,6 +5,25 @@ import type { God, Stats, HistoryEntry } from '../../types'
 import { ACHIEVEMENTS } from '../../data/achievements'
 import { EVENTS } from '../../data/events'
 import { STAT_ICONS, STAT_LABELS, STAT_COLORS } from '../../data/periods'
+import { GLOSSARY } from '../../data/glossary'
+
+const CAT_ICONS: Record<string, string> = {
+  egipcio:  '𓆣',
+  historia: '📜',
+  economia: '💰',
+  religion: '𓂀',
+  ciencia:  '🔬',
+  sociedad: '🤝',
+}
+const CAT_NAMES: Record<string, string> = {
+  egipcio:  'Egipcio',
+  historia: 'Historia',
+  economia: 'Economía',
+  religion: 'Religión',
+  ciencia:  'Ciencia',
+  sociedad: 'Sociedad',
+}
+const ALL_CATS = ['egipcio', 'historia', 'economia', 'religion', 'ciencia', 'sociedad'] as const
 
 interface Props {
   achievements: string[]
@@ -16,7 +35,11 @@ interface Props {
 }
 
 export function PapirosScreen({ achievements, history, god, stats, startTime, onBack }: Props) {
-  const [tab, setTab] = useState<'logros' | 'stats' | 'historial'>('logros')
+  const [tab, setTab] = useState<'logros' | 'stats' | 'historial' | 'glosario'>('logros')
+  const [glossCat, setGlossCat] = useState<string>('todos')
+  const filteredGloss = GLOSSARY
+    .filter(e => glossCat === 'todos' || e.cat === glossCat)
+    .sort((a, b) => a.word.localeCompare(b.word, 'es'))
   const unlocked = ACHIEVEMENTS.filter(a => achievements.includes(a.id))
   const locked = ACHIEVEMENTS.filter(a => !achievements.includes(a.id))
   const mins = Math.floor((Date.now() - startTime) / 60000)
@@ -32,9 +55,9 @@ export function PapirosScreen({ achievements, history, god, stats, startTime, on
       <button className="btn-back" onClick={onBack}>← Volver</button>
       <h2 className="sec-title">📜 PAPIROS</h2>
       <div className="tabs">
-        {(['logros', 'stats', 'historial'] as const).map(t => (
+        {(['logros', 'stats', 'historial', 'glosario'] as const).map(t => (
           <button key={t} className={`tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-            {t === 'logros' ? 'Logros' : t === 'stats' ? 'Stats' : 'Historial'}
+            {t === 'logros' ? 'Logros' : t === 'stats' ? 'Stats' : t === 'historial' ? 'Historial' : '𓆣 Glosario'}
           </button>
         ))}
       </div>
@@ -79,6 +102,32 @@ export function PapirosScreen({ achievements, history, god, stats, startTime, on
               <strong>{v}</strong>
             </div>
           ))}
+        </div>
+      )}
+
+      {tab === 'glosario' && (
+        <div className="gloss-tab">
+          <div className="gloss-cats">
+            <button className={`gloss-cat-btn${glossCat === 'todos' ? ' active' : ''}`} onClick={() => setGlossCat('todos')}>
+              📚 Todos ({GLOSSARY.length})
+            </button>
+            {ALL_CATS.map(c => (
+              <button key={c} className={`gloss-cat-btn${glossCat === c ? ' active' : ''}`} onClick={() => setGlossCat(c)}>
+                {CAT_ICONS[c]} {CAT_NAMES[c]}
+              </button>
+            ))}
+          </div>
+          <div className="gloss-entries">
+            {filteredGloss.map(e => (
+              <div key={e.word} className="gloss-entry">
+                <div className="gloss-entry-hd">
+                  <span className="gloss-entry-word">{e.word}</span>
+                  <span className="gloss-entry-cat">{CAT_ICONS[e.cat]} {CAT_NAMES[e.cat]}</span>
+                </div>
+                <p className="gloss-entry-def">{e.def}</p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
