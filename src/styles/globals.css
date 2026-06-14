@@ -447,6 +447,36 @@ button { font-family: inherit; cursor: pointer; }
 .fx-toast-fx { display: flex; flex-direction: column; gap: 6px; }
 .fx-toast-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: .88rem; color: var(--dim); }
 
+/* ── GLOSSARY ── */
+.gloss-word {
+  color: var(--gold-l); border-bottom: 1px dotted var(--gold-d);
+  cursor: pointer; transition: color .15s, border-color .15s;
+}
+.gloss-word:hover { color: #fff; border-color: var(--gold); }
+
+.gmod-overlay {
+  position: fixed; inset: 0; z-index: 70;
+  background: rgba(20,14,8,.7); backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.gmod {
+  background: var(--stone-m); border: 1px solid var(--gold-d); border-radius: 12px;
+  padding: 22px 24px; width: 100%; max-width: 420px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.7);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.gmod-cat {
+  font-family: 'Cinzel', serif; font-size: .65rem; color: var(--nile-l);
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.gmod-word {
+  font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--gold-l);
+  line-height: 1.2;
+}
+.gmod-def {
+  font-size: .95rem; color: var(--txt); line-height: 1.6;
+}
+
 /* ── TOOLTIP ── */
 .tip-wrap { position: relative; display: inline-block; }
 .tip-wrap.tip-block { display: block; }

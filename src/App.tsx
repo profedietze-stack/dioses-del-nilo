@@ -19,6 +19,8 @@ import { WordOrder } from './components/puzzles/WordOrder'
 import { InfoModal } from './components/ui/InfoModal'
 import { ConsejerModal } from './components/ui/ConsejerModal'
 import { AdvisorPanel } from './components/ui/AdvisorPanel'
+import { GlossaryModal } from './components/ui/GlossaryModal'
+import { processGlossary } from './utils/processGlossary'
 
 function requestFS() {
   const el = document.documentElement
@@ -48,6 +50,7 @@ export function App() {
   const [showModal, setShowModal] = useState(false)
   const [animKey, setAnimKey] = useState(0)
   const [consejer, setConsejer] = useState<{ fx: Partial<Stats>; choice: string } | null>(null)
+  const [glossWord, setGlossWord] = useState<string | null>(null)
   const [musicOn, setMusicOn] = useState(true)
   const [gs, setGs] = useState<GameStats>({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
   const startTime = useRef(Date.now())
@@ -264,10 +267,10 @@ export function App() {
                 <span className="ev-tag cat">{ev.cat.toUpperCase()}</span>
               </div>
               <h2 className="ev-title">{ev.title}</h2>
-              <p className="ev-desc">{ev.desc}</p>
+              <p className="ev-desc">{processGlossary(ev.desc, setGlossWord)}</p>
               <div className="hist-ctx">
                 <span className="ctx-lbl">📚 Contexto histórico</span>
-                <p>{ev.ctx}</p>
+                <p>{processGlossary(ev.ctx, setGlossWord)}</p>
               </div>
               <AdvisorPanel stats={stats} eventCat={ev.cat} />
               <div className="opts">
@@ -297,6 +300,12 @@ export function App() {
       </div>
 
       {showModal && <InfoModal onClose={() => setShowModal(false)} />}
+
+      <AnimatePresence>
+        {glossWord && (
+          <GlossaryModal key="gmod" word={glossWord} onClose={() => setGlossWord(null)} />
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {consejer && (
