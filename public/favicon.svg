@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#2A2117"/>
+  <!-- ankh cross -->
+  <rect x="28" y="32" width="8" height="22" rx="2" fill="#D4A017"/>
+  <rect x="16" y="26" width="32" height="8" rx="2" fill="#D4A017"/>
+  <!-- ankh loop -->
+  <circle cx="32" cy="20" r="10" fill="none" stroke="#D4A017" stroke-width="7"/>
+  <rect x="28" y="14" width="8" height="12" fill="#2A2117"/>
+</svg>
