@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
-import type { God, Stats, Screen, HistoryEntry, GameStats, EventOption, GameEvent } from './types'
+import type { God, Stats, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData } from './types'
 import { GODS } from './data/gods'
 import { PERIODS } from './data/periods'
+import { PLAY_STYLES, PERIOD_LORE, getLegacyVerdict } from './data/periodLore'
+import { PeriodTransitionScreen } from './components/screens/PeriodTransitionScreen'
 import { STAT_ICONS, STAT_LABELS, STAT_COLORS, STAT_DESC, OPTION_TYPE_LABELS } from './data/periods'
 import { Tooltip } from './components/ui/Tooltip'
 import { buildGameEvents, getEventsById } from './data/eventPools'
@@ -54,8 +56,10 @@ export function App() {
   const [glossWord, setGlossWord] = useState<string | null>(null)
   const [musicOn, setMusicOn] = useState(true)
   const [gs, setGs] = useState<GameStats>({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
+  const [periodTransData, setPeriodTransData] = useState<PeriodTransitionData | null>(null)
   const startTime = useRef(Date.now())
   const pendingEnd = useRef(false)
+  const pendingPeriodTrans = useRef<PeriodTransitionData | null>(null)
 
   const hasSave = !!loadSave()
   const curPuzDef = PUZZLES_DEF[puzIdx]
@@ -154,7 +158,33 @@ export function App() {
     setConsejer({ fx: opt.fx, choice: opt.t })
     checkAch(ns, nh, ngs, puzFail, puzOk)
     if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
-    if (nIdx >= gameEvents.length) pendingEnd.current = true
+    if (nIdx >= gameEvents.length) {
+      pendingEnd.current = true
+    } else {
+      // detect period boundary crossing
+      const total = gameEvents.length
+      const perP = total / 4
+      const fromPIdx = Math.floor(evIdx / perP)
+      const toPIdx   = Math.floor(nIdx  / perP)
+      if (toPIdx > fromPIdx && fromPIdx < 3) {
+        const fromPeriod = PERIODS[fromPIdx]
+        const toPeriod   = PERIODS[Math.min(3, toPIdx)]
+        const pStart     = Math.round(fromPIdx * perP)
+        const periodHistory = nh.slice(pStart)
+        // detect play style from period history
+        const typeCounts: Record<string, number> = {}
+        for (const entry of periodHistory) {
+          const gev = gameEvents.find(e => e.id === entry.eventId)
+          const matched = gev?.opts.find(o => o.t === entry.choice)
+          if (matched) typeCounts[matched.type] = (typeCounts[matched.type] ?? 0) + 1
+        }
+        const dominant = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'default'
+        const playStyle = PLAY_STYLES[dominant] ?? PLAY_STYLES.default
+        const lore = PERIOD_LORE[fromPeriod.id]
+        const verdict = getLegacyVerdict(ns)
+        pendingPeriodTrans.current = { fromPeriod, toPeriod, statsAtEnd: ns, playStyle, lore, verdict }
+      }
+    }
   }
 
   const handlePuzDone = (ok: boolean, statDelta: number) => {
@@ -316,7 +346,15 @@ export function App() {
             fx={consejer.fx}
             onContinue={() => {
               setConsejer(null)
-              if (pendingEnd.current) { pendingEnd.current = false; setScreen('end') }
+              if (pendingEnd.current) {
+                pendingEnd.current = false
+                setScreen('end')
+              } else if (pendingPeriodTrans.current) {
+                const d = pendingPeriodTrans.current
+                pendingPeriodTrans.current = null
+                setPeriodTransData(d)
+                setScreen('periodTransition')
+              }
             }}
           />
         )}
@@ -328,8 +366,9 @@ export function App() {
     if (screen === 'menu')      return <MenuScreen      key="menu"      hasSave={hasSave} onNew={() => setScreen('intro')} onContinue={continueGame} onAchievements={() => setScreen('papiros')} onInfo={() => setShowModal(true)} />
     if (screen === 'intro')     return <IntroScreen     key="intro"     onFinish={() => setScreen('godSelect')} />
     if (screen === 'godSelect') return <GodSelectScreen key="godSelect" onSelect={startGame} onBack={() => setScreen('menu')} />
-    if (screen === 'papiros')   return <PapirosScreen   key="papiros"   achievements={achievements} history={history} god={god} stats={stats} startTime={startTime.current} onBack={() => setScreen('menu')} />
-    if (screen === 'end')       return <EndScreen       key="end"       stats={stats} achievements={achievements} god={god} startTime={startTime.current} onNew={() => { clearSave(); setScreen('menu') }} onMenu={() => setScreen('menu')} />
+    if (screen === 'papiros')         return <PapirosScreen         key="papiros"         achievements={achievements} history={history} god={god} stats={stats} startTime={startTime.current} onBack={() => setScreen('menu')} />
+    if (screen === 'end')             return <EndScreen             key="end"             stats={stats} achievements={achievements} god={god} startTime={startTime.current} onNew={() => { clearSave(); setScreen('menu') }} onMenu={() => setScreen('menu')} />
+    if (screen === 'periodTransition' && periodTransData) return <PeriodTransitionScreen key="periodTransition" data={periodTransData} onContinue={() => setScreen('game')} />
     return gameJSX
   }
 

@@ -109,7 +109,41 @@ export interface GameStats {
   cruel: number
 }
 
-export type Screen = 'menu' | 'intro' | 'godSelect' | 'game' | 'papiros' | 'end'
+export type Screen = 'menu' | 'intro' | 'godSelect' | 'game' | 'papiros' | 'end' | 'periodTransition'
+
+export interface PlayStyle {
+  icon: string
+  title: string
+  desc: string
+}
+
+export interface LegacyVerdict {
+  verdict: string
+  color: string
+  desc: string
+}
+
+export interface PeriodLore {
+  id: string
+  summary: string
+  historicalFact: string
+  factTitle: string
+  achievement: string
+  achievementTitle: string
+  augurio: string
+  nextPeriodName: string
+  nextPeriodIntro: string
+  nextChallenges: string[]
+}
+
+export interface PeriodTransitionData {
+  fromPeriod: Period
+  toPeriod: Period | null
+  statsAtEnd: Stats
+  playStyle: PlayStyle
+  lore: PeriodLore
+  verdict: LegacyVerdict
+}
 
 export interface SaveData {
   godId: string
