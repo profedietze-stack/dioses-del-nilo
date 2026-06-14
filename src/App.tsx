@@ -16,6 +16,8 @@ import { EndScreen } from './components/screens/EndScreen'
 import { GlyphPuzzle } from './components/puzzles/GlyphPuzzle'
 import { WordOrder } from './components/puzzles/WordOrder'
 import { InfoModal } from './components/ui/InfoModal'
+import { ConsejerModal } from './components/ui/ConsejerModal'
+import { AdvisorPanel } from './components/ui/AdvisorPanel'
 
 function requestFS() {
   const el = document.documentElement
@@ -44,10 +46,11 @@ export function App() {
   const [showPuz, setShowPuz] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [animKey, setAnimKey] = useState(0)
-  const [toast, setToast] = useState<{ fx: Partial<Stats>; choice: string } | null>(null)
+  const [consejer, setConsejer] = useState<{ fx: Partial<Stats>; choice: string } | null>(null)
   const [musicOn, setMusicOn] = useState(true)
   const [gs, setGs] = useState<GameStats>({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
   const startTime = useRef(Date.now())
+  const pendingEnd = useRef(false)
 
   const hasSave = !!loadSave()
   const curPuzDef = PUZZLES_DEF[puzIdx]
@@ -143,11 +146,10 @@ export function App() {
     setAnimKey(k => k + 1)
     setEvIdx(nIdx)
     playSound('event_result')
-    setToast({ fx: opt.fx, choice: opt.t })
-    setTimeout(() => setToast(null), 2000)
+    setConsejer({ fx: opt.fx, choice: opt.t })
     checkAch(ns, nh, ngs, puzFail, puzOk)
     if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
-    if (nIdx >= gameEvents.length) setTimeout(() => setScreen('end'), 400)
+    if (nIdx >= gameEvents.length) pendingEnd.current = true
   }
 
   const handlePuzDone = (ok: boolean, statDelta: number) => {
@@ -264,17 +266,11 @@ export function App() {
                 <span className="ctx-lbl">📚 Contexto histórico</span>
                 <p>{ev.ctx}</p>
               </div>
+              <AdvisorPanel stats={stats} eventCat={ev.cat} />
               <div className="opts">
                 {ev.opts.map((opt, i) => (
                   <button key={i} className={`opt ${opt.type}`} onClick={() => handleChoice(opt)}>
                     <span className="opt-txt">{opt.t}</span>
-                    <div className="opt-fx">
-                      {Object.entries(opt.fx).filter(([, v]) => v !== 0).map(([k, v]) => (
-                        <span key={k} className={`fx ${v > 0 ? 'pos' : 'neg'}`}>
-                          {STAT_ICONS[k]} {v > 0 ? '+' : ''}{v}
-                        </span>
-                      ))}
-                    </div>
                   </button>
                 ))}
               </div>
@@ -298,26 +294,16 @@ export function App() {
       {showModal && <InfoModal onClose={() => setShowModal(false)} />}
 
       <AnimatePresence>
-        {toast && (
-          <motion.div
-            className="fx-toast"
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.25 }}
-          >
-            <div className="fx-toast-title">Consecuencias de tu decisión</div>
-            <div className="fx-toast-fx">
-              {Object.entries(toast.fx).filter(([, v]) => v !== 0).map(([k, v]) => (
-                <div key={k} className="fx-toast-row">
-                  <span>{STAT_ICONS[k]} {STAT_LABELS[k]}</span>
-                  <span className={`fx ${v > 0 ? 'pos' : 'neg'}`} style={{ fontSize: '1rem', padding: '2px 10px' }}>
-                    {v > 0 ? '+' : ''}{v}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+        {consejer && (
+          <ConsejerModal
+            key="cmod"
+            choice={consejer.choice}
+            fx={consejer.fx}
+            onContinue={() => {
+              setConsejer(null)
+              if (pendingEnd.current) { pendingEnd.current = false; setScreen('end') }
+            }}
+          />
         )}
       </AnimatePresence>
     </motion.div>
