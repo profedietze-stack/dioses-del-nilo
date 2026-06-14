@@ -39,7 +39,10 @@ export function GlyphPuzzle({ puz, onDone }: Props) {
 
   const egyptians = glyphs.filter(g => g.c)
   const hits = egyptians.filter(g => clicked.has(glyphs.indexOf(g))).length
-  const score = Math.round((hits / egyptians.length) * 100)
+  const falsePositives = glyphs.filter(g => !g.c && clicked.has(glyphs.indexOf(g))).length
+  const score = egyptians.length > 0
+    ? Math.max(0, Math.round(((hits - falsePositives) / egyptians.length) * 100))
+    : 0
   const target = puz.target ?? 60
 
   const getGlyphState = (g: Glyph, i: number) => {
