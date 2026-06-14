@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Tooltip } from '../ui/Tooltip'
 import { motion } from 'framer-motion'
 import type { God, Stats, HistoryEntry } from '../../types'
 import { ACHIEVEMENTS } from '../../data/achievements'
@@ -41,23 +42,26 @@ export function PapirosScreen({ achievements, history, god, stats, startTime, on
       {tab === 'logros' && (
         <div className="ach-grid">
           {unlocked.map(a => (
-            <div key={a.id} className={`ach on ${a.type}`}>
-              <span className="ach-ico">{a.ico}</span>
-              <div>
-                <strong>{a.name}</strong>
-                <p>{a.title}</p>
-                <small>{a.desc}</small>
+            <Tooltip key={a.id} text={a.desc} pos="top" className="tip-block">
+              <div className={`ach on ${a.type}`}>
+                <span className="ach-ico">{a.ico}</span>
+                <div>
+                  <strong>{a.name}</strong>
+                  <p>{a.title}</p>
+                </div>
               </div>
-            </div>
+            </Tooltip>
           ))}
           {locked.map(a => (
-            <div key={a.id} className={`ach off${a.secret ? ' sec' : ''}`}>
-              <span className="ach-ico">🔒</span>
-              <div>
-                <strong>{a.secret ? '???' : a.name}</strong>
-                <p>{a.secret ? 'Logro secreto' : a.desc}</p>
+            <Tooltip key={a.id} text={a.secret ? 'Completá otros logros para descubrir este.' : a.desc} pos="top" className="tip-block">
+              <div className={`ach off${a.secret ? ' sec' : ''}`}>
+                <span className="ach-ico">🔒</span>
+                <div>
+                  <strong>{a.secret ? '???' : a.name}</strong>
+                  <p>{a.secret ? 'Logro secreto' : a.title}</p>
+                </div>
               </div>
-            </div>
+            </Tooltip>
           ))}
         </div>
       )}

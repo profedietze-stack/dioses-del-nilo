@@ -447,6 +447,24 @@ button { font-family: inherit; cursor: pointer; }
 .fx-toast-fx { display: flex; flex-direction: column; gap: 6px; }
 .fx-toast-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: .88rem; color: var(--dim); }
 
+/* ── TOOLTIP ── */
+.tip-wrap { position: relative; display: inline-block; }
+.tip-wrap.tip-block { display: block; }
+.tip {
+  position: absolute; z-index: 80;
+  background: #1a1208; border: 1px solid var(--gold-d);
+  border-radius: 6px; padding: 7px 11px;
+  font-size: .78rem; color: var(--papyrus-d);
+  line-height: 1.45; max-width: 240px; width: max-content;
+  pointer-events: none; white-space: normal;
+  box-shadow: 0 4px 16px rgba(0,0,0,.6);
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+.tip-top    { bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); }
+.tip-bottom { top: calc(100% + 6px);    left: 50%; transform: translateX(-50%); }
+.tip-right  { left: calc(100% + 6px);   top: 50%;  transform: translateY(-50%); }
+.tip-left   { right: calc(100% + 6px);  top: 50%;  transform: translateY(-50%); }
+
 /* ── CONSEJER MODAL ── */
 .cmod-overlay {
   position: fixed; inset: 0; z-index: 60;

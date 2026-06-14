@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Stats } from '../../types'
 import { ADVISORS, getAdvisorAdvice } from '../../data/advisors'
+import { Tooltip } from './Tooltip'
 
 interface Props {
   stats: Stats
@@ -32,11 +33,11 @@ export function AdvisorPanel({ stats, eventCat }: Props) {
           const isOpen = open === adv.id
           return (
             <div key={adv.id} className="adv-chip-wrap">
+              <Tooltip text={`${adv.name} · ${adv.title}`} pos="top">
               <button
                 className={`adv-chip urgency-${urgency}${isOpen ? ' open' : ''}`}
                 style={{ '--acol': adv.color } as React.CSSProperties}
                 onClick={() => setOpen(isOpen ? null : adv.id)}
-                title={adv.name}
               >
                 <span className="adv-chip-icon">{adv.icon}</span>
                 <span className="adv-chip-name">{adv.name}</span>
@@ -44,6 +45,7 @@ export function AdvisorPanel({ stats, eventCat }: Props) {
                   <span className={`adv-pulse pulse-${urgency}`} />
                 )}
               </button>
+              </Tooltip>
 
               <AnimatePresence>
                 {isOpen && (

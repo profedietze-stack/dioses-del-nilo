@@ -3,7 +3,8 @@ import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
 import type { God, Stats, Screen, HistoryEntry, GameStats, EventOption, GameEvent } from './types'
 import { GODS } from './data/gods'
 import { PERIODS } from './data/periods'
-import { STAT_ICONS, STAT_LABELS, STAT_COLORS } from './data/periods'
+import { STAT_ICONS, STAT_LABELS, STAT_COLORS, STAT_DESC, OPTION_TYPE_LABELS } from './data/periods'
+import { Tooltip } from './components/ui/Tooltip'
 import { buildGameEvents, getEventsById } from './data/eventPools'
 import { PUZZLES_DEF } from './data/puzzles'
 import { INIT, clamp, applyFx } from './utils/gameLogic'
@@ -213,21 +214,23 @@ export function App() {
             <span className="god-badge-name">{god?.name}</span>
           </div>
           {(Object.keys(INIT) as (keyof Stats)[]).map(k => (
-            <div key={k} className="stat-row">
-              <div className="stat-hd">
-                <span className="stat-ico">{STAT_ICONS[k]}</span>
-                <span className="stat-lbl">{STAT_LABELS[k]}</span>
-                <span className="stat-val">{stats[k]}</span>
+            <Tooltip key={k} text={STAT_DESC[k]} pos="right" className="tip-block">
+              <div className="stat-row">
+                <div className="stat-hd">
+                  <span className="stat-ico">{STAT_ICONS[k]}</span>
+                  <span className="stat-lbl">{STAT_LABELS[k]}</span>
+                  <span className="stat-val">{stats[k]}</span>
+                </div>
+                <div className="stat-bg">
+                  <AnimatedStatBar value={stats[k]} color={STAT_COLORS[k]} />
+                </div>
+                {lastFx && lastFx[k] !== undefined && lastFx[k] !== 0 && (
+                  <span key={`${animKey}${k}`} className={`stat-delta ${(lastFx[k] ?? 0) > 0 ? 'pos' : 'neg'}`}>
+                    {(lastFx[k] ?? 0) > 0 ? '+' : ''}{lastFx[k]}
+                  </span>
+                )}
               </div>
-              <div className="stat-bg">
-                <AnimatedStatBar value={stats[k]} color={STAT_COLORS[k]} />
-              </div>
-              {lastFx && lastFx[k] !== undefined && lastFx[k] !== 0 && (
-                <span key={`${animKey}${k}`} className={`stat-delta ${(lastFx[k] ?? 0) > 0 ? 'pos' : 'neg'}`}>
-                  {(lastFx[k] ?? 0) > 0 ? '+' : ''}{lastFx[k]}
-                </span>
-              )}
-            </div>
+            </Tooltip>
           ))}
           <button className="btn-o sm" onClick={() => setScreen('papiros')}>📜 Papiros</button>
           <button className="btn-menu" onClick={() => { if (confirm('¿Volver al menú? La partida está guardada.')) { stopMusic(); setScreen('menu') } }}>🏠 Menú</button>
@@ -269,9 +272,11 @@ export function App() {
               <AdvisorPanel stats={stats} eventCat={ev.cat} />
               <div className="opts">
                 {ev.opts.map((opt, i) => (
-                  <button key={i} className={`opt ${opt.type}`} onClick={() => handleChoice(opt)}>
-                    <span className="opt-txt">{opt.t}</span>
-                  </button>
+                  <Tooltip key={i} text={OPTION_TYPE_LABELS[opt.type] ?? opt.type} pos="top" className="tip-block">
+                    <button className={`opt ${opt.type}`} onClick={() => handleChoice(opt)}>
+                      <span className="opt-txt">{opt.t}</span>
+                    </button>
+                  </Tooltip>
                 ))}
               </div>
               {ev.tl && (
