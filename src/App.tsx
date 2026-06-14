@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
-import type { God, Stats, Screen, HistoryEntry, GameStats, EventOption } from './types'
+import type { God, Stats, Screen, HistoryEntry, GameStats, EventOption, GameEvent } from './types'
 import { GODS } from './data/gods'
 import { PERIODS } from './data/periods'
 import { STAT_ICONS, STAT_LABELS, STAT_COLORS } from './data/periods'
-import { EVENTS } from './data/events'
+import { buildGameEvents, getEventsById } from './data/eventPools'
 import { PUZZLES_DEF } from './data/puzzles'
 import { INIT, clamp, applyFx } from './utils/gameLogic'
 import { loadSave, writeSave, clearSave } from './utils/save'
@@ -32,6 +32,7 @@ function AnimatedStatBar({ value, color }: { value: number; color: string }) {
 export function App() {
   const [screen, setScreen] = useState<Screen>('menu')
   const [god, setGod] = useState<God | null>(null)
+  const [gameEvents, setGameEvents] = useState<GameEvent[]>([])
   const [stats, setStats] = useState<Stats>(INIT)
   const [evIdx, setEvIdx] = useState(0)
   const [history, setHistory] = useState<HistoryEntry[]>([])
@@ -99,11 +100,13 @@ export function App() {
     startMusic()
     const s = { ...INIT }
     for (const k in g.bon) s[k as keyof Stats] = clamp(50 + g.bon[k as keyof Stats])
+    const events = buildGameEvents(8)
     setGod(g); setStats(s); setEvIdx(0); setHistory([]); setLastFx(null)
+    setGameEvents(events)
     setAchievements([]); setPuzFail(0); setPuzOk(0); setShowPuz(false); setPuzIdx(0)
     setGs({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
     startTime.current = Date.now()
-    writeSave({ godId: g.id, stats: s, evIdx: 0, history: [], achievements: [], t: Date.now() })
+    writeSave({ godId: g.id, stats: s, evIdx: 0, eventIds: events.map(e => e.id), history: [], achievements: [], t: Date.now() })
     setScreen('game')
   }
 
@@ -112,7 +115,9 @@ export function App() {
     startMusic()
     const sv = loadSave(); if (!sv) return
     const g = GODS.find(x => x.id === sv.godId); if (!g) return
+    const events = sv.eventIds?.length ? getEventsById(sv.eventIds) : buildGameEvents(8)
     setGod(g); setStats(sv.stats ?? INIT)
+    setGameEvents(events)
     setEvIdx(sv.evIdx ?? 0); setHistory(sv.history ?? [])
     setAchievements(sv.achievements ?? [])
     setScreen('game')
@@ -120,7 +125,7 @@ export function App() {
 
   const handleChoice = (opt: EventOption) => {
     const ns = applyFx(stats, opt.fx)
-    const ev = EVENTS[evIdx]
+    const ev = gameEvents[evIdx]
     const ngs = { ...gs }
     if (opt.type === 'militar') ngs.mil++
     if (['social', 'diplomatico', 'cultural'].includes(opt.type)) ngs.peace++
@@ -141,8 +146,8 @@ export function App() {
     setToast({ fx: opt.fx, choice: opt.t })
     setTimeout(() => setToast(null), 2000)
     checkAch(ns, nh, ngs, puzFail, puzOk)
-    if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, history: nh, achievements: [...achievements], t: Date.now() })
-    if (nIdx >= EVENTS.length) setTimeout(() => setScreen('end'), 400)
+    if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
+    if (nIdx >= gameEvents.length) setTimeout(() => setScreen('end'), 400)
   }
 
   const handlePuzDone = (ok: boolean, statDelta: number) => {
@@ -160,9 +165,10 @@ export function App() {
     }
   }
 
-  const perP = EVENTS.length / 4
-  const curPeriod = PERIODS[Math.min(3, Math.floor(evIdx / 7.5))]
-  const ev = EVENTS[evIdx]
+  const totalEvents = gameEvents.length || 32
+  const perP = totalEvents / 4
+  const curPeriod = PERIODS[Math.min(3, Math.floor(evIdx / perP))]
+  const ev = gameEvents[evIdx]
   const evPeriod = ev && PERIODS.find(p => p.id === ev.per)
 
   const gameJSX = (
@@ -192,7 +198,7 @@ export function App() {
               </div>
             )
           })}
-          <div className="ev-counter">{evIdx}/30</div>
+          <div className="ev-counter">{evIdx}/{totalEvents}</div>
         </div>
       </div>
 
@@ -248,7 +254,7 @@ export function App() {
               transition={{ duration: 0.35, ease: 'easeOut' }}
             >
               <div className="ev-hd">
-                <span className="ev-num">Evento {evIdx + 1} / 30</span>
+                <span className="ev-num">Evento {evIdx + 1} / {totalEvents}</span>
                 {evPeriod && <span className="ev-tag period">{evPeriod.name}</span>}
                 <span className="ev-tag cat">{ev.cat.toUpperCase()}</span>
               </div>

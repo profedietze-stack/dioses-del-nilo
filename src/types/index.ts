@@ -115,6 +115,7 @@ export interface SaveData {
   godId: string
   stats: Stats
   evIdx: number
+  eventIds: number[]
   history: HistoryEntry[]
   achievements: string[]
   t: number
