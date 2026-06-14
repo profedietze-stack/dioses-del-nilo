@@ -109,7 +109,7 @@ export interface GameStats {
   cruel: number
 }
 
-export type Screen = 'menu' | 'godSelect' | 'game' | 'papiros' | 'end'
+export type Screen = 'menu' | 'intro' | 'godSelect' | 'game' | 'papiros' | 'end'
 
 export interface SaveData {
   godId: string

@@ -11,6 +11,7 @@ import { INIT, clamp, applyFx } from './utils/gameLogic'
 import { loadSave, writeSave, clearSave } from './utils/save'
 import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngine'
 import { MenuScreen } from './components/screens/MenuScreen'
+import { IntroScreen } from './components/screens/IntroScreen'
 import { GodSelectScreen } from './components/screens/GodSelectScreen'
 import { PapirosScreen } from './components/screens/PapirosScreen'
 import { EndScreen } from './components/screens/EndScreen'
@@ -324,7 +325,8 @@ export function App() {
   )
 
   function renderScreen() {
-    if (screen === 'menu')      return <MenuScreen      key="menu"      hasSave={hasSave} onNew={() => setScreen('godSelect')} onContinue={continueGame} onAchievements={() => setScreen('papiros')} onInfo={() => setShowModal(true)} />
+    if (screen === 'menu')      return <MenuScreen      key="menu"      hasSave={hasSave} onNew={() => setScreen('intro')} onContinue={continueGame} onAchievements={() => setScreen('papiros')} onInfo={() => setShowModal(true)} />
+    if (screen === 'intro')     return <IntroScreen     key="intro"     onFinish={() => setScreen('godSelect')} />
     if (screen === 'godSelect') return <GodSelectScreen key="godSelect" onSelect={startGame} onBack={() => setScreen('menu')} />
     if (screen === 'papiros')   return <PapirosScreen   key="papiros"   achievements={achievements} history={history} god={god} stats={stats} startTime={startTime.current} onBack={() => setScreen('menu')} />
     if (screen === 'end')       return <EndScreen       key="end"       stats={stats} achievements={achievements} god={god} startTime={startTime.current} onNew={() => { clearSave(); setScreen('menu') }} onMenu={() => setScreen('menu')} />
