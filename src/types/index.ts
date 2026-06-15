@@ -109,7 +109,7 @@ export interface GameStats {
   cruel: number
 }
 
-export type Screen = 'menu' | 'intro' | 'godSelect' | 'game' | 'papiros' | 'end' | 'periodTransition'
+export type Screen = 'menu' | 'name' | 'intro' | 'godSelect' | 'game' | 'papiros' | 'end' | 'periodTransition'
 
 export interface PlayStyle {
   icon: string

@@ -80,11 +80,11 @@ const variants = {
 }
 
 // ── MAIN COMPONENT ────────────────────────────────────────────────────────────
-interface Props { onFinish: () => void }
+interface Props { onFinish: () => void; playerName?: string }
 
 const TOTAL = 5
 
-export function IntroScreen({ onFinish }: Props) {
+export function IntroScreen({ onFinish, playerName }: Props) {
   const [step, setStep]             = useState(0)
   const [dir, setDir]               = useState(1)
   const [activeRegion, setActive]   = useState<string | null>(null)
@@ -119,6 +119,7 @@ export function IntroScreen({ onFinish }: Props) {
               </div>
               <div className="intro-text-col">
                 <h1 className="intro-game-title">𓆣 Dioses del Nilo</h1>
+                {playerName && <p className="intro-pharaoh-greet">El Imperio te aguarda, Faraón <strong>{playerName}</strong>.</p>}
                 <p className="intro-tagline">
                   El Imperio más poderoso del mundo antiguo nació a orillas de un único río.
                 </p>

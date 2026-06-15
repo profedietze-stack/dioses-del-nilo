@@ -996,3 +996,94 @@ button { font-family: inherit; cursor: pointer; }
   .intro-map-row { flex-direction: column; align-items: center; }
   .intro-stats-grid { grid-template-columns: 1fr; }
 }
+
+/* ── NAME SCREEN ─────────────────────────────────────────────────────────── */
+.ns-screen {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 30%, #3D3020 0%, #1A1408 100%);
+  padding: 1.5rem;
+}
+.ns-card {
+  background: var(--stone-m);
+  border: 1px solid var(--gold-d);
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0,0,0,.5);
+}
+.ns-glyphs {
+  font-size: 1.4rem;
+  letter-spacing: .5rem;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+  opacity: .7;
+}
+.ns-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  color: var(--gold);
+  margin-bottom: .5rem;
+}
+.ns-sub {
+  color: var(--dim);
+  font-size: .9rem;
+  margin-bottom: 2rem;
+}
+.ns-field {
+  text-align: left;
+  margin-bottom: 1.8rem;
+}
+.ns-label {
+  display: block;
+  font-size: .75rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: .5rem;
+}
+.ns-input {
+  width: 100%;
+  background: var(--stone);
+  border: 1.5px solid var(--stone-l);
+  border-radius: .5rem;
+  color: var(--papyrus);
+  font-size: 1.1rem;
+  padding: .7rem 1rem;
+  outline: none;
+  transition: border-color .2s;
+  box-sizing: border-box;
+}
+.ns-input:focus {
+  border-color: var(--gold);
+}
+.ns-input::placeholder { color: var(--dim); }
+.ns-hint {
+  font-size: .78rem;
+  color: var(--dim);
+  margin-top: .45rem;
+  min-height: 1.1em;
+}
+.ns-btn {
+  width: 100%;
+  font-size: 1rem;
+  padding: .85rem 1.5rem;
+  opacity: 1;
+  transition: opacity .2s;
+}
+.ns-btn:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+/* Greeting line in IntroScreen slide 0 */
+.intro-pharaoh-greet {
+  color: var(--gold-l);
+  font-size: .95rem;
+  margin: -.3rem 0 .8rem;
+  letter-spacing: .02em;
+}
