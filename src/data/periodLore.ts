@@ -84,7 +84,7 @@ export const ADVISOR_PERIOD_LINES: Record<string, Record<'high' | 'low' | 'neutr
     low:     ['Las aldeas guardan heridas de este período, faraón. Espero que el próximo seas más atento a los que no tienen voz.', 'He escuchado demasiados llantos en los mercados. El pueblo necesita más de ti en los tiempos que vienen.'],
     neutral: ['El pueblo sobrevivió. No es poco, pero tampoco es suficiente. El próximo período, recuerda que las aldeas son el corazón del Imperio.', 'Hubo momentos buenos y malos para el pueblo. Así es el gobierno. Lo importante es no olvidar nunca a los que sostienen todo desde abajo.'],
   },
-  mercader: {  // Heqanakhte — riqueza
+  escriba: {  // Heqanakhte — riqueza
     high:    ['Los registros del tesoro no mienten, faraón: este período fue generoso. El comercio fluyó y los graneros están llenos.', 'Excelente gestión de los recursos. Los mercaderes del Mediterráneo hablarán bien de Egipto durante años.'],
     low:     ['El tesoro sangró demasiado en este período. Necesitamos decisiones más cautelosas con los recursos. El próximo ciclo no nos perdonará la misma imprudencia.', 'Los graneros están más vacíos de lo que deberían. Toma nota, faraón: sin riqueza, no hay ejércitos, ni templos, ni Imperio.'],
     neutral: ['El tesoro aguantó. No fuimos ricos, pero tampoco quebramos. El próximo período hay oportunidades comerciales que no deberíamos perder.', 'Un balance aceptable. Los mercaderes siguen llegando, lo cual es una señal positiva. Mantén las rutas abiertas.'],
@@ -94,7 +94,7 @@ export const ADVISOR_PERIOD_LINES: Record<string, Record<'high' | 'low' | 'neutr
     low:     ['Los templos necesitaron más atención de la que recibieron. La cultura no es un lujo, faraón — es lo que nos hace egipcios y no simplemente otro pueblo más del desierto.', 'He visto templos descuidados y escribas sin recursos. El próximo período, recuerda: la civilización se construye con conocimiento, no solo con espadas.'],
     neutral: ['El equilibrio cultural fue suficiente para mantener la identidad del Imperio. Pero podríamos haber alcanzado más. Los dioses esperan más de nosotros.', 'Ni el florecimiento ni el deterioro cultural. Un período de transición. El próximo, apunta más alto — Egipto siempre fue grande cuando cuidó su legado cultural.'],
   },
-  guerrera: {  // Meritaten — influencia
+  general: {  // Meritaten — influencia
     high:    ['El nombre de Egipto resuena con poder en todos los rincones del mundo conocido. Este período fortaleció nuestra posición estratégica.', 'Las fronteras resistieron, los aliados se mantuvieron fieles y nuestros enemigos nos respetan. Un período sólido desde la perspectiva del poder.'],
     low:     ['La influencia de Egipto se debilitó este período. Los pueblos vecinos notaron la vacilación. El próximo ciclo necesitará decisiones más firmes para recuperar lo perdido.', 'Nuestros aliados se preguntan si Egipto sigue siendo el gigante que conocían. Hay trabajo que hacer para restaurar el respeto perdido.'],
     neutral: ['La posición estratégica de Egipto se mantiene, aunque sin grandes avances. A veces la estabilidad es también una victoria.', 'Un período sin grandes triunfos ni grandes derrotas en el plano del poder. El próximo período traerá nuevos desafíos que pondrán a prueba la influencia del Imperio.'],
