@@ -22,6 +22,7 @@ import { EndScreen } from './components/screens/EndScreen'
 import { GlyphPuzzle } from './components/puzzles/GlyphPuzzle'
 import { WordOrder } from './components/puzzles/WordOrder'
 import { MaatScale } from './components/puzzles/MaatScale'
+import { PharaohTimeline } from './components/puzzles/PharaohTimeline'
 import { InfoModal } from './components/ui/InfoModal'
 import { ConsejerModal } from './components/ui/ConsejerModal'
 import { AdvisorPanel } from './components/ui/AdvisorPanel'
@@ -335,6 +336,7 @@ export function App() {
               {curPuzDef.type === 'glifos' && <GlyphPuzzle puz={curPuzDef} onDone={handlePuzDone} />}
               {curPuzDef.type === 'ordenar' && <WordOrder puz={curPuzDef} onDone={handlePuzDone} />}
               {curPuzDef.type === 'balanza' && <MaatScale puz={curPuzDef} onDone={handlePuzDone} />}
+              {curPuzDef.type === 'faraones' && <PharaohTimeline puz={curPuzDef} onDone={handlePuzDone} />}
             </motion.div>
           ) : ev ? (
             <motion.div

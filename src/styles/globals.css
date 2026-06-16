@@ -1449,3 +1449,37 @@ button { font-family: inherit; cursor: pointer; }
 .maat-no-place { font-size: .7rem; color: var(--dim); }
 .maat-review-hint { font-size: .78rem; color: var(--dim); margin: 0; line-height: 1.5; }
 
+/* ── PHARAOH TIMELINE PUZZLE ── */
+.pht-timeline { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; position: relative; }
+.pht-axis-label { font-size: .7rem; color: var(--dim); text-align: center; letter-spacing: .05em; padding: 2px 0; }
+.pht-slot { display: flex; align-items: center; gap: 8px; border-radius: 8px; padding: 6px 8px; min-height: 52px; border: 0.5px solid rgba(212,160,23,.25); background: rgba(255,255,255,.03); transition: background .15s; }
+.pht-slot.empty { border-style: dashed; }
+.pht-slot-num { font-family: 'Cinzel', serif; font-size: .9rem; font-weight: 700; color: var(--gold); min-width: 18px; text-align: center; }
+.pht-slot-hint { font-size: .72rem; color: var(--dim); font-style: italic; }
+.pht-card { display: flex; align-items: center; gap: 8px; border-radius: 7px; padding: 7px 10px; cursor: grab; transition: opacity .15s, transform .1s; flex: 1; }
+.pht-card.pool { background: rgba(75,58,138,.25); border: 1px solid rgba(155,125,255,.35); }
+.pht-card.placed { background: rgba(212,160,23,.12); border: 1px solid rgba(212,160,23,.35); flex: 1; }
+.pht-card.placed.ok { background: rgba(29,158,117,.15); border-color: rgba(29,158,117,.5); }
+.pht-card.placed.fail { background: rgba(216,90,48,.12); border-color: rgba(216,90,48,.4); }
+.pht-card.dragging { opacity: .35; transform: scale(.95); }
+.pht-card:active { transform: scale(.97); }
+.pht-card-ico { font-size: 1.2rem; flex-shrink: 0; }
+.pht-card-info { display: flex; flex-direction: column; flex: 1; }
+.pht-card-name { font-family: 'Cinzel', serif; font-size: .85rem; font-weight: 600; color: var(--txt); }
+.pht-card-year { font-size: .72rem; color: var(--gold); margin-top: 1px; }
+.pht-check { font-size: .95rem; font-weight: 700; flex-shrink: 0; }
+.pht-check.ok { color: #6fcf74; }
+.pht-check.fail { color: #e07060; }
+.pht-pool { border-radius: 10px; padding: 10px; margin-top: 10px; background: rgba(255,255,255,.03); border: 0.5px solid rgba(212,160,23,.2); transition: outline .1s; }
+.pht-pool-lbl { font-size: .72rem; color: var(--dim); margin-bottom: 8px; }
+.pht-pool-cards { display: flex; flex-direction: column; gap: 6px; }
+.pht-review { margin: 12px 0; display: flex; flex-direction: column; gap: 7px; }
+.pht-review-row { display: flex; align-items: flex-start; gap: 8px; padding: 8px; border-radius: 8px; }
+.pht-review-row.ok   { background: rgba(29,158,117,.1);  border: 0.5px solid rgba(29,158,117,.3); }
+.pht-review-row.fail { background: rgba(216,90,48,.1); border: 0.5px solid rgba(216,90,48,.3); }
+.pht-review-pos { font-family: 'Cinzel', serif; font-size: .85rem; font-weight: 700; color: var(--gold); min-width: 18px; }
+.pht-review-ico { font-size: 1.1rem; flex-shrink: 0; }
+.pht-review-info { display: flex; flex-direction: column; flex: 1; }
+.pht-review-name { font-size: .85rem; font-weight: 600; color: var(--txt); }
+.pht-review-fact { font-size: .75rem; color: var(--dim); line-height: 1.5; margin-top: 2px; }
+
