@@ -1256,7 +1256,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .si-desc {
   font-size: .88rem;
-  color: var(--stone-l);
+  color: var(--txt);
   line-height: 1.55;
   margin-bottom: 1rem;
 }
@@ -1282,7 +1282,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .si-tips-list li {
   font-size: .82rem;
-  color: var(--stone-l);
+  color: var(--txt);
   padding-left: 1.1rem;
   position: relative;
   line-height: 1.4;
