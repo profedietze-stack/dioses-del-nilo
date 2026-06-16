@@ -82,7 +82,7 @@ export interface Glyph {
   desc: string
 }
 
-export type PuzzleType = 'ordenar' | 'glifos' | 'memoria'
+export type PuzzleType = 'ordenar' | 'glifos' | 'memoria' | 'balanza'
 
 export interface PuzzleDef {
   id: number
@@ -95,6 +95,8 @@ export interface PuzzleDef {
   timeLimit?: number
   target?: number
   glyphs?: Glyph[]
+  statKeys?: StatKey[]
+  cardCount?: number
 }
 
 export interface HistoryEntry {

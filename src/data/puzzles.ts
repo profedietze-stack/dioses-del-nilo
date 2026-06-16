@@ -40,4 +40,6 @@ export const PUZZLES_DEF: PuzzleDef[] = [
   { id: 7, type: 'glifos', afterEvent: 21, cat: 'Jeroglíficos del Imperio Nuevo y Período Tardío', timeLimit: 45, target: 65, glyphs: GLYPH_SET_2, penalty: 3 },
   { id: 8, type: 'ordenar', afterEvent: 24, tpl: 'Akenatón impuso el culto al dios [ATON], prohibiendo a los demás. Su capital fue [AMARNA]. Fue la primera forma de [MONOTEISMO] documentada en la historia. Su sucesor [TUTANKAMON] restauró el culto tradicional.', words: ['ATON', 'AMARNA', 'MONOTEISMO', 'TUTANKAMON'], penalty: 3 },
   { id: 9, type: 'ordenar', afterEvent: 27, tpl: 'El [LIBRO] de los Muertos guiaba al alma a través del [DUAT]. El corazón del difunto era pesado en la balanza de [MAAT] frente al dios [ANUBIS], juez de los muertos.', words: ['LIBRO', 'DUAT', 'MAAT', 'ANUBIS'], penalty: 3 },
+  { id: 10, type: 'balanza', afterEvent: 16, timeLimit: 60, cardCount: 8, statKeys: ['fe', 'cultura', 'estabilidad'], penalty: 3 },
+  { id: 11, type: 'balanza', afterEvent: 25, timeLimit: 50, cardCount: 8, statKeys: ['fe', 'cultura', 'estabilidad'], penalty: 3 },
 ]

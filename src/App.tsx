@@ -21,6 +21,7 @@ import { PapirosScreen } from './components/screens/PapirosScreen'
 import { EndScreen } from './components/screens/EndScreen'
 import { GlyphPuzzle } from './components/puzzles/GlyphPuzzle'
 import { WordOrder } from './components/puzzles/WordOrder'
+import { MaatScale } from './components/puzzles/MaatScale'
 import { InfoModal } from './components/ui/InfoModal'
 import { ConsejerModal } from './components/ui/ConsejerModal'
 import { AdvisorPanel } from './components/ui/AdvisorPanel'
@@ -243,10 +244,11 @@ export function App() {
     if (ok) { setPuzOk(p => p + 1); playSound('success') }
     else { setPuzFail(p => p + 1); playSound('error') }
     if (statDelta !== 0) {
-      const perStat = Math.round(statDelta / 2)
+      const keys = curPuzDef?.statKeys ?? (Object.keys(INIT) as (keyof Stats)[])
+      const perStat = curPuzDef?.statKeys ? statDelta : Math.round(statDelta / 2)
       setStats(prev => {
         const n = { ...prev }
-        for (const k of Object.keys(INIT) as (keyof Stats)[]) n[k] = clamp(n[k] + perStat)
+        for (const k of keys) n[k] = clamp(n[k] + perStat)
         return n
       })
     }
@@ -332,6 +334,7 @@ export function App() {
             >
               {curPuzDef.type === 'glifos' && <GlyphPuzzle puz={curPuzDef} onDone={handlePuzDone} />}
               {curPuzDef.type === 'ordenar' && <WordOrder puz={curPuzDef} onDone={handlePuzDone} />}
+              {curPuzDef.type === 'balanza' && <MaatScale puz={curPuzDef} onDone={handlePuzDone} />}
             </motion.div>
           ) : ev ? (
             <motion.div

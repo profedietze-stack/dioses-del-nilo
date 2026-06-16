@@ -1407,3 +1407,43 @@ button { font-family: inherit; cursor: pointer; }
 .advm-urgency--critical { background: rgba(220,50,50,.15); color: #E53935; }
 .advm-advice { font-size: 1rem; line-height: 1.65; color: var(--txt); font-style: italic; padding: 0 4px; }
 .advm-btn { width: 100%; }
+
+/* ── MAAT SCALE PUZZLE ── */
+.maat-timer { text-align: center; font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; letter-spacing: .05em; transition: color .3s; }
+.maat-scale-wrap { margin: 4px 0 8px; }
+.maat-svg { width: 100%; display: block; }
+.maat-plates { display: flex; gap: 8px; margin-bottom: 10px; }
+.maat-plate { flex: 1; background: rgba(255,255,255,.04); border: 0.5px solid rgba(212,160,23,.3); border-radius: 8px; padding: 8px; min-height: 52px; }
+.maat-plate-lbl { font-size: .72rem; color: var(--dim); margin-bottom: 5px; }
+.maat-plate-cards { display: flex; flex-wrap: wrap; gap: 4px; }
+.maat-placed-chip { background: rgba(124,77,255,.15); border: 0.5px solid rgba(124,77,255,.4); color: #b39dff; border-radius: 6px; padding: 3px 7px; font-size: .78rem; cursor: pointer; }
+.maat-placed-chip:active { opacity: .7; }
+.maat-select-popup { background: var(--stone-m); border: 1px solid var(--gold); border-radius: 12px; padding: 16px; margin: 8px 0; text-align: center; }
+.maat-select-card-name { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+.maat-select-q { font-size: .88rem; color: var(--dim); margin-bottom: 12px; }
+.maat-select-btns { display: flex; gap: 8px; margin-bottom: 8px; }
+.maat-dest-btn { flex: 1; background: rgba(212,160,23,.12); border: 1px solid rgba(212,160,23,.4); color: var(--gold); border-radius: 8px; padding: 10px; font-size: .95rem; cursor: pointer; font-family: 'Cinzel', serif; }
+.maat-dest-btn:active { background: rgba(212,160,23,.22); }
+.maat-cancel-btn { background: transparent; border: 0.5px solid var(--dim); color: var(--dim); border-radius: 6px; padding: 6px 14px; font-size: .8rem; cursor: pointer; }
+.maat-hand { margin-top: 8px; }
+.maat-hand-lbl { font-size: .72rem; color: var(--dim); margin-bottom: 6px; }
+.maat-hand-cards { display: flex; flex-wrap: wrap; gap: 6px; }
+.maat-card { background: rgba(124,77,255,.12); border: 1px solid rgba(124,77,255,.35); border-radius: 8px; padding: 7px 10px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .15s, transform .1s; }
+.maat-card:active { transform: scale(.96); background: rgba(124,77,255,.22); }
+.maat-card-ico { font-size: 1.1rem; }
+.maat-card-lbl { font-size: .85rem; color: #c9b8ff; font-family: 'Cinzel', serif; }
+.maat-result { margin-top: 8px; }
+.maat-review { margin: 12px 0; display: flex; flex-direction: column; gap: 8px; }
+.maat-review-title { font-family: 'Cinzel', serif; font-size: .78rem; color: var(--gold); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+.maat-review-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px; border-radius: 8px; }
+.maat-review-item.virtud { background: rgba(29,158,117,.1); border: 0.5px solid rgba(29,158,117,.3); }
+.maat-review-item.pecado { background: rgba(216,90,48,.1); border: 0.5px solid rgba(216,90,48,.3); }
+.maat-review-ico { font-size: 1.4rem; flex-shrink: 0; }
+.maat-review-name { font-size: .88rem; font-weight: 600; color: var(--txt); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 3px; }
+.maat-type-tag { font-size: .68rem; padding: 1px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.maat-review-item.virtud .maat-type-tag { background: rgba(29,158,117,.2); color: #1D9E75; }
+.maat-review-item.pecado .maat-type-tag { background: rgba(216,90,48,.2); color: #D85A30; }
+.maat-dest-tag { font-size: .8rem; }
+.maat-no-place { font-size: .7rem; color: var(--dim); }
+.maat-review-hint { font-size: .78rem; color: var(--dim); margin: 0; line-height: 1.5; }
+
