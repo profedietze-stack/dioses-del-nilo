@@ -226,6 +226,11 @@ button { font-family: inherit; cursor: pointer; }
 .opt.social:hover     { border-color: #6fcf74;        box-shadow: 0 4px 20px rgba(78,173,80,.25); }
 .opt.diplomatico:hover{ border-color: #B56FDB;        box-shadow: 0 4px 20px rgba(181,111,219,.25); }
 .opt.politico:hover   { border-color: #FFB938;        box-shadow: 0 4px 20px rgba(255,185,56,.25); }
+.opt { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+.opt-type-badge {
+  font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; opacity: .7; pointer-events: none;
+}
 .opt-txt { font-size: .9rem; line-height: 1.4; color: var(--txt); }
 .opt-fx { display: flex; flex-wrap: wrap; gap: 4px; }
 .fx { font-family: 'Cinzel', serif; font-size: .66rem; padding: 1px 6px; border-radius: 3px; }

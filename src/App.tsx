@@ -31,6 +31,16 @@ import { StatInfoModal } from './components/ui/StatInfoModal'
 import { buildGodModal } from './data/godLore'
 import { processGlossary } from './utils/processGlossary'
 
+const OPT_TYPE_ICONS: Record<string, string> = {
+  militar:     '⚔️',
+  social:      '🤝',
+  diplomatico: '🕊️',
+  cultural:    '🎭',
+  economico:   '💰',
+  religioso:   '𓂀',
+  cruel:       '💀',
+}
+
 function requestFS() {
   const el = document.documentElement
   if (el.requestFullscreen) el.requestFullscreen().catch(() => { /* ignore */ })
@@ -345,11 +355,12 @@ export function App() {
               <AdvisorPanel stats={stats} eventCat={ev.cat} />
               <div className="opts">
                 {ev.opts.map((opt, i) => (
-                  <Tooltip key={i} text={OPTION_TYPE_LABELS[opt.type] ?? opt.type} pos="top" className="tip-block">
-                    <button className={`opt ${opt.type}`} onClick={() => handleChoice(opt)}>
-                      <span className="opt-txt">{opt.t}</span>
-                    </button>
-                  </Tooltip>
+                  <button key={i} className={`opt ${opt.type}`} onClick={() => handleChoice(opt)}>
+                    <span className="opt-type-badge">
+                      {OPT_TYPE_ICONS[opt.type] ?? '⚡'} {OPTION_TYPE_LABELS[opt.type] ?? opt.type}
+                    </span>
+                    <span className="opt-txt">{opt.t}</span>
+                  </button>
                 ))}
               </div>
               {ev.tl && (
