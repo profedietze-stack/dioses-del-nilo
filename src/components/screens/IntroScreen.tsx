@@ -109,27 +109,30 @@ export function IntroScreen({ onFinish, playerName }: Props) {
       <div className="intro-body">
         <AnimatePresence mode="wait" custom={dir}>
 
-          {/* 0 — Mapa visual + título */}
+          {/* 0 — Mapa realista + título */}
           {step === 0 && (
-            <motion.div key="s0" className="intro-slide intro-slide--hero"
+            <motion.div key="s0" className="intro-slide intro-slide--hero intro-slide--hero-v"
               custom={dir} variants={variants} initial="enter" animate="center" exit="exit"
               transition={{ duration: 0.3, ease: 'easeOut' }}>
-              <div className="intro-map-col">
-                <EgyptMap interactive={false} active={null} onClick={() => {}} />
+              <div className="intro-map-img-wrap">
+                <img
+                  src="/images/mapa-egipto.jpg"
+                  alt="Mapa del Imperio Egipcio"
+                  className="intro-map-img"
+                />
               </div>
-              <div className="intro-text-col">
+              <div className="intro-text-col intro-text-col--center">
                 <h1 className="intro-game-title">𓆣 Dioses del Nilo</h1>
                 {playerName && <p className="intro-pharaoh-greet">El Imperio te aguarda, Faraón <strong>{playerName}</strong>.</p>}
-                <p className="intro-tagline">
-                  El Imperio más poderoso del mundo antiguo nació a orillas de un único río.
-                </p>
-                <div className="intro-fact-box">
-                  <span className="ifb-ico">📍</span>
-                  <p>Egipto ocupa el noreste de África. Sin el Nilo, todo sería desierto. Con él, floreció durante <strong>más de 3.000 años</strong>.</p>
-                </div>
-                <div className="intro-fact-box">
-                  <span className="ifb-ico">🕰️</span>
-                  <p>En este juego gobernarás cuatro períodos históricos, desde el <strong>Antiguo Imperio</strong> (3100 a.C.) hasta el <strong>Período Tardío</strong> (332 a.C.).</p>
+                <div className="intro-facts-row">
+                  <div className="intro-fact-box">
+                    <span className="ifb-ico">📍</span>
+                    <p>Egipto ocupa el noreste de África. Sin el Nilo, todo sería desierto. Con él, floreció durante <strong>más de 3.000 años</strong>.</p>
+                  </div>
+                  <div className="intro-fact-box">
+                    <span className="ifb-ico">🕰️</span>
+                    <p>En este juego gobernarás cuatro períodos históricos, desde el <strong>Antiguo Imperio</strong> (3100 a.C.) hasta el <strong>Período Tardío</strong> (332 a.C.).</p>
+                  </div>
                 </div>
               </div>
             </motion.div>

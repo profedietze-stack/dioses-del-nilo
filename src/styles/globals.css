@@ -868,11 +868,24 @@ button { font-family: inherit; cursor: pointer; }
   flex-direction: row; align-items: flex-start; text-align: left;
   gap: 28px; max-width: 800px;
 }
+/* Step 0: vertical layout for horizontal map */
+.intro-slide--hero-v {
+  flex-direction: column; align-items: center; text-align: center; gap: 20px;
+}
 .intro-slide--map { max-width: 800px; }
 
 /* Slide 0 – hero */
 .intro-map-col { flex-shrink: 0; width: 200px; }
+.intro-map-img-wrap { width: 100%; max-width: 640px; }
+.intro-map-img {
+  width: 100%; height: auto; max-height: 320px; object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid rgba(212,160,23,.4);
+  box-shadow: 0 6px 28px rgba(0,0,0,.55);
+}
 .intro-text-col { flex: 1; display: flex; flex-direction: column; gap: 14px; padding-top: 12px; }
+.intro-text-col--center { align-items: center; max-width: 640px; width: 100%; padding-top: 0; }
+.intro-facts-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; width: 100%; }
 .intro-game-title {
   font-family: 'Cinzel', serif; font-size: clamp(1.6rem, 4vw, 2.4rem);
   color: var(--gold-l); letter-spacing: .08em; line-height: 1.2;
