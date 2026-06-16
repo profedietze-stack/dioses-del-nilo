@@ -36,7 +36,7 @@ export interface Period {
   col: string
 }
 
-export type OptionType = 'cultural' | 'social' | 'militar' | 'economico' | 'diplomatico' | 'politico' | 'cruel'
+export type OptionType = 'cultural' | 'social' | 'militar' | 'economico' | 'diplomatico' | 'politico' | 'cruel' | 'religioso'
 
 export interface EventOption {
   t: string
@@ -100,7 +100,7 @@ export interface PuzzleDef {
 export interface HistoryEntry {
   eventId: number
   choice: string
-  effects: Stats
+  effects: Partial<Stats>
   statsAfter: Stats
 }
 

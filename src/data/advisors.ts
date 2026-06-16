@@ -244,6 +244,114 @@ export const ADVISORS: Record<StatKey, Advisor> = {
       ],
     },
   },
+  fe: {
+    id: 'sacerdote',
+    name: 'Amenhotep',
+    title: 'Sumo Sacerdote de Amón',
+    icon: '𓂀',
+    color: '#7C4DFF',
+    stat: 'fe',
+    domains: ['religioso', 'cultural'],
+    lines: {
+      pos: [
+        'Los dioses sonríen, faraón. Los templos rebosan de ofrendas y gratitud.',
+        'La Fe del pueblo crece. Amón protege a quienes lo honran con generosidad.',
+        'Bien decidido. Los rituales sagrados mantienen el orden del cosmos.',
+        'Los sacerdotes elevan plegarias por tu reinado. Los dioses escuchan.',
+      ],
+      neg: [
+        'Los dioses observan, faraón. Descuidar la Fe trae consecuencias que el oro no repara.',
+        'Los templos se vacían. Sin Fe, el pueblo pierde el hilo que lo une al cosmos.',
+        'El favor divino se gana con actos, no con palabras. Debemos rectificar.',
+        'Los sacerdotes murmuran. La voluntad de los dioses no puede ignorarse.',
+      ],
+      neutral: [
+        'Los dioses aguardan tus ofrendas, faraón. La Fe se cultiva cada día.',
+        'El equilibrio entre lo divino y lo terrenal define a un gran faraón.',
+      ],
+    },
+    advice: {
+      critical: [
+        '¡La Fe se desmorona! Los dioses pueden retirar su protección si no actuamos de inmediato.',
+        'Los templos reportan templos vacíos y rituales abandonados. Esto es una señal de mal presagio.',
+        '¡Faraón, sin la bendición de los dioses el Imperio queda expuesto a todo mal!',
+      ],
+      low: [
+        'La Fe decrece. Los dioses no son pacientes con quienes los olvidan.',
+        'Los sacerdotes piden orientación. Necesitamos fortalecer los lazos con los templos.',
+        'Un acto de piedad ahora puede restaurar el favor divino antes de que sea tarde.',
+      ],
+      ok: [
+        'Los templos funcionan, faraón. Pero la Fe siempre puede crecer más.',
+        'Los dioses están satisfechos, aunque nunca sobra una ofrenda generosa.',
+        'La Fe es estable. Mantén los rituales y el pueblo seguirá creyendo.',
+      ],
+      high: [
+        'Los dioses bendicen tu reinado, faraón. La Fe del pueblo es tu mayor escudo.',
+        'Los templos prosperan. Amón guía cada una de tus decisiones con sabiduría divina.',
+        'Excelente. Cuando la Fe es alta, hasta las cosechas y las batallas favorecen al faraón.',
+      ],
+      domain: [
+        'Este es un asunto sagrado, faraón. La voluntad de los dioses debe guiar esta decisión.',
+        'En lo que concierne a los templos y rituales, mi consejo vale más que cualquier riqueza.',
+        'Los dioses observan esta decisión. Actúa con piedad y serás recompensado.',
+      ],
+    },
+  },
+  comercio: {
+    id: 'mercader',
+    name: 'Khentkaus',
+    title: 'Gran Supervisora de Rutas',
+    icon: '🏺',
+    color: '#00897B',
+    stat: 'comercio',
+    domains: ['economico', 'diplomatico'],
+    lines: {
+      pos: [
+        'Las caravanas llegan cargadas, faraón. Nubia y el Levante nos favorecen.',
+        'El comercio florece. Los mercados del Nilo son los más ricos del mundo antiguo.',
+        'Buena decisión. Las rutas comerciales abiertas son tan valiosas como un ejército.',
+        'Los intercambios prosperan. El Imperio crece en riqueza gracias a tu visión.',
+      ],
+      neg: [
+        'Las rutas comerciales sufren, faraón. Sin intercambio, el Imperio se empobrece.',
+        'Los mercados se ralentizan. Una decisión equivocada puede cerrar puertas que tardan en abrirse.',
+        'El Comercio requiere estabilidad y confianza. Hemos perdido terreno.',
+        'Las caravanas buscan caminos más seguros. Debemos reconquistar su confianza.',
+      ],
+      neutral: [
+        'Los mercados aguardan tu señal, faraón. El Comercio es el pulso del Imperio.',
+        'Las rutas del Nilo conectan mundos. Cada decisión afecta el flujo de riqueza.',
+      ],
+    },
+    advice: {
+      critical: [
+        '¡El Comercio se ha desplomado! Las rutas comerciales están en riesgo y los mercados temen.',
+        'Los mercaderes de Nubia han reducido sus envíos. Debemos actuar antes de perder esas rutas.',
+        '¡Faraón, sin Comercio la riqueza del Imperio se agota más rápido de lo que imaginas!',
+      ],
+      low: [
+        'El Comercio se debilita. Necesitamos abrir o proteger las rutas de intercambio.',
+        'Los mercados reportan menos actividad. Una decisión pro-comercio es urgente.',
+        'Las caravanas necesitan garantías. Sin ellas, buscarán otros caminos.',
+      ],
+      ok: [
+        'El Comercio es estable, faraón. Pero siempre hay más rutas por abrir.',
+        'Los mercados funcionan. Mantén las políticas que favorecen el intercambio.',
+        'Las rutas están activas. Con un poco más de impulso, podríamos multiplicar las ganancias.',
+      ],
+      high: [
+        'El Imperio comercia con el mundo, faraón. Las riquezas de Nubia y el Levante son nuestras.',
+        'Los mercados del Nilo son los más prósperos del mundo conocido. ¡Excelente gestión!',
+        'El Comercio en su apogeo enriquece todos los sectores del Imperio. Mantén este rumbo.',
+      ],
+      domain: [
+        'Este asunto afecta directamente las rutas comerciales, faraón. Mi experiencia es clave aquí.',
+        'En temas de intercambio y economía, nadie conoce mejor las rutas que yo.',
+        'El Comercio habla su propio idioma. Escúchame antes de tomar esta decisión.',
+      ],
+    },
+  },
 }
 
 export type AdvisorAdvice = {

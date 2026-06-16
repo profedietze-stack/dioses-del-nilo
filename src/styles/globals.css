@@ -1348,3 +1348,38 @@ button { font-family: inherit; cursor: pointer; }
   font-size: .9rem;
   padding: .65rem 1rem;
 }
+
+/* ── AdvisorModal ───────────────────────────────────────── */
+.advm-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(10,8,4,.75);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.advm-card {
+  background: var(--stone);
+  border: 1px solid color-mix(in srgb, var(--advm-col) 35%, transparent);
+  border-radius: 16px; padding: 20px;
+  width: 100%; max-width: 400px;
+  display: flex; flex-direction: column; gap: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04);
+}
+.advm-header { display: flex; align-items: center; gap: 12px; position: relative; }
+.advm-icon { font-size: 2rem; }
+.advm-header-text { display: flex; flex-direction: column; flex: 1; }
+.advm-name {
+  font-family: 'Cinzel', serif; font-size: .95rem; font-weight: 700;
+  color: var(--advm-col); text-transform: uppercase; letter-spacing: .06em;
+}
+.advm-title { font-size: .78rem; color: var(--txt); opacity: .65; }
+.advm-bar {
+  position: absolute; bottom: -10px; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--advm-col) 0%, transparent 100%); opacity: .5;
+}
+.advm-urgency {
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 6px; text-align: center;
+}
+.advm-urgency--warning  { background: rgba(255,160,0,.15); color: #FFA000; }
+.advm-urgency--critical { background: rgba(220,50,50,.15); color: #E53935; }
+.advm-advice { font-size: 1rem; line-height: 1.65; color: var(--txt); font-style: italic; padding: 0 4px; }
+.advm-btn { width: 100%; }
