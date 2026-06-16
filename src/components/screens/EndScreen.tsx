@@ -8,46 +8,78 @@ interface Props {
   achievements: string[]
   god: God | null
   startTime: number
+  playerName: string
   onNew: () => void
   onMenu: () => void
 }
 
-const GOD_TITLES: Record<string, string[]> = {
-  ra:      ['Llama Efímera', 'Portador del Disco', 'Sacerdote del Alba', 'Faraón del Sol Naciente', 'Ra Encarnado'],
-  osiris:  ['Alma Perdida', 'Guardián de Semillas', 'Señor de la Cosecha', 'Resucitado de Duat', 'Osiris Viviente'],
-  thoth:   ['Escriba Novato', 'Lector de Papiros', 'Guardián del Saber', 'Maestro de Jeroglifos', 'Thoth Encarnado'],
-  horus:   ['Halcón Caído', 'Guerrero del Delta', 'Señor de Batalla', 'Ojo del Cielo', 'Horus Invicto'],
-  hathor:  ['Alma en Disonancia', 'Portadora de Armonía', 'Señora del Amor', 'Diosa de Dos Tierras', 'Hathor Radiante'],
-  sekhmet: ['Leona Dormida', 'Garra del Desierto', 'Llama de Guerra', 'Señora del Poder', 'Sekhmet Desatada'],
-  anubis:  ['Alma sin Guía', 'Pesador de Corazones', 'Señor del Umbral', 'Custodio de Duat', 'Anubis Eterno'],
-  bastet:  ['Gato sin Hogar', 'Protectora del Umbral', 'Guardiana del Nilo', 'Señora de las Dos Tierras', 'Bastet Inmortal'],
+// ── 10+ universal titles ──────────────────────────────────────────────────────
+function assignTitle(stats: Stats, achievements: string[], score: number): string {
+  const pct = (score / 600) * 100
+  const { estabilidad, riqueza, cultura, influencia, fe, comercio } = stats
+
+  if (pct >= 90)                                       return 'Faraón de los Dos Reinos'
+  if (achievements.includes('puzzlemaster') && pct >= 72) return 'El Sabio de Karnak'
+  if (achievements.includes('tragedia') && pct >= 50) return 'Señor de Hierro del Desierto'
+  if (fe >= 75 && pct >= 65)                          return 'Sumo Sacerdote del Nilo'
+  if (comercio >= 75 && pct >= 65)                    return 'Gran Mercader de las Dos Tierras'
+  if (cultura >= 75 && pct >= 65)                     return 'Maestro de los Jeroglíficos'
+  if (influencia >= 75 && pct >= 60)                  return 'Conquistador del Levante'
+  if (estabilidad >= 75 && pct >= 60)                 return 'Guardián de la Maat'
+  if (riqueza >= 75 && pct >= 60)                     return 'Señor de los Tesoros de Amón'
+  if (pct >= 70)                                       return 'Gran Visir del Imperio'
+  if (pct >= 55)                                       return 'Nomarca del Alto Egipto'
+  if (pct >= 40)                                       return 'Escriba Real de Menfis'
+  if (pct >= 25)                                       return 'Guardián del Templo Menor'
+  return 'Iniciado de la Casa de la Vida'
 }
 
-const QUOTES = [
-  '"El desierto no perdona la ignorancia, pero da una nueva oportunidad al que aprende." — Proverbio del Nilo',
-  '"Cada caída del Nilo trae consigo nueva vida. También tú puedes comenzar de nuevo." — Sabiduría de Ptah',
-  '"El equilibrio de Maat no se alcanza en un día; se construye decisión a decisión." — Libro de los Muertos',
-  '"El escriba que conoce la historia no repite sus errores. Tú has aprendido." — Papiro de Ani',
-  '"Como Ra que renace cada amanecer, tu nombre quedará grabado en el cartucho de la memoria." — Textos de las Pirámides',
-]
+// ── Narrative paragraph ───────────────────────────────────────────────────────
+function buildNarrative(stats: Stats, achievements: string[], god: God | null, name: string): string {
+  const { estabilidad, riqueza, cultura, influencia, fe, comercio } = stats
+  const strengths: string[] = []
+  const weaknesses: string[] = []
 
-const PRIZES = [
-  { ico: '🏺', name: 'Vasija de Barro', desc: 'Una humilde vasija del Nilo. Sigue practicando.' },
-  { ico: '𓏏', name: 'Tablilla de Escriba', desc: 'Una tablilla de arcilla donde registrar tus primeros aprendizajes.' },
-  { ico: '📜', name: 'Papiro Sagrado', desc: 'Un papiro con fragmentos del Libro de los Muertos.' },
-  { ico: '𓋹', name: 'Ankh de Plata', desc: 'La cruz de la vida en plata. Símbolo de tu progreso en el camino divino.' },
-  { ico: '👑', name: 'Corona del Faraón', desc: 'La doble corona del Alto y Bajo Egipto. El Imperio te reconoce.' },
-]
+  if (estabilidad >= 65) strengths.push('mantuvo el orden y la paz en todo el Imperio')
+  else if (estabilidad < 40) weaknesses.push('el pueblo sufrió bajo la inestabilidad de su reinado')
+  if (riqueza >= 65) strengths.push('los graneros y tesoros del faraón jamás estuvieron vacíos')
+  else if (riqueza < 40) weaknesses.push('las arcas reales se vieron empobrecidas')
+  if (cultura >= 65) strengths.push('escribas y artistas florecieron bajo su patronazgo')
+  else if (cultura < 40) weaknesses.push('los saberes del Imperio fueron descuidados')
+  if (influencia >= 65) strengths.push('los pueblos vecinos temieron y respetaron su nombre')
+  else if (influencia < 40) weaknesses.push('la influencia más allá de las fronteras fue escasa')
+  if (fe >= 65) strengths.push('los dioses recibieron sus ofrendas y los templos prosperaron')
+  else if (fe < 40) weaknesses.push('la fe del pueblo menguó sin el sostén de los rituales')
+  if (comercio >= 65) strengths.push('las rutas de Nubia y el Levante enriquecieron al pueblo')
+  else if (comercio < 40) weaknesses.push('el comercio exterior quedó limitado')
 
-export function EndScreen({ stats, achievements, god, startTime, onNew, onMenu }: Props) {
+  const godName = god?.name ?? 'los dioses'
+  let text = `Bajo la protección de ${godName}, el faraón ${name} gobernó el Imperio Egipcio con mano firme. `
+
+  if (strengths.length > 0) {
+    text += `Se destacó porque ${strengths.slice(0, 2).join(' y ')}. `
+  }
+  if (weaknesses.length > 0) {
+    text += `Sin embargo, la historia recuerda que ${weaknesses[0]}. `
+  }
+  if (achievements.includes('equilibrio')) {
+    text += 'Los historiadores lo recuerdan como un gobernante equilibrado, fiel a la Maat. '
+  } else if (achievements.includes('conquistador')) {
+    text += 'Su nombre se grabó en las estelas de conquista a lo largo del Nilo. '
+  } else if (achievements.includes('artesano')) {
+    text += 'Los monumentos y papiros de su época sobrevivieron hasta nuestros días. '
+  }
+  text += 'Su cartucho quedará grabado en los muros del templo por la eternidad.'
+  return text
+}
+
+// ── Component ─────────────────────────────────────────────────────────────────
+export function EndScreen({ stats, achievements, god, startTime, playerName, onNew, onMenu }: Props) {
   const score = Object.values(stats).reduce((a, b) => a + b, 0)
-  const maxScore = 400
+  const maxScore = 600
   const pct = Math.round((score / maxScore) * 100)
-  const tier = pct > 85 ? 4 : pct > 70 ? 3 : pct > 50 ? 2 : pct > 30 ? 1 : 0
-  const godId = god?.id ?? 'ra'
-  const godTitle = (GOD_TITLES[godId] ?? GOD_TITLES.ra)[tier]
-  const quote = QUOTES[tier]
-  const prize = PRIZES[tier]
+  const title = assignTitle(stats, achievements, score)
+  const narrative = buildNarrative(stats, achievements, god, playerName || 'el Faraón')
   const unlockedAch = ACHIEVEMENTS.filter(a => achievements.includes(a.id))
   const playMins = Math.floor((Date.now() - startTime) / 60000)
 
@@ -59,77 +91,83 @@ export function EndScreen({ stats, achievements, god, startTime, onNew, onMenu }
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
-      <div className="end-header">
-        <div className="end-g">𓆣</div>
-        <h2 className="end-title">El Imperio ha hablado</h2>
+      {/* Papyrus header */}
+      <div className="end-papyrus-hd">
+        <div className="end-papyrus-border" />
+        <div className="end-pap-glyphs">𓆣 𓇳 𓆣</div>
+
         <div className="end-god-row">
           <span className="end-god-icon">{god?.icon}</span>
           <div>
             <div className="end-god-name">{god?.name}</div>
-            <div className="end-god-title-lbl">Encarnación divina</div>
+            <div className="end-god-title-lbl">Dios Protector</div>
           </div>
         </div>
-        <div className="end-divine-title">{godTitle}</div>
-        <div className="end-quote">{quote}</div>
+
+        <div className="end-divine-title">{title}</div>
+        <div className="end-player-name">{playerName}</div>
+        <p className="end-narrative">{narrative}</p>
+        <div className="end-papyrus-border" />
       </div>
 
-      <div className="end-body">
-        <div className="end-col">
-          <h3 className="end-section-title">📊 Legado del Imperio</h3>
-          <div className="end-score-big">
-            <span className="end-score-num">{score}</span>
-            <span className="end-score-max"> / {maxScore}</span>
-            <div className="end-score-bar">
+      {/* Score */}
+      <div className="end-score-section">
+        <h3 className="end-section-title">📊 Legado del Imperio</h3>
+        <div className="end-score-big">
+          <span className="end-score-num">{score}</span>
+          <span className="end-score-max"> / {maxScore}</span>
+        </div>
+        <div className="end-score-bar">
+          <motion.div
+            className="end-score-fill"
+            initial={{ width: 0 }}
+            animate={{ width: `${pct}%` }}
+            transition={{ duration: 1.2, ease: 'easeOut', delay: 0.4 }}
+          />
+        </div>
+        <div className="end-score-pct">{pct}% de legado</div>
+      </div>
+
+      {/* Stats */}
+      <div className="end-stats">
+        {Object.entries(stats).map(([k, v]) => (
+          <div key={k} className="end-stat">
+            <span>{STAT_ICONS[k]} {STAT_LABELS[k]}</span>
+            <div className="mini">
               <motion.div
-                className="end-score-fill"
                 initial={{ width: 0 }}
-                animate={{ width: `${pct}%` }}
-                transition={{ duration: 1.2, ease: 'easeOut', delay: 0.4 }}
+                animate={{ width: `${v}%` }}
+                transition={{ duration: 1, ease: 'easeOut', delay: 0.5 }}
+                style={{ height: '100%', borderRadius: 3, background: STAT_COLORS[k] }}
               />
             </div>
-            <div className="end-score-pct">{pct}% de legado</div>
+            <span style={{ color: STAT_COLORS[k], fontFamily: "'Cinzel',serif", fontWeight: 600 }}>{v}</span>
           </div>
-          <div className="end-stats">
-            {Object.entries(stats).map(([k, v]) => (
-              <div key={k} className="end-stat">
-                <span>{STAT_ICONS[k]} {STAT_LABELS[k]}</span>
-                <div className="mini"><motion.div initial={{ width: 0 }} animate={{ width: `${v}%` }} transition={{ duration: 1, ease: 'easeOut', delay: 0.5 }} style={{ height: '100%', borderRadius: 3, background: STAT_COLORS[k] }} /></div>
-                <span style={{ color: STAT_COLORS[k], fontFamily: "'Cinzel',serif", fontWeight: 600 }}>{v}</span>
+        ))}
+      </div>
+
+      <div className="end-meta">
+        <span>⏱ {playMins} min de juego</span>
+        <span>🧩 {achievements.length} logros</span>
+      </div>
+
+      {/* Achievements */}
+      {unlockedAch.length > 0 && (
+        <div className="end-ach-wrap">
+          <h3 className="end-section-title">📜 Logros del Reinado</h3>
+          <div className="end-ach-list">
+            {unlockedAch.map(a => (
+              <div key={a.id} className={`end-ach-item type-${a.type}`}>
+                <span className="end-ach-ico">{a.ico}</span>
+                <div>
+                  <strong>{a.name}</strong>
+                  <p>{a.title}</p>
+                </div>
               </div>
             ))}
           </div>
-          <div className="end-meta">
-            <span>⏱ {playMins} min de juego</span>
-            <span>🧩 {achievements.length} logros</span>
-          </div>
-          <div className="end-prize">
-            <div className="end-prize-ico">{prize.ico}</div>
-            <div>
-              <strong>{prize.name}</strong>
-              <p>{prize.desc}</p>
-            </div>
-          </div>
         </div>
-
-        <div className="end-col">
-          <h3 className="end-section-title">📜 Logros Conseguidos</h3>
-          {unlockedAch.length === 0 ? (
-            <p className="empty" style={{ padding: '20px 0' }}>Ningún logro desbloqueado. ¡Intentalo de nuevo!</p>
-          ) : (
-            <div className="end-ach-list">
-              {unlockedAch.map(a => (
-                <div key={a.id} className={`end-ach-item type-${a.type}`}>
-                  <span className="end-ach-ico">{a.ico}</span>
-                  <div>
-                    <strong>{a.name}</strong>
-                    <p>{a.title}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
+      )}
 
       <div className="end-acts">
         <button className="btn-g" onClick={onNew}>⚡ Nueva Partida</button>

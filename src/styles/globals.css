@@ -375,13 +375,24 @@ button { font-family: inherit; cursor: pointer; }
 /* ── END SCREEN ── */
 .end {
   min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-  padding: 32px 24px; gap: 20px;
+  padding: 32px 24px; gap: 20px; max-width: 720px; margin: 0 auto;
   background: radial-gradient(ellipse at 50% 20%, #3D2A08, var(--stone) 65%);
   overflow-y: auto;
 }
-.end-header { text-align: center; max-width: 640px; width: 100%; }
-.end-g { font-size: 3rem; color: var(--gold); opacity: .6; }
-.end-title { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 900; color: var(--gold-l); margin: 4px 0 12px; }
+
+/* Papyrus header */
+.end-papyrus-hd {
+  background: linear-gradient(180deg, #3D2B1A 0%, #2A1F0F 100%);
+  border: 2px solid rgba(212,160,23,.4);
+  border-radius: 12px; padding: 24px 20px;
+  width: 100%; text-align: center;
+}
+.end-papyrus-border {
+  height: 3px; margin: 8px -20px;
+  background: repeating-linear-gradient(90deg, #D4A017 0px, #D4A017 8px, transparent 8px, transparent 16px);
+  opacity: .45;
+}
+.end-pap-glyphs { font-size: 1.2rem; letter-spacing: 12px; opacity: .45; margin-bottom: 16px; }
 .end-god-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
 .end-god-icon { font-size: 2.4rem; }
 .end-god-name { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--gold); font-weight: 700; }
@@ -393,9 +404,16 @@ button { font-family: inherit; cursor: pointer; }
   -webkit-background-clip: text; background-clip: text;
   letter-spacing: .1em; margin: 4px 0 12px;
 }
-.end-quote { font-style: italic; color: var(--papyrus-d); font-size: .92rem; line-height: 1.6; max-width: 500px; margin: 0 auto; padding: 10px 16px; border-left: 2px solid var(--gold-d); }
-.end-body { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 860px; width: 100%; }
-.end-col { background: var(--stone-m); border: 1px solid var(--stone-l); border-radius: var(--r); padding: 18px; }
+.end-player-name {
+  font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: .12em;
+  color: var(--papyrus); margin: 6px 0 14px;
+}
+.end-narrative {
+  font-size: .9rem; line-height: 1.75; color: var(--txt);
+  font-style: italic; text-align: left; max-width: 480px; margin: 0 auto;
+}
+.end-score-section { width: 100%; text-align: center; }
+.end-ach-wrap { width: 100%; }
 .end-section-title { font-family: 'Cinzel', serif; font-size: .9rem; color: var(--gold); letter-spacing: .08em; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--stone-l); }
 .end-score-big { text-align: center; margin-bottom: 14px; }
 .end-score-num { font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 900; color: var(--gold-l); }

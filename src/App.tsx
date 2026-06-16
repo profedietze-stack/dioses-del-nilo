@@ -496,7 +496,7 @@ export function App() {
     if (screen === 'intro')     return <IntroScreen     key="intro"     playerName={playerName} onFinish={() => setScreen('godSelect')} />
     if (screen === 'godSelect') return <GodSelectScreen key="godSelect" onSelect={startGame} onBack={() => setScreen('menu')} />
     if (screen === 'papiros')         return <PapirosScreen         key="papiros"         achievements={achievements} history={history} god={god} stats={stats} startTime={startTime.current} onBack={() => setScreen(papirosPrev)} />
-    if (screen === 'end')             return <EndScreen             key="end"             stats={stats} achievements={achievements} god={god} startTime={startTime.current} onNew={() => { clearSave(); setScreen('menu') }} onMenu={() => setScreen('menu')} />
+    if (screen === 'end')             return <EndScreen             key="end"             stats={stats} achievements={achievements} god={god} startTime={startTime.current} playerName={playerName} onNew={() => { clearSave(); setScreen('menu') }} onMenu={() => setScreen('menu')} />
     if (screen === 'periodTransition' && periodTransData) return <PeriodTransitionScreen key="periodTransition" data={periodTransData} onContinue={() => setScreen('game')} />
     return gameJSX
   }
