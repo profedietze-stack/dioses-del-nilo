@@ -3,9 +3,10 @@ import { motion } from 'framer-motion'
 
 interface Props {
   onFinish: (name: string) => void
+  onBack: () => void
 }
 
-export function NameScreen({ onFinish }: Props) {
+export function NameScreen({ onFinish, onBack }: Props) {
   const [name, setName] = useState('')
   const trimmed = name.trim()
   const valid = trimmed.length >= 4
@@ -59,6 +60,9 @@ export function NameScreen({ onFinish }: Props) {
         >
           𓇳 Comenzar mi Reinado
         </motion.button>
+        <button className="btn-o ns-back-btn" onClick={onBack}>
+          ← Volver al Menú
+        </button>
       </div>
     </motion.div>
   )
