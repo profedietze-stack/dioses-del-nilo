@@ -1,10 +1,12 @@
-export type StatKey = 'estabilidad' | 'riqueza' | 'cultura' | 'influencia'
+export type StatKey = 'estabilidad' | 'riqueza' | 'cultura' | 'influencia' | 'fe' | 'comercio'
 
 export interface Stats {
   estabilidad: number
   riqueza: number
   cultura: number
   influencia: number
+  fe: number
+  comercio: number
 }
 
 export interface GodBonus {
@@ -12,6 +14,8 @@ export interface GodBonus {
   riqueza: number
   cultura: number
   influencia: number
+  fe: number
+  comercio: number
 }
 
 export interface God {
@@ -36,7 +40,7 @@ export type OptionType = 'cultural' | 'social' | 'militar' | 'economico' | 'dipl
 
 export interface EventOption {
   t: string
-  fx: Stats
+  fx: Partial<Stats>
   type: OptionType
 }
 

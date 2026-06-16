@@ -1,6 +1,6 @@
 import type { Stats } from '../types'
 
-export const INIT: Stats = { estabilidad: 50, riqueza: 50, cultura: 50, influencia: 50 }
+export const INIT: Stats = { estabilidad: 50, riqueza: 50, cultura: 50, influencia: 50, fe: 50, comercio: 50 }
 
 export const clamp = (v: number): number => Math.max(0, Math.min(100, v))
 
@@ -14,7 +14,8 @@ export function applyFx(stats: Stats, fx: Partial<Stats>): Stats {
 }
 
 export function calcScore(stats: Stats, puzOk: number, puzFail: number): number {
-  const statAvg = Object.values(stats).reduce((a, b) => a + b, 0) / 4
+  const vals = Object.values(stats)
+  const statAvg = vals.reduce((a, b) => a + b, 0) / vals.length
   const puzBonus = puzOk * 3 - puzFail * 2
   return Math.round(statAvg + puzBonus)
 }

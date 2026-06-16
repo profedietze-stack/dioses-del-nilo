@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
-import type { God, Stats, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData } from './types'
+import type { God, Stats, StatKey, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData } from './types'
 import { GODS } from './data/gods'
 import { PERIODS } from './data/periods'
 import { PLAY_STYLES, PERIOD_LORE, getLegacyVerdict } from './data/periodLore'
@@ -27,6 +27,7 @@ import { ConsejerModal } from './components/ui/ConsejerModal'
 import { AdvisorPanel } from './components/ui/AdvisorPanel'
 import { GlossaryModal } from './components/ui/GlossaryModal'
 import { GodModal } from './components/ui/GodModal'
+import { StatInfoModal } from './components/ui/StatInfoModal'
 import { buildGodModal } from './data/godLore'
 import { processGlossary } from './utils/processGlossary'
 
@@ -63,6 +64,7 @@ export function App() {
   const [gs, setGs] = useState<GameStats>({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
   const [periodTransData, setPeriodTransData] = useState<PeriodTransitionData | null>(null)
   const [godModalData, setGodModalData] = useState<{ approval: string; encouragement: string; fact: string } | null>(null)
+  const [statInfoKey, setStatInfoKey] = useState<StatKey | null>(null)
   const [playerName, setPlayerName] = useState('')
   const startTime = useRef(Date.now())
   const pendingEnd = useRef(false)
@@ -191,7 +193,7 @@ export function App() {
     if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
     // god modal trigger — every 3-5 events, not on last event
     if (nIdx >= nextGodModalAt.current && nIdx < gameEvents.length && god) {
-      const avg = Object.values(ns).reduce((a, b) => a + b, 0) / 4
+      const vals = Object.values(ns); const avg = vals.reduce((a, b) => a + b, 0) / vals.length
       pendingGodModal.current = buildGodModal(god.id, opt.type, avg, ev.cat)
       nextGodModalAt.current = nIdx + 3 + Math.floor(Math.random() * 3)
     }
@@ -286,23 +288,21 @@ export function App() {
             <span className="god-badge-name">{god?.name}</span>
           </div>
           {(Object.keys(INIT) as (keyof Stats)[]).map(k => (
-            <Tooltip key={k} text={STAT_DESC[k]} pos="right" className="tip-block">
-              <div className="stat-row">
-                <div className="stat-hd">
-                  <span className="stat-ico">{STAT_ICONS[k]}</span>
-                  <span className="stat-lbl">{STAT_LABELS[k]}</span>
-                  <span className="stat-val">{stats[k]}</span>
-                </div>
-                <div className="stat-bg">
-                  <AnimatedStatBar value={stats[k]} color={STAT_COLORS[k]} />
-                </div>
-                {lastFx && lastFx[k] !== undefined && lastFx[k] !== 0 && (
-                  <span key={`${animKey}${k}`} className={`stat-delta ${(lastFx[k] ?? 0) > 0 ? 'pos' : 'neg'}`}>
-                    {(lastFx[k] ?? 0) > 0 ? '+' : ''}{lastFx[k]}
-                  </span>
-                )}
+            <div key={k} className="stat-row stat-row--clickable" onClick={() => setStatInfoKey(k)} title="Toca para más info">
+              <div className="stat-hd">
+                <span className="stat-ico">{STAT_ICONS[k]}</span>
+                <span className="stat-lbl">{STAT_LABELS[k]}</span>
+                <span className="stat-val">{stats[k]}</span>
               </div>
-            </Tooltip>
+              <div className="stat-bg">
+                <AnimatedStatBar value={stats[k]} color={STAT_COLORS[k]} />
+              </div>
+              {lastFx && lastFx[k] !== undefined && lastFx[k] !== 0 && (
+                <span key={`${animKey}${k}`} className={`stat-delta ${(lastFx[k] ?? 0) > 0 ? 'pos' : 'neg'}`}>
+                  {(lastFx[k] ?? 0) > 0 ? '+' : ''}{lastFx[k]}
+                </span>
+              )}
+            </div>
           ))}
           <button className="btn-o sm" onClick={() => setScreen('papiros')}>📜 Papiros</button>
           <button className="btn-menu" onClick={() => { if (confirm('¿Volver al menú? La partida está guardada.')) { stopMusic(); setScreen('menu') } }}>🏠 Menú</button>
@@ -422,6 +422,16 @@ export function App() {
                 setScreen('periodTransition')
               }
             }}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {statInfoKey && (
+          <StatInfoModal
+            key="si"
+            statKey={statInfoKey}
+            onClose={() => setStatInfoKey(null)}
           />
         )}
       </AnimatePresence>
