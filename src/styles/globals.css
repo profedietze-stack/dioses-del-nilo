@@ -1430,6 +1430,8 @@ button { font-family: inherit; cursor: pointer; }
 .maat-hand-cards { display: flex; flex-wrap: wrap; gap: 6px; }
 .maat-card { background: rgba(124,77,255,.12); border: 1px solid rgba(124,77,255,.35); border-radius: 8px; padding: 7px 10px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .15s, transform .1s; }
 .maat-card:active { transform: scale(.96); background: rgba(124,77,255,.22); }
+.maat-card.dragging { opacity: .4; transform: scale(.95); }
+.maat-drop-hint { font-size: .72rem; color: var(--dim); font-style: italic; }
 .maat-card-ico { font-size: 1.1rem; }
 .maat-card-lbl { font-size: .85rem; color: #c9b8ff; font-family: 'Cinzel', serif; }
 .maat-result { margin-top: 8px; }
