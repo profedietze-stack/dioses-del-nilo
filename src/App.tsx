@@ -15,6 +15,8 @@ import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngi
 import { MenuScreen } from './components/screens/MenuScreen'
 import { IntroScreen } from './components/screens/IntroScreen'
 import { NameScreen } from './components/screens/NameScreen'
+import { DebugPanel } from './components/dev/DebugPanel'
+import { parseDevParams } from './utils/devParams'
 import { GodSelectScreen } from './components/screens/GodSelectScreen'
 import { PapirosScreen } from './components/screens/PapirosScreen'
 import { EndScreen } from './components/screens/EndScreen'
@@ -62,6 +64,28 @@ export function App() {
   const startTime = useRef(Date.now())
   const pendingEnd = useRef(false)
   const pendingPeriodTrans = useRef<PeriodTransitionData | null>(null)
+
+  // ── DEV: URL params ───────────────────────────────────────────────────────
+  useEffect(() => {
+    if (!import.meta.env.DEV) return
+    const p = parseDevParams()
+    if (!p) return
+    if (p.godId) {
+      const g = GODS.find(x => x.id === p.godId)
+      if (g) {
+        const events = buildGameEvents(8)
+        const baseStats = { ...INIT }
+        for (const k in g.bon) baseStats[k as keyof typeof baseStats] = clamp(50 + g.bon[k as keyof typeof baseStats])
+        const s = p.stats ? { ...baseStats, ...p.stats } : baseStats
+        const idx = p.evIdx ?? 0
+        writeSave({ godId: g.id, stats: s, evIdx: idx, eventIds: events.map(e => e.id), history: [], achievements: [], t: Date.now() })
+        setGod(g); setStats(s); setEvIdx(idx); setGameEvents(events); setHistory([])
+        setScreen((p.screen as Screen) ?? 'game')
+        console.info('[DEV] URL params applied:', p)
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const hasSave = !!loadSave()
   const curPuzDef = PUZZLES_DEF[puzIdx]
@@ -364,6 +388,47 @@ export function App() {
     </motion.div>
   )
 
+  // ── DEV: debug helpers ────────────────────────────────────────────────────
+  const devRef = useRef({ gameEvents, evIdx, stats, totalEvents, handleChoice: null as unknown as typeof handleChoice })
+  devRef.current = { gameEvents, evIdx, stats, totalEvents, handleChoice }
+
+  const skipEvent = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    const { gameEvents: evs, evIdx: idx, handleChoice: hc } = devRef.current
+    const ev = evs[idx]
+    if (!ev) return
+    const opt = ev.opts[Math.floor(Math.random() * ev.opts.length)]
+    if (opt) hc(opt)
+  }, [])
+
+  const triggerPeriodTransition = useCallback((fromPeriodIdx: number) => {
+    if (!import.meta.env.DEV) return
+    const fromPeriod = PERIODS[fromPeriodIdx]
+    const toPeriod   = PERIODS[Math.min(3, fromPeriodIdx + 1)]
+    if (!fromPeriod) return
+    const { stats: s } = devRef.current
+    const lore    = PERIOD_LORE[fromPeriod.id]
+    const verdict = getLegacyVerdict(s)
+    setPeriodTransData({ fromPeriod, toPeriod, statsAtEnd: s, playStyle: PLAY_STYLES.default, lore, verdict })
+    setScreen('periodTransition')
+  }, [])
+
+  // ── DEV: keyboard shortcuts ───────────────────────────────────────────────
+  useEffect(() => {
+    if (!import.meta.env.DEV) return
+    const handler = (e: KeyboardEvent) => {
+      if (!e.shiftKey) return
+      if (e.key === 'ArrowRight') { e.preventDefault(); skipEvent() }
+      if (e.key === 'P') {
+        e.preventDefault()
+        const { evIdx: idx, totalEvents: tot } = devRef.current
+        triggerPeriodTransition(Math.min(2, Math.floor(idx / (tot / 4))))
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [skipEvent, triggerPeriodTransition])
+
   function renderScreen() {
     if (screen === 'menu')      return <MenuScreen      key="menu"      hasSave={hasSave} onNew={() => setScreen('name')} onContinue={continueGame} onAchievements={() => setScreen('papiros')} onInfo={() => setShowModal(true)} />
     if (screen === 'name')      return <NameScreen      key="name"      onFinish={n => { setPlayerName(n); setScreen('intro') }} />
@@ -379,6 +444,13 @@ export function App() {
     <>
       <AnimatePresence>{renderScreen()}</AnimatePresence>
       {showModal && <InfoModal onClose={() => setShowModal(false)} />}
+      {import.meta.env.DEV && (
+        <DebugPanel actions={{
+          evIdx, totalEvents, stats, god, screen,
+          setEvIdx, setStats, setScreen,
+          skipEvent, triggerPeriodTransition,
+        }} />
+      )}
     </>
   )
 }
