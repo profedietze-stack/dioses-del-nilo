@@ -103,10 +103,31 @@ Invisibles para jugadores en producción — Vite los elimina en build.
 ```
 Carga el juego directamente con ese estado al abrir la URL.
 
+## GodModal (`src/components/ui/GodModal.tsx`)
+
+Aparece automáticamente cada 3-5 eventos después del ConsejerModal. Flujo:
+`opción elegida → ConsejerModal.onContinue → (si pendingGodModal) GodModal → juego`
+
+### Trigger (App.tsx `handleChoice`)
+```ts
+if (nIdx >= nextGodModalAt.current && nIdx < gameEvents.length && god) {
+  pendingGodModal.current = buildGodModal(god.id, opt.type, statsAvg, ev.cat)
+  nextGodModalAt.current = nIdx + 3 + Math.floor(Math.random() * 3)
+}
+```
+
+### Datos (`src/data/godLore.ts`)
+- `GOD_APPROVAL`: 8 dioses × 7 tipos de opción (`cultural`, `social`, `militar`, `economico`, `diplomatico`, `politico`, `cruel`) × 2 frases
+- `GOD_ENCOURAGEMENT`: 8 dioses × 3 niveles (`high` ≥60, `neutral` 35-59, `low` <35) × 2 frases
+- `CATEGORY_FACTS`: 7 categorías (`economia`, `sociedad`, `cultura`, `militar`, `diplomacia`, `religion`, `politica`) × 6 datos
+- `buildGodModal(godId, optionType, statsAvg, eventCat)` → `{ approval, encouragement, fact }`
+
+### CSS: `.gm-*` (GodModal), usa `--gcol: god.col` para theming por dios
+
 ## Convenciones CSS
 
 - Variables en `:root`: `--gold`, `--stone`, `--stone-m`, `--stone-l`, `--nile-l`, `--papyrus`, `--dim`, `--font-title`
-- Prefijos de clases por componente: `pt-*` (PeriodTransition), `intro-*` (Intro), `ns-*` (NameScreen), `dbg-*` (DebugPanel)
+- Prefijos de clases por componente: `pt-*` (PeriodTransition), `intro-*` (Intro), `ns-*` (NameScreen), `dbg-*` (DebugPanel), `gm-*` (GodModal)
 - Media query responsive: `@media (max-width: 600px)`
 
 ## Encoding
