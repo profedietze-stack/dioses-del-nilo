@@ -66,6 +66,7 @@ export function App() {
   const [godModalData, setGodModalData] = useState<{ approval: string; encouragement: string; fact: string } | null>(null)
   const [statInfoKey, setStatInfoKey] = useState<StatKey | null>(null)
   const [playerName, setPlayerName] = useState('')
+  const [papirosPrev, setPapirosPrev] = useState<Screen>('menu')
   const startTime = useRef(Date.now())
   const pendingEnd = useRef(false)
   const pendingPeriodTrans = useRef<PeriodTransitionData | null>(null)
@@ -304,7 +305,7 @@ export function App() {
               )}
             </div>
           ))}
-          <button className="btn-o sm" onClick={() => setScreen('papiros')}>📜 Papiros</button>
+          <button className="btn-o sm" onClick={() => { setPapirosPrev('game'); setScreen('papiros') }}>📜 Papiros</button>
           <button className="btn-menu" onClick={() => { if (confirm('¿Volver al menú? La partida está guardada.')) { stopMusic(); setScreen('menu') } }}>🏠 Menú</button>
           <button className="btn-music" onClick={() => { const on = toggleMusic(); setMusicOn(on) }} title={musicOn ? 'Silenciar música' : 'Activar música'}>
             {musicOn ? '🔊' : '🔇'}
@@ -480,11 +481,11 @@ export function App() {
   }, [skipEvent, triggerPeriodTransition])
 
   function renderScreen() {
-    if (screen === 'menu')      return <MenuScreen      key="menu"      hasSave={hasSave} onNew={() => setScreen('name')} onContinue={continueGame} onAchievements={() => setScreen('papiros')} onInfo={() => setShowModal(true)} />
+    if (screen === 'menu')      return <MenuScreen      key="menu"      hasSave={hasSave} onNew={() => setScreen('name')} onContinue={continueGame} onAchievements={() => { setPapirosPrev('menu'); setScreen('papiros') }} onInfo={() => setShowModal(true)} />
     if (screen === 'name')      return <NameScreen      key="name"      onFinish={n => { setPlayerName(n); setScreen('intro') }} onBack={() => setScreen('menu')} />
     if (screen === 'intro')     return <IntroScreen     key="intro"     playerName={playerName} onFinish={() => setScreen('godSelect')} />
     if (screen === 'godSelect') return <GodSelectScreen key="godSelect" onSelect={startGame} onBack={() => setScreen('menu')} />
-    if (screen === 'papiros')         return <PapirosScreen         key="papiros"         achievements={achievements} history={history} god={god} stats={stats} startTime={startTime.current} onBack={() => setScreen('menu')} />
+    if (screen === 'papiros')         return <PapirosScreen         key="papiros"         achievements={achievements} history={history} god={god} stats={stats} startTime={startTime.current} onBack={() => setScreen(papirosPrev)} />
     if (screen === 'end')             return <EndScreen             key="end"             stats={stats} achievements={achievements} god={god} startTime={startTime.current} onNew={() => { clearSave(); setScreen('menu') }} onMenu={() => setScreen('menu')} />
     if (screen === 'periodTransition' && periodTransData) return <PeriodTransitionScreen key="periodTransition" data={periodTransData} onContinue={() => setScreen('game')} />
     return gameJSX
