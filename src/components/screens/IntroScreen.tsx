@@ -171,16 +171,18 @@ export function IntroScreen({ onFinish, playerName }: Props) {
               custom={dir} variants={variants} initial="enter" animate="center" exit="exit"
               transition={{ duration: 0.3, ease: 'easeOut' }}>
               <h2 className="intro-heading">El Sistema del Faraón</h2>
-              <p className="intro-lead">El poder en Egipto funcionaba como una pirámide:</p>
+              <p className="intro-lead">El poder en Egipto funcionaba como una pirámide social:</p>
               <div className="intro-hier">
-                <div className="ihr-row">
-                  <div className="ihr-card ihr-gold">
+                {/* Tier 1 — apex */}
+                <div className="ihr-tier ihr-tier--1">
+                  <div className="ihr-card ihr-gold ihr-apex">
                     <span>𓃭</span>
                     <strong>El Faraón</strong>
                     <small>Dios en la Tierra. Rey absoluto. Responsable de mantener la Maat: el orden del universo.</small>
                   </div>
                 </div>
-                <div className="ihr-row">
+                {/* Tier 2 */}
+                <div className="ihr-tier ihr-tier--2">
                   <div className="ihr-card">
                     <span>𓀭</span>
                     <strong>El Visir</strong>
@@ -192,16 +194,28 @@ export function IntroScreen({ onFinish, playerName }: Props) {
                     <small>Controlaba los templos y sus enormes riquezas. Interpretaba la voluntad de los dioses.</small>
                   </div>
                 </div>
-                <div className="ihr-row">
+                {/* Tier 3 */}
+                <div className="ihr-tier ihr-tier--3">
                   <div className="ihr-card ihr-dim">
                     <span>📜</span>
-                    <strong>Escribas</strong>
-                    <small>Registraban impuestos, contratos, leyes. Eran los funcionarios del Imperio.</small>
+                    <strong>Escribas y Funcionarios</strong>
+                    <small>Registraban impuestos, contratos y leyes. Eran los administradores del Imperio.</small>
                   </div>
+                </div>
+                {/* Tier 4 */}
+                <div className="ihr-tier ihr-tier--4">
                   <div className="ihr-card ihr-dim">
                     <span>🌾</span>
-                    <strong>Campesinos</strong>
+                    <strong>Campesinos y Artesanos</strong>
                     <small>La mayoría del pueblo. Pagaban impuestos con trabajo y alimento. Sostuvieron todo el sistema.</small>
+                  </div>
+                </div>
+                {/* Tier 5 — base */}
+                <div className="ihr-tier ihr-tier--5">
+                  <div className="ihr-card ihr-dim ihr-base">
+                    <span>⛓️</span>
+                    <strong>Esclavos y Prisioneros</strong>
+                    <small>Prisioneros de guerra y deudores. Trabajaban en construcciones, minas y labores domésticas.</small>
                   </div>
                 </div>
               </div>
