@@ -262,7 +262,7 @@ export function IntroScreen({ onFinish, playerName }: Props) {
               <h2 className="intro-heading">Tu Imperio, Tus Decisiones</h2>
               <p className="intro-lead">Cuatro métricas miden el estado de tu gobierno:</p>
               <div className="intro-stats-grid">
-                {(['estabilidad','riqueza','cultura','influencia'] as const).map(k => (
+                {(['estabilidad','riqueza','cultura','influencia','fe','comercio'] as const).map(k => (
                   <div key={k} className="ist-card" style={{ '--sc': STAT_COLORS[k] } as React.CSSProperties}>
                     <span className="ist-ico">{STAT_ICONS[k]}</span>
                     <div className="ist-card-text">
