@@ -27,6 +27,12 @@ export function GodModal({ god, approval, encouragement, fact, onClose }: Props)
         style={{ '--gcol': god.col } as React.CSSProperties}
         onClick={e => e.stopPropagation()}
       >
+        <div className="gm-announce">
+          <span className="gm-announce-ico">✨</span>
+          <span className="gm-announce-txt">Los Dioses Te Hablan</span>
+          <span className="gm-announce-ico">✨</span>
+        </div>
+
         <div className="gm-header">
           <span className="gm-icon">{god.icon}</span>
           <div className="gm-header-text">

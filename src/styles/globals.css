@@ -1049,6 +1049,21 @@ button { font-family: inherit; cursor: pointer; }
 .gm-fact       { color: #c8b882; font-size: .87rem; font-style: normal; }
 .gm-btn { width: 100%; margin-top: .25rem; }
 
+.gm-announce {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 9px 16px;
+  background: color-mix(in srgb, var(--gcol) 18%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--gcol) 35%, transparent);
+  border-radius: 12px 12px 0 0;
+  margin: -20px -20px 16px -20px;
+}
+.gm-announce-txt {
+  font-family: 'Cinzel', serif; font-size: .8rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gcol);
+}
+.gm-announce-ico { font-size: .85rem; opacity: .75; }
+
 /* ── DEBUG PANEL (DEV only) ──────────────────────────────────────────────── */
 .dbg-wrap {
   position: fixed;
