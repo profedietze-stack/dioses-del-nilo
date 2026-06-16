@@ -29,7 +29,7 @@ export function GlyphPuzzle({ puz, onDone }: Props) {
     let delta = 0
     egyptians.forEach(g => { const i = glyphs.indexOf(g); if (clicked.has(i)) delta += 1; else delta -= 1 })
     nonEgyptians.forEach(g => { const i = glyphs.indexOf(g); if (clicked.has(i)) delta -= 2 })
-    setStatDelta(Math.max(-8, Math.min(8, delta)))
+    setStatDelta(Math.max(-12, Math.min(12, Math.round(delta * 1.5))))
   }, [ended, doneCalled, glyphs, clicked])
 
   const toggle = (i: number) => {
@@ -90,8 +90,11 @@ export function GlyphPuzzle({ puz, onDone }: Props) {
           <div className={`puz-res ${score >= target ? 'ok' : 'fail'}`}>
             {score >= target ? `✓ ¡Bien hecho! ${score}% de acierto` : `✗ ${score}% de acierto — seguí practicando`}
           </div>
-          <div className="stat-impact" style={{ color: statDelta >= 0 ? '#6fcf74' : '#e07060' }}>
-            Impacto en stats: {statDelta >= 0 ? '+' : ''}{statDelta} puntos
+          <div className={`puz-stat-result ${statDelta >= 0 ? 'reward' : 'penalty'}`}>
+            {statDelta >= 0
+              ? `✨ Todos los stats +${Math.abs(Math.round(statDelta / 2))} por tu buen trabajo`
+              : `⚠ Todos los stats ${Math.round(statDelta / 2)} por los errores cometidos`
+            }
           </div>
           <div className="glyph-legend">
             <span className="legend-item ok">✓ Jeroglífico egipcio seleccionado</span>

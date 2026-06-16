@@ -30,7 +30,7 @@ export function WordOrder({ puz, onDone }: Props) {
     setDone(true)
     const correct = slots.filter((s, i) => s === words[i]).length
     const total = words.length
-    setStatDelta((correct * 2) - ((total - correct) * 1))
+    setStatDelta((correct * 3) - ((total - correct) * 2))
   }
 
   const parts = (puz.tpl ?? '').split(/\[([A-ZÁÉÍÓÚ0-9]+)\]/g)
@@ -82,8 +82,11 @@ export function WordOrder({ puz, onDone }: Props) {
               ? '✓ ¡Perfecto! Todas las palabras correctas'
               : `${correctCount} de ${totalWords} palabras correctas`}
           </div>
-          <div className="stat-impact" style={{ color: statDelta >= 0 ? '#6fcf74' : '#e07060' }}>
-            Impacto en stats: {statDelta >= 0 ? '+' : ''}{statDelta} puntos
+          <div className={`puz-stat-result ${statDelta >= 0 ? 'reward' : 'penalty'}`}>
+            {statDelta >= 0
+              ? `✨ Todos los stats +${Math.abs(Math.round(statDelta / 2))} por tu buen trabajo`
+              : `⚠ Todos los stats ${Math.round(statDelta / 2)} por los errores cometidos`
+            }
           </div>
           <div className="word-review">
             {words.map((w, i) => {

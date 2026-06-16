@@ -271,6 +271,12 @@ button { font-family: inherit; cursor: pointer; }
 .puz-opt.fail { border-color: #e07060; background: rgba(192,57,43,.15); }
 .puz-hint { font-size: .8rem; color: var(--dim); font-style: italic; margin-bottom: 12px; }
 .stat-impact { font-family: 'Cinzel', serif; font-size: .95rem; font-weight: 600; text-align: center; margin: 8px 0; letter-spacing: .05em; }
+.puz-stat-result {
+  margin: 10px 0; padding: 10px 16px; border-radius: 8px;
+  font-size: .92rem; font-weight: 600; text-align: center;
+}
+.puz-stat-result.reward { background: rgba(80,180,100,.15); color: #6fcf74; border: 1px solid rgba(80,180,100,.3); }
+.puz-stat-result.penalty { background: rgba(220,80,60,.15); color: #e07060; border: 1px solid rgba(220,80,60,.3); }
 
 /* glyph puzzle */
 .glyph-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 16px 0; }
