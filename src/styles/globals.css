@@ -17,7 +17,7 @@
 
 /* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body, #root { height: 100%; background: var(--stone); color: var(--txt); font-family: 'Crimson Pro', Georgia, serif; font-size: 16px; overflow-x: hidden; }
+html, body, #root { height: 100%; background: var(--stone); color: var(--txt); font-family: 'Crimson Pro', Georgia, serif; font-size: 18px; overflow-x: hidden; }
 button { font-family: inherit; cursor: pointer; }
 
 /* ── BUTTONS ── */
@@ -54,7 +54,7 @@ button { font-family: inherit; cursor: pointer; }
 .btn-menu {
   background: rgba(212,160,23,.12); border: 1px solid var(--gold-d);
   border-radius: var(--r); color: var(--papyrus-d);
-  font-family: 'Cinzel', serif; font-size: .72rem;
+  font-family: 'Cinzel', serif; font-size: .8rem;
   letter-spacing: .06em; padding: 5px 12px; cursor: pointer;
   transition: background .2s, color .2s; white-space: nowrap;
 }
@@ -152,8 +152,8 @@ button { font-family: inherit; cursor: pointer; }
 }
 .period.active { border-color: var(--pcol,var(--gold)); }
 .period-fill { position: absolute; inset: 0; background: var(--pcol,var(--gold)); opacity: .18; transition: width .5s ease; width: var(--pct,0%); }
-.period-name { display: block; font-family: 'Cinzel', serif; font-size: .65rem; font-weight: 600; color: var(--pcol,var(--gold)); position: relative; white-space: nowrap; }
-.period-dates { display: block; font-size: .58rem; color: var(--dim); position: relative; }
+.period-name { display: block; font-family: 'Cinzel', serif; font-size: .72rem; font-weight: 600; color: var(--pcol,var(--gold)); position: relative; white-space: nowrap; }
+.period-dates { display: block; font-size: .64rem; color: var(--dim); position: relative; }
 .ev-counter { font-family: 'Cinzel', serif; font-size: .85rem; color: var(--gold); white-space: nowrap; padding: 0 8px; }
 .game-layout { flex: 1; display: grid; grid-template-columns: 220px 1fr; gap: 16px; max-width: 1100px; margin: 0 auto; width: 100%; padding: 16px; }
 
@@ -171,7 +171,7 @@ button { font-family: inherit; cursor: pointer; }
 .stat-row { position: relative; padding: 2px 0; }
 .stat-hd { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
 .stat-ico { font-size: .9rem; }
-.stat-lbl { font-family: 'Cinzel', serif; font-size: .63rem; letter-spacing: .08em; color: var(--dim); flex: 1; }
+.stat-lbl { font-family: 'Cinzel', serif; font-size: .72rem; letter-spacing: .08em; color: var(--dim); flex: 1; }
 .stat-val { font-family: 'Cinzel', serif; font-size: .9rem; font-weight: 600; }
 .stat-bg { height: 7px; background: rgba(255,255,255,.06); border-radius: 4px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,.4); }
 .stat-fill { height: 100%; border-radius: 4px; transition: width .4s ease; filter: brightness(1.1); }
@@ -193,7 +193,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .ev-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
 .ev-num { font-family: 'Cinzel', serif; font-size: .72rem; color: var(--dim); }
-.ev-tag { font-family: 'Cinzel', serif; font-size: .63rem; padding: 2px 8px; border-radius: 3px; letter-spacing: .06em; }
+.ev-tag { font-family: 'Cinzel', serif; font-size: .72rem; padding: 2px 8px; border-radius: 3px; letter-spacing: .06em; }
 .ev-tag.period { background: rgba(212,160,23,.15); color: var(--gold); border: 1px solid rgba(212,160,23,.3); }
 .ev-tag.cat { background: rgba(255,255,255,.05); color: var(--dim); border: 1px solid rgba(255,255,255,.1); }
 .ev-title { font-family: 'Cinzel', serif; font-size: 1.45rem; font-weight: 600; color: var(--gold-l); margin-bottom: 10px; line-height: 1.2; }
