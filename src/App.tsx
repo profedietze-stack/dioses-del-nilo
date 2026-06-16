@@ -26,6 +26,8 @@ import { InfoModal } from './components/ui/InfoModal'
 import { ConsejerModal } from './components/ui/ConsejerModal'
 import { AdvisorPanel } from './components/ui/AdvisorPanel'
 import { GlossaryModal } from './components/ui/GlossaryModal'
+import { GodModal } from './components/ui/GodModal'
+import { buildGodModal } from './data/godLore'
 import { processGlossary } from './utils/processGlossary'
 
 function requestFS() {
@@ -60,10 +62,13 @@ export function App() {
   const [musicOn, setMusicOn] = useState(true)
   const [gs, setGs] = useState<GameStats>({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
   const [periodTransData, setPeriodTransData] = useState<PeriodTransitionData | null>(null)
+  const [godModalData, setGodModalData] = useState<{ approval: string; encouragement: string; fact: string } | null>(null)
   const [playerName, setPlayerName] = useState('')
   const startTime = useRef(Date.now())
   const pendingEnd = useRef(false)
   const pendingPeriodTrans = useRef<PeriodTransitionData | null>(null)
+  const pendingGodModal = useRef<{ approval: string; encouragement: string; fact: string } | null>(null)
+  const nextGodModalAt = useRef(3 + Math.floor(Math.random() * 3))
 
   // ── DEV: URL params ───────────────────────────────────────────────────────
   useEffect(() => {
@@ -184,6 +189,13 @@ export function App() {
     setConsejer({ fx: opt.fx, choice: opt.t })
     checkAch(ns, nh, ngs, puzFail, puzOk)
     if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
+    // god modal trigger — every 3-5 events, not on last event
+    if (nIdx >= nextGodModalAt.current && nIdx < gameEvents.length && god) {
+      const avg = Object.values(ns).reduce((a, b) => a + b, 0) / 4
+      pendingGodModal.current = buildGodModal(god.id, opt.type, avg, ev.cat)
+      nextGodModalAt.current = nIdx + 3 + Math.floor(Math.random() * 3)
+    }
+
     if (nIdx >= gameEvents.length) {
       pendingEnd.current = true
     } else {
@@ -365,6 +377,30 @@ export function App() {
       </AnimatePresence>
 
       <AnimatePresence>
+        {godModalData && god && (
+          <GodModal
+            key="godmod"
+            god={god}
+            approval={godModalData.approval}
+            encouragement={godModalData.encouragement}
+            fact={godModalData.fact}
+            onClose={() => {
+              setGodModalData(null)
+              if (pendingEnd.current) {
+                pendingEnd.current = false
+                setScreen('end')
+              } else if (pendingPeriodTrans.current) {
+                const d = pendingPeriodTrans.current
+                pendingPeriodTrans.current = null
+                setPeriodTransData(d)
+                setScreen('periodTransition')
+              }
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
         {consejer && (
           <ConsejerModal
             key="cmod"
@@ -372,7 +408,11 @@ export function App() {
             fx={consejer.fx}
             onContinue={() => {
               setConsejer(null)
-              if (pendingEnd.current) {
+              if (pendingGodModal.current) {
+                const d = pendingGodModal.current
+                pendingGodModal.current = null
+                setGodModalData(d)
+              } else if (pendingEnd.current) {
                 pendingEnd.current = false
                 setScreen('end')
               } else if (pendingPeriodTrans.current) {

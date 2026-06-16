@@ -997,6 +997,58 @@ button { font-family: inherit; cursor: pointer; }
   .intro-stats-grid { grid-template-columns: 1fr; }
 }
 
+/* ── GOD MODAL ───────────────────────────────────────────────────────────── */
+.gm-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.72);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 900; padding: 1rem;
+  backdrop-filter: blur(3px);
+}
+.gm-card {
+  background: linear-gradient(160deg, var(--stone-m) 0%, #1A1408 100%);
+  border: 1.5px solid var(--gcol, var(--gold));
+  border-radius: 1rem;
+  max-width: 500px; width: 100%;
+  padding: 1.75rem 1.5rem 1.5rem;
+  box-shadow: 0 0 40px color-mix(in srgb, var(--gcol, var(--gold)) 25%, transparent), 0 8px 32px rgba(0,0,0,.5);
+  display: flex; flex-direction: column; gap: 1.1rem;
+}
+.gm-header {
+  display: flex; align-items: center; gap: .9rem;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--gcol, var(--gold)) 30%, transparent);
+  position: relative;
+}
+.gm-icon { font-size: 2.2rem; line-height: 1; }
+.gm-header-text { display: flex; flex-direction: column; gap: .15rem; flex: 1; }
+.gm-name {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: var(--gcol, var(--gold));
+  letter-spacing: .04em;
+}
+.gm-title { font-size: .78rem; color: var(--dim); }
+.gm-header-bar {
+  position: absolute; bottom: -.9rem; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gcol, var(--gold)), transparent);
+  opacity: .4;
+}
+.gm-section { display: flex; flex-direction: column; gap: .35rem; }
+.gm-section-lbl {
+  font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--gcol, var(--gold)); opacity: .8;
+}
+.gm-text {
+  font-size: .92rem; line-height: 1.55; color: var(--papyrus);
+  margin: 0;
+}
+.gm-approval   { font-style: italic; }
+.gm-encourage  { color: #d4e8a0; font-style: italic; }
+.gm-section--fact { background: rgba(0,0,0,.25); border-radius: .5rem; padding: .75rem; }
+.gm-fact       { color: #c8b882; font-size: .87rem; font-style: normal; }
+.gm-btn { width: 100%; margin-top: .25rem; }
+
 /* ── DEBUG PANEL (DEV only) ──────────────────────────────────────────────── */
 .dbg-wrap {
   position: fixed;
