@@ -3,6 +3,67 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { STAT_ICONS, STAT_LABELS, STAT_COLORS, STAT_DESC } from '../../data/periods'
 import { ADVISORS } from '../../data/advisors'
 
+// ── PYRAMID TIER DATA ────────────────────────────────────────────────────────
+interface TierData {
+  id: string
+  icon: string
+  title: string
+  short: string
+  long: string
+  color: string
+}
+
+const PYRAMID_TIERS: TierData[] = [
+  {
+    id: 'faraon',
+    icon: '𓃭',
+    title: 'El Faraón',
+    short: 'Dios en la Tierra. Rey absoluto.',
+    long: 'El faraón era considerado la encarnación del dios Horus en vida y de Osiris tras la muerte. Su autoridad era absoluta e incuestionable: comandaba el ejército, controlaba las riquezas del reino y era el único intermediario entre los dioses y los hombres.\n\nSu deber sagrado era mantener la Maat — el orden cósmico que equilibraba la justicia, la verdad y la armonía del universo. Si la Maat se rompía (hambrunas, guerras, caos), se culpaba al faraón por no haber cumplido su rol divino.\n\nPortaba la doble corona del Alto y el Bajo Egipto. Sus titulares incluían cinco nombres sagrados, entre ellos el cartucho real, considerado mágicamente protector.',
+    color: '#D4A017',
+  },
+  {
+    id: 'visir',
+    icon: '𓀭',
+    title: 'El Visir',
+    short: 'Primer ministro del Imperio.',
+    long: 'El visir (tjati) era el funcionario más poderoso después del faraón. Supervisaba todos los aspectos del gobierno: la justicia, el sistema de impuestos, los proyectos de construcción, la administración de tierras y el comercio exterior.\n\nA menudo había dos visires: uno para el Alto Egipto y otro para el Bajo Egipto. Era el último juez en disputas civiles y penales, y reportaba directamente al faraón cada amanecer.\n\nEl cargo era hereditario en algunas dinastías, pero en otras el faraón elegía personalmente a un hombre de confianza. Figuras como Imhotep (arquitecto de Djoser) y Rekhmire (bajo Tutmosis III) son los visires más célebres de la historia.',
+    color: '#a87d3e',
+  },
+  {
+    id: 'sacerdote',
+    icon: '𓂀',
+    title: 'Sumo Sacerdote',
+    short: 'Controlaba templos y riquezas divinas.',
+    long: 'Los sacerdotes egipcios no eran predicadores espirituales como en las religiones modernas: eran administradores del dios residente en el templo. El Sumo Sacerdote era el custodio de la estatua sagrada, responsable de alimentarla, vestirla y "activarla" en rituales diarios.\n\nCon el tiempo, los templos acumularon enormes propiedades: tierras, ganado, barcos y talleres. El Sumo Sacerdote de Amón en Tebas llegó a controlar el 30% de las tierras cultivables de Egipto, convirtiéndose en un poder rival del faraón.\n\nDurante el Tercer Período Intermedio, los sacerdotes de Amón gobernaron el Alto Egipto como faraones de facto, mostrando hasta qué punto el clero podía concentrar poder político.',
+    color: '#7a5c99',
+  },
+  {
+    id: 'escribas',
+    icon: '📜',
+    title: 'Escribas y Funcionarios',
+    short: 'Los administradores del Imperio.',
+    long: 'Los escribas eran la clase media intelectual del antiguo Egipto. Aprendían a leer y escribir desde niños en las "escuelas de escribas" (casas de vida). Dominaban los tres sistemas de escritura: jeroglífico (monumental), hierático (administrativo) y demótico (popular).\n\nSus funciones eran esenciales: registraban los censos y cosechas, calculaban impuestos, redactaban contratos y cartas, llevaban las cuentas de los templos y los palacios, y organizaban expediciones militares y comerciales.\n\nSer escriba era el camino de ascenso social más seguro. Un campesino inteligente podía llegar a funcionario del Estado gracias a esta habilidad. Los textos de la época los describen como "privilegiados" que no sudaban bajo el sol ni cargaban piedras.',
+    color: '#4a7a5c',
+  },
+  {
+    id: 'campesinos',
+    icon: '🌾',
+    title: 'Campesinos y Artesanos',
+    short: 'La base que sostuvo todo el sistema.',
+    long: 'Los campesinos (fellahin) constituían el 80–90% de la población egipcia. Cultivaban trigo, cebada, lino y papiro en las orillas del Nilo aprovechando el limo negro de las inundaciones anuales. Pagaban impuestos en especie — grano, aceite, tela — que abastecían los graneros estatales.\n\nDurante la temporada de inundación, cuando los campos estaban anegados, el Estado los empleaba en la construcción de monumentos. Las pirámides no fueron construidas por esclavos: investigaciones modernas demuestran que eran trabajadores pagados que recibían raciones de pan, cerveza y atención médica.\n\nLos artesanos (carpinteros, orfebres, alfareros, tejedores) formaban una categoría ligeramente superior. Los más hábiles trabajaban en los talleres reales o en el pueblo de Deir el-Medina, comunidad especializada en construir las tumbas del Valle de los Reyes.',
+    color: '#5a8a30',
+  },
+  {
+    id: 'esclavos',
+    icon: '⛓️',
+    title: 'Esclavos y Prisioneros',
+    short: 'Prisioneros de guerra y deudores.',
+    long: 'La esclavitud en el antiguo Egipto era diferente a la esclavitud moderna. Los esclavos eran principalmente prisioneros de guerra capturados en campañas contra Nubia, Canán o Libia. También podían ser egipcios que caían en esclavitud por deudas impagables o como castigo por ciertos crímenes.\n\nTrabajaban en minas, canteras, construcciones monumentales y hogares de nobles. Sin embargo, en Egipto los esclavos podían poseer propiedades, casarse con personas libres e incluso comprar su propia libertad. Algunos llegaron a ocupar posiciones de confianza en las casas de sus dueños.\n\nRamsés II capturó miles de hititas y nubios tras sus campañas; muchos fueron integrados al ejército egipcio o asignados a los templos como mano de obra especializada. La esclavitud masiva al estilo romano nunca fue característica del sistema egipcio.',
+    color: '#5a2e0a',
+  },
+]
+
 // ── MAP DATA ─────────────────────────────────────────────────────────────────
 interface Region {
   id: string
@@ -88,6 +149,8 @@ export function IntroScreen({ onFinish, playerName }: Props) {
   const [step, setStep]             = useState(0)
   const [dir, setDir]               = useState(1)
   const [activeRegion, setActive]   = useState<string | null>(null)
+  const [tierModal, setTierModal]   = useState<TierData | null>(null)
+  const [mapImgErr, setMapImgErr]   = useState(false)
 
   const go = (next: number) => {
     setDir(next > step ? 1 : -1)
@@ -115,11 +178,15 @@ export function IntroScreen({ onFinish, playerName }: Props) {
               custom={dir} variants={variants} initial="enter" animate="center" exit="exit"
               transition={{ duration: 0.3, ease: 'easeOut' }}>
               <div className="intro-map-img-wrap">
-                <img
-                  src="/images/mapa-egipto.jpg"
-                  alt="Mapa del Imperio Egipcio"
-                  className="intro-map-img"
-                />
+                {mapImgErr
+                  ? <EgyptMap interactive={false} active={null} onClick={() => {}} />
+                  : <img
+                      src="/images/mapa-egipto.jpg"
+                      alt="Mapa del Imperio Egipcio"
+                      className="intro-map-img"
+                      onError={() => setMapImgErr(true)}
+                    />
+                }
               </div>
               <div className="intro-text-col intro-text-col--center">
                 <h1 className="intro-game-title">𓆣 Dioses del Nilo</h1>
@@ -171,52 +238,51 @@ export function IntroScreen({ onFinish, playerName }: Props) {
               custom={dir} variants={variants} initial="enter" animate="center" exit="exit"
               transition={{ duration: 0.3, ease: 'easeOut' }}>
               <h2 className="intro-heading">El Sistema del Faraón</h2>
-              <p className="intro-lead">El poder en Egipto funcionaba como una pirámide social:</p>
+              <p className="intro-lead">El poder en Egipto funcionaba como una pirámide social. <span className="intro-tap-hint">Tocá cada nivel para aprender más.</span></p>
               <div className="intro-hier">
-                {/* Tier 1 — apex */}
-                <div className="ihr-tier ihr-tier--1">
-                  <div className="ihr-card ihr-gold ihr-apex">
-                    <span>𓃭</span>
-                    <strong>El Faraón</strong>
-                    <small>Dios en la Tierra. Rey absoluto. Responsable de mantener la Maat: el orden del universo.</small>
+                {PYRAMID_TIERS.slice(0, 1).map(t => (
+                  <div key={t.id} className="ihr-tier ihr-tier--1">
+                    <button className="ihr-card ihr-gold ihr-apex ihr-clickable" onClick={() => setTierModal(t)}>
+                      <span>{t.icon}</span>
+                      <strong>{t.title}</strong>
+                      <small>{t.short}</small>
+                      <span className="ihr-tap">👆 más info</span>
+                    </button>
                   </div>
-                </div>
-                {/* Tier 2 */}
+                ))}
                 <div className="ihr-tier ihr-tier--2">
-                  <div className="ihr-card">
-                    <span>𓀭</span>
-                    <strong>El Visir</strong>
-                    <small>Primer ministro. Administraba justicia y coordinaba el Imperio en nombre del faraón.</small>
-                  </div>
-                  <div className="ihr-card">
-                    <span>𓂀</span>
-                    <strong>Sumo Sacerdote</strong>
-                    <small>Controlaba los templos y sus enormes riquezas. Interpretaba la voluntad de los dioses.</small>
-                  </div>
+                  {PYRAMID_TIERS.slice(1, 3).map(t => (
+                    <button key={t.id} className="ihr-card ihr-clickable" onClick={() => setTierModal(t)}>
+                      <span>{t.icon}</span>
+                      <strong>{t.title}</strong>
+                      <small>{t.short}</small>
+                      <span className="ihr-tap">👆 más info</span>
+                    </button>
+                  ))}
                 </div>
-                {/* Tier 3 */}
                 <div className="ihr-tier ihr-tier--3">
-                  <div className="ihr-card ihr-dim">
-                    <span>📜</span>
-                    <strong>Escribas y Funcionarios</strong>
-                    <small>Registraban impuestos, contratos y leyes. Eran los administradores del Imperio.</small>
-                  </div>
+                  <button className="ihr-card ihr-dim ihr-clickable" onClick={() => setTierModal(PYRAMID_TIERS[3])}>
+                    <span>{PYRAMID_TIERS[3].icon}</span>
+                    <strong>{PYRAMID_TIERS[3].title}</strong>
+                    <small>{PYRAMID_TIERS[3].short}</small>
+                    <span className="ihr-tap">👆 más info</span>
+                  </button>
                 </div>
-                {/* Tier 4 */}
                 <div className="ihr-tier ihr-tier--4">
-                  <div className="ihr-card ihr-dim">
-                    <span>🌾</span>
-                    <strong>Campesinos y Artesanos</strong>
-                    <small>La mayoría del pueblo. Pagaban impuestos con trabajo y alimento. Sostuvieron todo el sistema.</small>
-                  </div>
+                  <button className="ihr-card ihr-dim ihr-clickable" onClick={() => setTierModal(PYRAMID_TIERS[4])}>
+                    <span>{PYRAMID_TIERS[4].icon}</span>
+                    <strong>{PYRAMID_TIERS[4].title}</strong>
+                    <small>{PYRAMID_TIERS[4].short}</small>
+                    <span className="ihr-tap">👆 más info</span>
+                  </button>
                 </div>
-                {/* Tier 5 — base */}
                 <div className="ihr-tier ihr-tier--5">
-                  <div className="ihr-card ihr-dim ihr-base">
-                    <span>⛓️</span>
-                    <strong>Esclavos y Prisioneros</strong>
-                    <small>Prisioneros de guerra y deudores. Trabajaban en construcciones, minas y labores domésticas.</small>
-                  </div>
+                  <button className="ihr-card ihr-dim ihr-base ihr-clickable" onClick={() => setTierModal(PYRAMID_TIERS[5])}>
+                    <span>{PYRAMID_TIERS[5].icon}</span>
+                    <strong>{PYRAMID_TIERS[5].title}</strong>
+                    <small>{PYRAMID_TIERS[5].short}</small>
+                    <span className="ihr-tap">👆 más info</span>
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -289,6 +355,38 @@ export function IntroScreen({ onFinish, playerName }: Props) {
 
         </AnimatePresence>
       </div>
+
+      {/* ── TIER MODAL ── */}
+      <AnimatePresence>
+        {tierModal && (
+          <motion.div
+            className="tier-modal-overlay"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={() => setTierModal(null)}
+          >
+            <motion.div
+              className="tier-modal"
+              style={{ '--tc': tierModal.color } as React.CSSProperties}
+              initial={{ opacity: 0, scale: 0.92, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 16 }}
+              transition={{ duration: 0.22 }}
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="tier-modal-ico">{tierModal.icon}</div>
+              <h3 className="tier-modal-title">{tierModal.title}</h3>
+              <div className="tier-modal-body">
+                {tierModal.long.split('\n\n').map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+              <button className="btn-o" style={{ marginTop: 18, width: '100%' }} onClick={() => setTierModal(null)}>
+                Cerrar ×
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── NAV ── */}
       <div className="intro-nav">
