@@ -611,7 +611,7 @@ button { font-family: inherit; cursor: pointer; }
 .adv-panel-alert {
   font-size: .68rem; color: #FFB938; font-style: italic;
 }
-.adv-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.adv-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .adv-chip-wrap { position: relative; }
 
 .adv-chip {

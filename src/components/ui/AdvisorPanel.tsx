@@ -9,7 +9,7 @@ interface Props {
   eventCat: string
 }
 
-const STAT_ORDER = ['estabilidad', 'riqueza', 'cultura', 'influencia'] as const
+const STAT_ORDER = ['estabilidad', 'riqueza', 'cultura', 'influencia', 'fe', 'comercio'] as const
 
 export function AdvisorPanel({ stats, eventCat }: Props) {
   const [open, setOpen] = useState<string | null>(null)
