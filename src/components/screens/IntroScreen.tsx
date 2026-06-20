@@ -143,7 +143,7 @@ const variants = {
 // ── MAIN COMPONENT ────────────────────────────────────────────────────────────
 interface Props { onFinish: () => void; playerName?: string }
 
-const TOTAL = 5
+const TOTAL = 6
 
 export function IntroScreen({ onFinish, playerName }: Props) {
   const [step, setStep]             = useState(0)
@@ -190,7 +190,7 @@ export function IntroScreen({ onFinish, playerName }: Props) {
               </div>
               <div className="intro-text-col intro-text-col--center">
                 <h1 className="intro-game-title">𓆣 Dioses del Nilo</h1>
-                {playerName && <p className="intro-pharaoh-greet">El Imperio te aguarda, Faraón <strong>{playerName}</strong>.</p>}
+                {playerName && <p className="intro-pharaoh-greet">El Nilo te convoca, <strong>{playerName}</strong>.</p>}
                 <div className="intro-facts-row">
                   <div className="intro-fact-box">
                     <span className="ifb-ico">📍</span>
@@ -205,9 +205,45 @@ export function IntroScreen({ onFinish, playerName }: Props) {
             </motion.div>
           )}
 
-          {/* 1 — Nacimiento de la civilización */}
+          {/* 1 — El Ka Eterno: rol del jugador */}
           {step === 1 && (
-            <motion.div key="s1" className="intro-slide"
+            <motion.div key="s1" className="intro-slide intro-slide--ka"
+              custom={dir} variants={variants} initial="enter" animate="center" exit="exit"
+              transition={{ duration: 0.3, ease: 'easeOut' }}>
+              <div className="intro-ka-symbol">𓇳</div>
+              <h2 className="intro-heading">Tú eres el Ka Eterno</h2>
+              <p className="intro-lead">
+                No eres un faraón mortal. Eres algo más antiguo — y más poderoso.
+              </p>
+              <div className="intro-ka-body">
+                <div className="intro-ka-block">
+                  <span className="intro-ka-ico">𓃭</span>
+                  <div>
+                    <strong>El Ka: la fuerza divina</strong>
+                    <p>Para los egipcios, el Ka era la energía vital que el dios Jnum insufla en cada ser al nacer. En el faraón, el Ka no era humano — era la chispa de Horus, el dios del cielo encarnado en la tierra.</p>
+                  </div>
+                </div>
+                <div className="intro-ka-block">
+                  <span className="intro-ka-ico">🌊</span>
+                  <div>
+                    <strong>Eterno como el Nilo</strong>
+                    <p>Cuando un faraón moría, su Ka no desaparecía: pasaba al siguiente. Tú eres ese Ka — la voluntad divina que guió a Egipto durante más de 3.000 años, a través de cada dinastía, cada crisis y cada gloria.</p>
+                  </div>
+                </div>
+                <div className="intro-ka-block">
+                  <span className="intro-ka-ico">⚖️</span>
+                  <div>
+                    <strong>Tu misión: mantener la Maat</strong>
+                    <p>La Maat era el orden cósmico — la balanza entre caos y armonía. Tu deber no es solo gobernar: es sostener ese equilibrio frágil entre los dioses, el pueblo y las fuerzas de la naturaleza.</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* 2 — Nacimiento de la civilización */}
+          {step === 2 && (
+            <motion.div key="s2" className="intro-slide"
               custom={dir} variants={variants} initial="enter" animate="center" exit="exit"
               transition={{ duration: 0.3, ease: 'easeOut' }}>
               <h2 className="intro-heading">Hace 5.000 años...</h2>
@@ -232,9 +268,9 @@ export function IntroScreen({ onFinish, playerName }: Props) {
             </motion.div>
           )}
 
-          {/* 2 — El sistema del faraón */}
-          {step === 2 && (
-            <motion.div key="s2" className="intro-slide"
+          {/* 3 — El sistema del faraón */}
+          {step === 3 && (
+            <motion.div key="s3b" className="intro-slide"
               custom={dir} variants={variants} initial="enter" animate="center" exit="exit"
               transition={{ duration: 0.3, ease: 'easeOut' }}>
               <h2 className="intro-heading">El Sistema del Faraón</h2>
@@ -288,9 +324,9 @@ export function IntroScreen({ onFinish, playerName }: Props) {
             </motion.div>
           )}
 
-          {/* 3 — Mapa interactivo */}
-          {step === 3 && (
-            <motion.div key="s3" className="intro-slide intro-slide--map"
+          {/* 4 — Mapa interactivo */}
+          {step === 4 && (
+            <motion.div key="s4b" className="intro-slide intro-slide--map"
               custom={dir} variants={variants} initial="enter" animate="center" exit="exit"
               transition={{ duration: 0.3, ease: 'easeOut' }}>
               <h2 className="intro-heading">Conocé el Imperio</h2>
@@ -320,13 +356,13 @@ export function IntroScreen({ onFinish, playerName }: Props) {
             </motion.div>
           )}
 
-          {/* 4 — Tutorial stats + consejeros */}
-          {step === 4 && (
-            <motion.div key="s4" className="intro-slide"
+          {/* 5 — Tutorial stats + consejeros */}
+          {step === 5 && (
+            <motion.div key="s5" className="intro-slide"
               custom={dir} variants={variants} initial="enter" animate="center" exit="exit"
               transition={{ duration: 0.3, ease: 'easeOut' }}>
               <h2 className="intro-heading">Tu Imperio, Tus Decisiones</h2>
-              <p className="intro-lead">Cuatro métricas miden el estado de tu gobierno:</p>
+              <p className="intro-lead">Seis métricas miden el estado de tu gobierno:</p>
               <div className="intro-stats-grid">
                 {(['estabilidad','riqueza','cultura','influencia','fe','comercio'] as const).map(k => (
                   <div key={k} className="ist-card" style={{ '--sc': STAT_COLORS[k] } as React.CSSProperties}>
@@ -339,7 +375,7 @@ export function IntroScreen({ onFinish, playerName }: Props) {
                 ))}
               </div>
               <div className="intro-adv-row">
-                <span className="intro-adv-lbl">Cuatro consejeros te guiarán durante el juego:</span>
+                <span className="intro-adv-lbl">Seis consejeros te guiarán durante el juego:</span>
                 <div className="intro-adv-chips">
                   {advisors.map(adv => (
                     <div key={adv.id} className="intro-adv-chip" style={{ '--ac': adv.color } as React.CSSProperties}>
