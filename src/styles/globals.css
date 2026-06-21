@@ -947,6 +947,166 @@ button { font-family: inherit; cursor: pointer; }
 .intro-ka-block strong { display: block; color: var(--gold); margin-bottom: 4px; font-size: 0.95rem; }
 .intro-ka-block p { margin: 0; color: var(--sand-l); font-size: 0.88rem; line-height: 1.55; }
 
+/* ── Pharaoh Event Modal ── */
+.pharaoh-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(3,1,0,.97);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 20px; overflow-y: auto;
+}
+.pharaoh-modal {
+  position: relative;
+  width: 100%; max-width: 600px; margin: auto;
+  background: linear-gradient(160deg, #1a1005 0%, #0d0800 100%);
+  border: 1px solid rgba(212,160,23,.35);
+  border-radius: 14px; padding: 32px 28px;
+  box-shadow: 0 0 60px rgba(212,160,23,.12), 0 0 0 1px rgba(212,160,23,.08);
+  text-align: center; overflow: hidden;
+}
+.pharaoh-modal::before {
+  content: '𓇳 𓃭 𓂀 𓆣 𓇳 𓃭 𓂀 𓆣 𓇳 𓃭 𓂀 𓆣';
+  position: absolute; top: 0; left: 0; right: 0;
+  padding: 6px 0; font-size: 0.65rem; letter-spacing: 6px;
+  color: rgba(212,160,23,.18); pointer-events: none;
+  white-space: nowrap; overflow: hidden;
+}
+.pharaoh-ritual-label {
+  font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(212,160,23,.6); margin-bottom: 18px; margin-top: 10px;
+}
+.pharaoh-ka-text {
+  font-style: italic; color: var(--gold);
+  font-size: 0.93rem; line-height: 1.65;
+  margin: 0 0 22px; padding: 0 8px;
+  border-left: 2px solid rgba(212,160,23,.3);
+  text-align: left;
+}
+.pharaoh-identity {
+  background: rgba(212,160,23,.06);
+  border: 1px solid rgba(212,160,23,.18);
+  border-radius: 10px; padding: 18px 16px;
+  margin-bottom: 22px;
+}
+.pharaoh-big-icon { font-size: 2.4rem; line-height: 1; margin-bottom: 10px; }
+.pharaoh-cartouche {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  margin-bottom: 8px;
+}
+.pharaoh-cartouche-bar {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.pharaoh-name {
+  font-size: 1.45rem; font-weight: 700;
+  color: var(--gold); letter-spacing: 1px;
+}
+.pharaoh-name-glyph { font-size: 1.1rem; color: rgba(212,160,23,.6); }
+.pharaoh-meta {
+  display: flex; gap: 12px; justify-content: center;
+  font-size: 0.78rem; color: var(--sand-l); opacity: 0.75;
+  margin-bottom: 8px;
+}
+.pharaoh-meta span + span::before { content: '· '; }
+.pharaoh-title-line {
+  font-size: 0.8rem; color: rgba(212,160,23,.7);
+  font-style: italic; margin: 0 0 10px;
+}
+.pharaoh-bio {
+  font-size: 0.82rem; line-height: 1.6;
+  color: var(--sand-l); margin: 0; text-align: left;
+}
+.pharaoh-section-title {
+  font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase;
+  color: rgba(212,160,23,.7); margin-bottom: 14px;
+}
+/* Blessing cards */
+.pharaoh-blessings {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  margin-bottom: 4px;
+}
+.pharaoh-blessing-card {
+  background: rgba(212,160,23,.07);
+  border: 1px solid rgba(212,160,23,.25);
+  border-radius: 10px; padding: 14px 10px;
+  cursor: pointer; text-align: center;
+  transition: background 0.18s, border-color 0.18s, transform 0.15s;
+  display: flex; flex-direction: column; gap: 6px; align-items: center;
+}
+.pharaoh-blessing-card:hover {
+  background: rgba(212,160,23,.15);
+  border-color: rgba(212,160,23,.6);
+  transform: translateY(-2px);
+}
+.pb-icon { font-size: 1.5rem; }
+.pb-label { font-size: 0.8rem; color: var(--gold); font-weight: 600; line-height: 1.2; }
+.pb-desc { font-size: 0.72rem; color: var(--sand-l); line-height: 1.4; margin: 0; }
+/* Pharaoh speech */
+.pharaoh-speech-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; margin-bottom: 22px;
+}
+.pharaoh-speech-icon { font-size: 1.8rem; }
+.pharaoh-speech {
+  font-style: italic; font-size: 0.91rem; line-height: 1.65;
+  color: var(--sand-l); border: none; margin: 0; padding: 14px 16px;
+  background: rgba(255,220,100,.05); border-radius: 8px;
+  border-left: 3px solid rgba(212,160,23,.4);
+  text-align: left; max-width: 500px;
+}
+.pharaoh-speech-name {
+  font-size: 0.75rem; color: rgba(212,160,23,.6); letter-spacing: 1px;
+}
+/* Mission buttons */
+.pharaoh-missions {
+  display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px;
+}
+.pharaoh-mission-btn {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: rgba(212,160,23,.06);
+  border: 1px solid rgba(212,160,23,.2);
+  border-radius: 10px; padding: 12px 14px;
+  cursor: pointer; text-align: left;
+  transition: background 0.18s, border-color 0.18s, transform 0.12s;
+}
+.pharaoh-mission-btn:hover {
+  background: rgba(212,160,23,.13);
+  border-color: rgba(212,160,23,.5);
+  transform: translateX(2px);
+}
+.pm-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+.pm-text { display: flex; flex-direction: column; gap: 2px; }
+.pm-label { font-size: 0.85rem; color: var(--gold); font-weight: 600; }
+.pm-desc { font-size: 0.78rem; color: var(--sand-l); line-height: 1.4; margin: 0; }
+/* Response step */
+.pharaoh-modal--response { padding: 40px 28px; }
+.pharaoh-response-icon { font-size: 3rem; margin-bottom: 8px; }
+.pharaoh-response-name {
+  font-size: 1.2rem; color: var(--gold); font-weight: 700;
+  margin-bottom: 20px; letter-spacing: 1px;
+}
+.pharaoh-speech--response {
+  font-size: 1rem; border-left: none;
+  background: rgba(212,160,23,.07);
+  border: 1px solid rgba(212,160,23,.25);
+  text-align: center; margin-bottom: 20px;
+}
+.pharaoh-ka-close {
+  font-size: 0.75rem; letter-spacing: 1px;
+  color: rgba(212,160,23,.5); margin: 0; text-transform: uppercase;
+}
+/* Placeholder shown in event panel while modal is open */
+.pharaoh-event-placeholder {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 16px; height: 300px; opacity: 0.35;
+}
+.pep-glyph { font-size: 3rem; }
+.pep-text { font-size: 0.9rem; color: var(--gold); font-style: italic; }
+@media (max-width: 600px) {
+  .pharaoh-blessings { grid-template-columns: 1fr; }
+  .pharaoh-modal { padding: 24px 16px; }
+}
+
 /* Slide 0 – hero */
 .intro-map-col { flex-shrink: 0; width: 200px; }
 .intro-map-img-wrap { width: 100%; max-width: 640px; display: flex; justify-content: center; }
