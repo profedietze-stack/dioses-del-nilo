@@ -29,6 +29,8 @@ import { AdvisorPanel } from './components/ui/AdvisorPanel'
 import { GlossaryModal } from './components/ui/GlossaryModal'
 import { GodModal } from './components/ui/GodModal'
 import { StatInfoModal } from './components/ui/StatInfoModal'
+import { PharaohModal } from './components/ui/PharaohModal'
+import { PHARAOHS } from './data/pharaohs'
 import { buildGodModal } from './data/godLore'
 import { processGlossary } from './utils/processGlossary'
 
@@ -255,6 +257,32 @@ export function App() {
     }
   }
 
+  const handlePharaohDone = (bFx: Partial<Stats>, mFx: Partial<Stats>) => {
+    const combined: Partial<Stats> = {}
+    const keys: (keyof Stats)[] = ['estabilidad', 'riqueza', 'cultura', 'influencia', 'fe', 'comercio']
+    for (const k of keys) {
+      const v = (bFx[k] ?? 0) + (mFx[k] ?? 0)
+      if (v !== 0) combined[k] = v
+    }
+    const ns = applyFx(stats, combined)
+    const ev = gameEvents[evIdx]
+    const nh = [...history, { eventId: ev.id, choice: 'pharaoh_event', effects: combined, statsAfter: ns }]
+    const nIdx = evIdx + 1
+
+    setStats(ns)
+    setHistory(nh)
+    setLastFx(combined)
+    setAnimKey(k => k + 1)
+    setEvIdx(nIdx)
+    playSound('event_result')
+
+    if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
+
+    if (nIdx >= gameEvents.length) {
+      setScreen('end')
+    }
+  }
+
   const totalEvents = gameEvents.length || 32
   const perP = totalEvents / 4
   const curPeriod = PERIODS[Math.min(3, Math.floor(evIdx / perP))]
@@ -337,6 +365,17 @@ export function App() {
               {curPuzDef.type === 'ordenar' && <WordOrder puz={curPuzDef} onDone={handlePuzDone} />}
               {curPuzDef.type === 'balanza' && <MaatScale puz={curPuzDef} onDone={handlePuzDone} />}
               {curPuzDef.type === 'faraones' && <PharaohTimeline puz={curPuzDef} onDone={handlePuzDone} />}
+            </motion.div>
+          ) : ev?.isPharaoh ? (
+            <motion.div
+              key={evIdx}
+              className="pharaoh-event-placeholder"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <span className="pep-glyph">𓇳</span>
+              <p className="pep-text">El Ka Eterno presencia una coronación...</p>
             </motion.div>
           ) : ev ? (
             <motion.div
@@ -448,6 +487,16 @@ export function App() {
             key="si"
             statKey={statInfoKey}
             onClose={() => setStatInfoKey(null)}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {ev?.isPharaoh && ev.pharaohId && PHARAOHS[ev.pharaohId] && (
+          <PharaohModal
+            key="pharaoh-modal"
+            pharaoh={PHARAOHS[ev.pharaohId]}
+            onDone={handlePharaohDone}
           />
         )}
       </AnimatePresence>
