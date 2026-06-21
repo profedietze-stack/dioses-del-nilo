@@ -60,6 +60,8 @@ export interface GameEvent {
   ctx: string
   opts: EventOption[]
   tl: TimelineCard
+  isPharaoh?: boolean
+  pharaohId?: string
 }
 
 export type AchievementType = 'ankh' | 'escarabajo' | 'corona' | 'papiro'
