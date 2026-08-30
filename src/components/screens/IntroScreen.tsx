@@ -181,7 +181,7 @@ export function IntroScreen({ onFinish, playerName }: Props) {
                 {mapImgErr
                   ? <EgyptMap interactive={false} active={null} onClick={() => {}} />
                   : <img
-                      src="/images/mapa-egipto.jpg"
+                      src={import.meta.env.BASE_URL + "images/mapa-egipto.jpg"}
                       alt="Mapa del Imperio Egipcio"
                       className="intro-map-img"
                       onError={() => setMapImgErr(true)}
