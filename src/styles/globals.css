@@ -703,7 +703,11 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* ── FULLSCREEN ── */
-:fullscreen #root, .game { width: 100%; height: 100%; }
+/* :fullscreen locks #root to the screen's exact height — content taller than
+   that (long end-screen narratives, achievement lists) gets clipped instead
+   of scrolling unless the fullscreen box itself allows overflow. */
+:fullscreen #root { width: 100%; height: 100%; overflow-y: auto; }
+.game { width: 100%; height: 100%; }
 
 /* ── GLOSARIO TAB (Papiros) ── */
 .gloss-tab { display: flex; flex-direction: column; gap: 12px; }
