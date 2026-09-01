@@ -107,7 +107,7 @@ export function App() {
         for (const k in g.bon) baseStats[k as keyof typeof baseStats] = clamp(50 + g.bon[k as keyof typeof baseStats])
         const s = p.stats ? { ...baseStats, ...p.stats } : baseStats
         const idx = p.evIdx ?? 0
-        writeSave({ godId: g.id, stats: s, evIdx: idx, eventIds: events.map(e => e.id), history: [], achievements: [], t: Date.now() })
+        writeSave({ godId: g.id, playerName: 'Faraón', stats: s, evIdx: idx, eventIds: events.map(e => e.id), history: [], achievements: [], t: Date.now() })
         setGod(g); setStats(s); setEvIdx(idx); setGameEvents(events); setHistory([])
         setScreen((p.screen as Screen) ?? 'game')
         console.info('[DEV] URL params applied:', p)
@@ -173,7 +173,7 @@ export function App() {
     setGs({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
     startTime.current = Date.now()
     nextGodModalAt.current = 3 + Math.floor(Math.random() * 3)
-    writeSave({ godId: g.id, stats: s, evIdx: 0, eventIds: events.map(e => e.id), history: [], achievements: [], t: Date.now() })
+    writeSave({ godId: g.id, playerName: playerName || 'Faraón', stats: s, evIdx: 0, eventIds: events.map(e => e.id), history: [], achievements: [], t: Date.now() })
     setScreen('game')
   }
 
@@ -188,6 +188,7 @@ export function App() {
     requestFS()
     startMusic()
     setGod(g); setStats(sv.stats ?? INIT)
+    setPlayerName(sv.playerName || 'Faraón')
     setGameEvents(events)
     setEvIdx(savedIdx); setHistory(resolved ? (sv.history ?? []) : [])
     setAchievements(resolved ? (sv.achievements ?? []) : [])
@@ -217,7 +218,7 @@ export function App() {
     playSound('event_result')
     setConsejer({ fx: opt.fx, choice: opt.t })
     checkAch(ns, nh, ngs, puzFail, puzOk)
-    if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
+    if (god) writeSave({ godId: god.id, playerName: playerName || 'Faraón', stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
     // god modal trigger — every 3-5 events, not on last event
     if (nIdx >= nextGodModalAt.current && nIdx < gameEvents.length && god) {
       const vals = Object.values(ns); const avg = vals.reduce((a, b) => a + b, 0) / vals.length
@@ -299,7 +300,7 @@ export function App() {
     playSound('event_result')
     checkAch(ns, nh, ngs, puzFail, puzOk)
 
-    if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
+    if (god) writeSave({ godId: god.id, playerName: playerName || 'Faraón', stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
 
     if (nIdx >= gameEvents.length) {
       setScreen('end')

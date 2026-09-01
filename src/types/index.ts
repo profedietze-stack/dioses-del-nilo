@@ -156,6 +156,7 @@ export interface PeriodTransitionData {
 
 export interface SaveData {
   godId: string
+  playerName: string
   stats: Stats
   evIdx: number
   eventIds: number[]

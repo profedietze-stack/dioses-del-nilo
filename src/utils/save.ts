@@ -23,6 +23,9 @@ export function loadSave(): SaveData | null {
     // Reject saves from an incompatible schema version.
     if (parsed.v !== undefined && parsed.v !== SAVE_VERSION) return null
     if (!isValidSave(parsed)) return null
+    // playerName was added after v3 saves already existed in the wild; default
+    // it rather than rejecting older saves that predate the field.
+    if (typeof parsed.playerName !== 'string') parsed.playerName = ''
     return parsed as SaveData
   } catch {
     return null
