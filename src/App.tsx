@@ -10,6 +10,7 @@ import { PUZZLES_DEF } from './data/puzzles'
 import { INIT, clamp, applyFx } from './utils/gameLogic'
 import { loadSave, writeSave, clearSave } from './utils/save'
 import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngine'
+import { SplashScreen } from './components/screens/SplashScreen'
 import { MenuScreen } from './components/screens/MenuScreen'
 import { NameScreen } from './components/screens/NameScreen'
 import { IntroScreen } from './components/screens/IntroScreen'
@@ -56,6 +57,21 @@ function requestFS() {
   if (el.requestFullscreen) el.requestFullscreen().catch(() => { /* ignore */ })
 }
 
+function CatImage({ cat }: { cat: string }) {
+  const [err, setErr] = useState(false)
+  if (err) return null
+  return (
+    <img
+      key={cat}
+      src={`${import.meta.env.BASE_URL}images/cat-${cat}.jpg`}
+      alt=""
+      aria-hidden="true"
+      className="ev-cat-img"
+      onError={() => setErr(true)}
+    />
+  )
+}
+
 function AnimatedStatBar({ value, color }: { value: number; color: string }) {
   const spring = useSpring(value, { stiffness: 80, damping: 18 })
   useEffect(() => { spring.set(value) }, [value, spring])
@@ -88,11 +104,18 @@ export function App() {
   const [playerName, setPlayerName] = useState('')
   const [papirosPrev, setPapirosPrev] = useState<Screen>('menu')
   const [confirmMenu, setConfirmMenu] = useState(false)
+  const [showSplash, setShowSplash] = useState(true)
   const startTime = useRef(Date.now())
   const pendingEnd = useRef(false)
   const pendingPeriodTrans = useRef<PeriodTransitionData | null>(null)
   const pendingGodModal = useRef<{ approval: string; encouragement: string; fact: string } | null>(null)
   const nextGodModalAt = useRef(3 + Math.floor(Math.random() * 3))
+
+  // ── SPLASH: brief loading screen on first mount ────────────────────────────
+  useEffect(() => {
+    const t = setTimeout(() => setShowSplash(false), 2200)
+    return () => clearTimeout(t)
+  }, [])
 
   // ── DEV: URL params ───────────────────────────────────────────────────────
   useEffect(() => {
@@ -422,6 +445,7 @@ export function App() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
             >
+              <CatImage key={ev.cat} cat={ev.cat} />
               <div className="ev-hd">
                 <span className="ev-num">Evento {evIdx + 1} / {totalEvents}</span>
                 {evPeriod && <span className="ev-tag period">{evPeriod.name}</span>}
@@ -575,6 +599,7 @@ export function App() {
 
   return (
     <>
+      <AnimatePresence>{showSplash && <SplashScreen key="splash" />}</AnimatePresence>
       <AnimatePresence>{renderScreen()}</AnimatePresence>
       {showModal && <InfoModal onClose={() => setShowModal(false)} />}
       {import.meta.env.DEV && (

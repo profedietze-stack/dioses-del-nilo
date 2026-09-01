@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+const MENU_BG_SRC = import.meta.env.BASE_URL + 'images/menu-bg.jpg'
+
 interface Props {
   hasSave: boolean
   onNew: () => void
@@ -24,6 +26,7 @@ const itemVariants = {
 
 export function MenuScreen({ hasSave, onNew, onContinue, onAchievements, onInfo, onDeleteSave }: Props) {
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [bgImgErr, setBgImgErr] = useState(false)
 
   return (
     <motion.div
@@ -33,6 +36,15 @@ export function MenuScreen({ hasSave, onNew, onContinue, onAchievements, onInfo,
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
+      {!bgImgErr && (
+        <img
+          src={MENU_BG_SRC}
+          alt=""
+          aria-hidden="true"
+          className="menu-bg-photo"
+          onError={() => setBgImgErr(true)}
+        />
+      )}
       <div className="menu-bg" aria-hidden="true">
         {GLYPHS.map((g, i) => (
           <span key={i} className="bg-g" style={{ '--i': i } as React.CSSProperties}>{g}</span>

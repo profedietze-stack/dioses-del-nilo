@@ -67,6 +67,40 @@ button { font-family: inherit; cursor: pointer; }
 }
 .btn-music:hover { background: rgba(78,173,80,.25); }
 
+/* ── SPLASH (loading) ── */
+.splash {
+  position: fixed; inset: 0; z-index: 999;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--stone); overflow: hidden;
+}
+.splash-bg-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center; opacity: .7;
+}
+.splash-overlay {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(20,14,6,.35) 0%, rgba(20,14,6,.85) 100%);
+}
+.splash-c { position: relative; z-index: 1; text-align: center; }
+.splash-glyph { font-size: 3rem; color: var(--gold); opacity: .85; margin-bottom: 8px; animation: splash-pulse 1.8s ease-in-out infinite; }
+@keyframes splash-pulse { 0%,100%{opacity:.6; transform:scale(1)} 50%{opacity:1; transform:scale(1.08)} }
+.splash-title {
+  font-family: 'Cinzel', serif; font-weight: 900; letter-spacing: .08em;
+  font-size: clamp(1.8rem,5vw,3rem);
+  color: transparent;
+  background: linear-gradient(180deg, var(--gold-l), var(--gold) 50%, var(--gold-d));
+  -webkit-background-clip: text; background-clip: text;
+  margin-bottom: 28px;
+}
+.splash-loader { display: flex; gap: 8px; justify-content: center; }
+.splash-loader span {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
+  animation: splash-dot 1.2s ease-in-out infinite;
+}
+.splash-loader span:nth-child(2) { animation-delay: .15s; }
+.splash-loader span:nth-child(3) { animation-delay: .3s; }
+@keyframes splash-dot { 0%,80%,100%{opacity:.25; transform:translateY(0)} 40%{opacity:1; transform:translateY(-6px)} }
+
 /* ── MENU ── */
 .menu {
   min-height: 100vh; display: flex; align-items: center;
@@ -74,8 +108,15 @@ button { font-family: inherit; cursor: pointer; }
   background: radial-gradient(ellipse at 50% 30%, #3D2A08 0%, #1e1609 50%, var(--stone) 100%);
 }
 .menu::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 0%, rgba(212,160,23,.08) 0%, transparent 60%);
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(212,160,23,.08) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(20,14,6,.55) 0%, rgba(20,14,6,.35) 40%, rgba(20,14,6,.75) 100%);
+}
+.menu-bg-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 35%;
+  opacity: .55; pointer-events: none;
 }
 .menu-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .bg-g {
@@ -88,7 +129,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 @keyframes fg  { 0%,100%{transform:translateY(0)        rotate(0deg)}  50%{transform:translateY(-28px) rotate(4deg)} }
 @keyframes fgr { 0%,100%{transform:translateX(0)  scale(1)}  50%{transform:translateX(12px) scale(1.06)} }
-.menu-c { position: relative; z-index: 1; text-align: center; max-width: 480px; width: 90%; }
+.menu-c { position: relative; z-index: 2; text-align: center; max-width: 480px; width: 90%; }
 .logo-sym { color: var(--gold); font-size: 1.6rem; letter-spacing: .3em; opacity: .7; }
 .game-title {
   font-family: 'Cinzel', serif; font-weight: 900;
@@ -218,6 +259,10 @@ button { font-family: inherit; cursor: pointer; }
   padding: 24px; overflow-y: auto; max-height: calc(100vh - 100px);
   box-shadow: 0 4px 32px rgba(0,0,0,.3), inset 0 1px 0 rgba(212,160,23,.06);
   backdrop-filter: blur(4px);
+}
+.ev-cat-img {
+  width: 100%; max-height: 200px; object-fit: cover; border-radius: var(--r);
+  margin-bottom: 14px; border: 1px solid rgba(212,160,23,.25);
 }
 .ev-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
 .ev-num { font-family: 'Cinzel', serif; font-size: .72rem; color: var(--dim); }
@@ -762,7 +807,17 @@ button { font-family: inherit; cursor: pointer; }
   text-align: center; padding: 32px 20px 24px;
   border-bottom: 1px solid rgba(212,160,23,.2);
   background: linear-gradient(180deg, rgba(212,160,23,.06) 0%, transparent 100%);
+  position: relative; overflow: hidden;
 }
+.pt-header-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center; opacity: .3; z-index: 0;
+}
+.pt-header::after {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(180deg, rgba(14,10,4,.2) 0%, rgba(14,10,4,.9) 100%);
+}
+.pt-header > *:not(.pt-header-photo) { position: relative; z-index: 1; }
 .pt-header-glyphs {
   font-size: 1.2rem; letter-spacing: .4em; color: var(--gold-d); opacity: .7;
   margin-bottom: 6px;

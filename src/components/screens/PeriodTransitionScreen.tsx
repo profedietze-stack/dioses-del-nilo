@@ -1,8 +1,11 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ADVISORS } from '../../data/advisors'
 import { ADVISOR_PERIOD_LINES } from '../../data/periodLore'
 import { STAT_ICONS, STAT_LABELS, STAT_COLORS } from '../../data/periods'
 import type { PeriodTransitionData } from '../../types'
+
+const periodImgSrc = (periodId: string) => `${import.meta.env.BASE_URL}images/period-${periodId}.jpg`
 
 const section = {
   hidden: { opacity: 0, y: 24 },
@@ -21,6 +24,7 @@ interface Props {
 export function PeriodTransitionScreen({ data, onContinue }: Props) {
   const { fromPeriod, toPeriod, statsAtEnd, playStyle, lore, verdict } = data
   const advisors = Object.values(ADVISORS)
+  const [imgErr, setImgErr] = useState(false)
 
   return (
     <motion.div
@@ -32,6 +36,15 @@ export function PeriodTransitionScreen({ data, onContinue }: Props) {
     >
       {/* ── HEADER ── */}
       <div className="pt-header" style={{ '--pcol': fromPeriod.col } as React.CSSProperties}>
+        {!imgErr && (
+          <img
+            src={periodImgSrc(fromPeriod.id)}
+            alt=""
+            aria-hidden="true"
+            className="pt-header-photo"
+            onError={() => setImgErr(true)}
+          />
+        )}
         <div className="pt-header-glyphs">𓂀 𓆣 𓇋 𓏏 𓆑</div>
         <p className="pt-label">— Fin del Período —</p>
         <h1 className="pt-period-name">{fromPeriod.name}</h1>
