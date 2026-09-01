@@ -72,5 +72,15 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    rollupOptions: {
+      output: {
+        // Split heavy vendors into their own cacheable chunks so the app
+        // code chunk stays under the size-warning threshold.
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          motion: ['framer-motion'],
+        },
+      },
+    },
   },
 })

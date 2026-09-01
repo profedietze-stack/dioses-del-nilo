@@ -162,4 +162,5 @@ export interface SaveData {
   history: HistoryEntry[]
   achievements: string[]
   t: number
+  v?: number
 }

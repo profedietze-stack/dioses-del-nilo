@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
 import type { God, Stats, StatKey, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData } from './types'
 import { GODS } from './data/gods'
 import { PERIODS } from './data/periods'
 import { PLAY_STYLES, PERIOD_LORE, getLegacyVerdict } from './data/periodLore'
-import { PeriodTransitionScreen } from './components/screens/PeriodTransitionScreen'
 import { STAT_ICONS, STAT_LABELS, STAT_COLORS, OPTION_TYPE_LABELS } from './data/periods'
 import { buildGameEvents, getEventsById } from './data/eventPools'
 import { PUZZLES_DEF } from './data/puzzles'
@@ -12,17 +11,21 @@ import { INIT, clamp, applyFx } from './utils/gameLogic'
 import { loadSave, writeSave, clearSave } from './utils/save'
 import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngine'
 import { MenuScreen } from './components/screens/MenuScreen'
-import { IntroScreen } from './components/screens/IntroScreen'
 import { NameScreen } from './components/screens/NameScreen'
 import { DebugPanel } from './components/dev/DebugPanel'
 import { parseDevParams } from './utils/devParams'
-import { GodSelectScreen } from './components/screens/GodSelectScreen'
-import { PapirosScreen } from './components/screens/PapirosScreen'
-import { EndScreen } from './components/screens/EndScreen'
-import { GlyphPuzzle } from './components/puzzles/GlyphPuzzle'
-import { WordOrder } from './components/puzzles/WordOrder'
-import { MaatScale } from './components/puzzles/MaatScale'
-import { PharaohTimeline } from './components/puzzles/PharaohTimeline'
+import { useDevTools } from './hooks/useDevTools'
+
+// Code-split: secondary screens & puzzles load on demand to shrink initial bundle.
+const IntroScreen           = lazy(() => import('./components/screens/IntroScreen').then(m => ({ default: m.IntroScreen })))
+const GodSelectScreen       = lazy(() => import('./components/screens/GodSelectScreen').then(m => ({ default: m.GodSelectScreen })))
+const PapirosScreen         = lazy(() => import('./components/screens/PapirosScreen').then(m => ({ default: m.PapirosScreen })))
+const EndScreen             = lazy(() => import('./components/screens/EndScreen').then(m => ({ default: m.EndScreen })))
+const PeriodTransitionScreen = lazy(() => import('./components/screens/PeriodTransitionScreen').then(m => ({ default: m.PeriodTransitionScreen })))
+const GlyphPuzzle           = lazy(() => import('./components/puzzles/GlyphPuzzle').then(m => ({ default: m.GlyphPuzzle })))
+const WordOrder             = lazy(() => import('./components/puzzles/WordOrder').then(m => ({ default: m.WordOrder })))
+const MaatScale             = lazy(() => import('./components/puzzles/MaatScale').then(m => ({ default: m.MaatScale })))
+const PharaohTimeline       = lazy(() => import('./components/puzzles/PharaohTimeline').then(m => ({ default: m.PharaohTimeline })))
 import { InfoModal } from './components/ui/InfoModal'
 import { ConsejerModal } from './components/ui/ConsejerModal'
 import { AdvisorPanel } from './components/ui/AdvisorPanel'
@@ -30,6 +33,7 @@ import { GlossaryModal } from './components/ui/GlossaryModal'
 import { GodModal } from './components/ui/GodModal'
 import { StatInfoModal } from './components/ui/StatInfoModal'
 import { PharaohModal } from './components/ui/PharaohModal'
+import { ConfirmModal } from './components/ui/ConfirmModal'
 import { PHARAOHS } from './data/pharaohs'
 import { buildGodModal } from './data/godLore'
 import { processGlossary } from './utils/processGlossary'
@@ -80,6 +84,7 @@ export function App() {
   const [statInfoKey, setStatInfoKey] = useState<StatKey | null>(null)
   const [playerName, setPlayerName] = useState('')
   const [papirosPrev, setPapirosPrev] = useState<Screen>('menu')
+  const [confirmMenu, setConfirmMenu] = useState(false)
   const startTime = useRef(Date.now())
   const pendingEnd = useRef(false)
   const pendingPeriodTrans = useRef<PeriodTransitionData | null>(null)
@@ -105,7 +110,6 @@ export function App() {
         console.info('[DEV] URL params applied:', p)
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const hasSave = !!loadSave()
@@ -165,20 +169,26 @@ export function App() {
     setAchievements([]); setPuzFail(0); setPuzOk(0); setShowPuz(false); setPuzIdx(0)
     setGs({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
     startTime.current = Date.now()
+    nextGodModalAt.current = 3 + Math.floor(Math.random() * 3)
     writeSave({ godId: g.id, stats: s, evIdx: 0, eventIds: events.map(e => e.id), history: [], achievements: [], t: Date.now() })
     setScreen('game')
   }
 
   const continueGame = () => {
-    requestFS()
-    startMusic()
     const sv = loadSave(); if (!sv) return
     const g = GODS.find(x => x.id === sv.godId); if (!g) return
-    const events = sv.eventIds?.length ? getEventsById(sv.eventIds) : buildGameEvents(8)
+    // Resolve saved event IDs; if any fail (e.g. pools changed since save), start fresh
+    // rather than desyncing evIdx from a shorter list.
+    const resolved = sv.eventIds?.length ? getEventsById(sv.eventIds) : null
+    const events = resolved ?? buildGameEvents(8)
+    const savedIdx = resolved ? Math.min(sv.evIdx ?? 0, events.length) : 0
+    requestFS()
+    startMusic()
     setGod(g); setStats(sv.stats ?? INIT)
     setGameEvents(events)
-    setEvIdx(sv.evIdx ?? 0); setHistory(sv.history ?? [])
-    setAchievements(sv.achievements ?? [])
+    setEvIdx(savedIdx); setHistory(resolved ? (sv.history ?? []) : [])
+    setAchievements(resolved ? (sv.achievements ?? []) : [])
+    nextGodModalAt.current = savedIdx + 3 + Math.floor(Math.random() * 3)
     setScreen('game')
   }
 
@@ -269,12 +279,22 @@ export function App() {
     const nh = [...history, { eventId: ev.id, choice: 'pharaoh_event', effects: combined, statsAfter: ns }]
     const nIdx = evIdx + 1
 
+    // keep game-stat trackers in sync (mirrors handleChoice)
+    const ngs = { ...gs }
+    const hadLow = Object.values(stats).some(v => v <= 5)
+    if (hadLow && Object.values(ns).every(v => v >= 50)) ngs.revived = true
+    const noLoss = Object.values(combined).every(v => v >= 0)
+    ngs.stabStr = noLoss ? ngs.stabStr + 1 : 0
+    ngs.infMax = Math.max(ngs.infMax, ns.influencia)
+
     setStats(ns)
     setHistory(nh)
     setLastFx(combined)
+    setGs(ngs)
     setAnimKey(k => k + 1)
     setEvIdx(nIdx)
     playSound('event_result')
+    checkAch(ns, nh, ngs, puzFail, puzOk)
 
     if (god) writeSave({ godId: god.id, stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
 
@@ -316,7 +336,7 @@ export function App() {
               </div>
             )
           })}
-          <div className="ev-counter">{evIdx}/{totalEvents}</div>
+          <div className="ev-counter">{Math.min(evIdx + 1, totalEvents)}/{totalEvents}</div>
         </div>
       </div>
 
@@ -329,9 +349,18 @@ export function App() {
             <span className="god-badge-name">{god?.name}</span>
           </div>
           {(Object.keys(INIT) as (keyof Stats)[]).map(k => (
-            <div key={k} className="stat-row stat-row--clickable" onClick={() => setStatInfoKey(k)} title="Toca para más info">
+            <div
+              key={k}
+              className="stat-row stat-row--clickable"
+              onClick={() => setStatInfoKey(k)}
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStatInfoKey(k) } }}
+              role="button"
+              tabIndex={0}
+              aria-label={`${STAT_LABELS[k]}: ${stats[k]}. Más información`}
+              title="Toca para más info"
+            >
               <div className="stat-hd">
-                <span className="stat-ico">{STAT_ICONS[k]}</span>
+                <span className="stat-ico" aria-hidden="true">{STAT_ICONS[k]}</span>
                 <span className="stat-lbl">{STAT_LABELS[k]}</span>
                 <span className="stat-val">{stats[k]}</span>
               </div>
@@ -346,7 +375,7 @@ export function App() {
             </div>
           ))}
           <button className="btn-o sm" onClick={() => { setPapirosPrev('game'); setScreen('papiros') }}>📜 Papiros</button>
-          <button className="btn-menu" onClick={() => { if (confirm('¿Volver al menú? La partida está guardada.')) { stopMusic(); setScreen('menu') } }}>🏠 Menú</button>
+          <button className="btn-menu" onClick={() => setConfirmMenu(true)}>🏠 Menú</button>
           <button className="btn-music" onClick={() => { const on = toggleMusic(); setMusicOn(on) }} title={musicOn ? 'Silenciar música' : 'Activar música'}>
             {musicOn ? '🔊' : '🔇'}
           </button>
@@ -500,49 +529,29 @@ export function App() {
           />
         )}
       </AnimatePresence>
+
+      <AnimatePresence>
+        {confirmMenu && (
+          <ConfirmModal
+            key="confirm-menu"
+            title="¿Volver al menú?"
+            message="La partida está guardada. Podrás continuarla más tarde."
+            confirmLabel="Volver al menú"
+            cancelLabel="Seguir jugando"
+            icon="🏠"
+            onConfirm={() => { setConfirmMenu(false); stopMusic(); setScreen('menu') }}
+            onCancel={() => setConfirmMenu(false)}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 
-  // ── DEV: debug helpers ────────────────────────────────────────────────────
-  const devRef = useRef({ gameEvents, evIdx, stats, totalEvents, handleChoice: null as unknown as typeof handleChoice })
-  devRef.current = { gameEvents, evIdx, stats, totalEvents, handleChoice }
-
-  const skipEvent = useCallback(() => {
-    if (!import.meta.env.DEV) return
-    const { gameEvents: evs, evIdx: idx, handleChoice: hc } = devRef.current
-    const ev = evs[idx]
-    if (!ev) return
-    const opt = ev.opts[Math.floor(Math.random() * ev.opts.length)]
-    if (opt) hc(opt)
-  }, [])
-
-  const triggerPeriodTransition = useCallback((fromPeriodIdx: number) => {
-    if (!import.meta.env.DEV) return
-    const fromPeriod = PERIODS[fromPeriodIdx]
-    const toPeriod   = PERIODS[Math.min(3, fromPeriodIdx + 1)]
-    if (!fromPeriod) return
-    const { stats: s } = devRef.current
-    const lore    = PERIOD_LORE[fromPeriod.id]
-    const verdict = getLegacyVerdict(s)
-    setPeriodTransData({ fromPeriod, toPeriod, statsAtEnd: s, playStyle: PLAY_STYLES.default, lore, verdict })
-    setScreen('periodTransition')
-  }, [])
-
-  // ── DEV: keyboard shortcuts ───────────────────────────────────────────────
-  useEffect(() => {
-    if (!import.meta.env.DEV) return
-    const handler = (e: KeyboardEvent) => {
-      if (!e.shiftKey) return
-      if (e.key === 'ArrowRight') { e.preventDefault(); skipEvent() }
-      if (e.key === 'P') {
-        e.preventDefault()
-        const { evIdx: idx, totalEvents: tot } = devRef.current
-        triggerPeriodTransition(Math.min(2, Math.floor(idx / (tot / 4))))
-      }
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [skipEvent, triggerPeriodTransition])
+  // ── DEV: debug helpers (extracted) ────────────────────────────────────────
+  const { skipEvent, triggerPeriodTransition } = useDevTools({
+    gameEvents, evIdx, stats, totalEvents, handleChoice,
+    setPeriodTransData, setScreen,
+  })
 
   function renderScreen() {
     if (screen === 'menu')      return <MenuScreen      key="menu"      hasSave={hasSave} onNew={() => setScreen('name')} onContinue={continueGame} onAchievements={() => { setPapirosPrev('menu'); setScreen('papiros') }} onInfo={() => setShowModal(true)} onDeleteSave={() => { clearSave(); setScreen('menu') }} />
@@ -557,7 +566,9 @@ export function App() {
 
   return (
     <>
-      <AnimatePresence>{renderScreen()}</AnimatePresence>
+      <Suspense fallback={<div className="lazy-fallback">𓇳</div>}>
+        <AnimatePresence>{renderScreen()}</AnimatePresence>
+      </Suspense>
       {showModal && <InfoModal onClose={() => setShowModal(false)} />}
       {import.meta.env.DEV && (
         <DebugPanel actions={{

@@ -34,7 +34,7 @@ export function GlyphPuzzle({ puz, onDone }: Props) {
 
   const toggle = (i: number) => {
     if (ended) return
-    setClicked(p => { const s = new Set(p); s.has(i) ? s.delete(i) : s.add(i); return s })
+    setClicked(p => { const s = new Set(p); if (s.has(i)) s.delete(i); else s.add(i); return s })
   }
 
   const egyptians = glyphs.filter(g => g.c)

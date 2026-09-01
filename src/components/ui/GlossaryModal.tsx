@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { GLOSSARY_MAP } from '../../data/glossary'
+import { useModalA11y } from '../../hooks/useModalA11y'
 
 const CAT_LABELS: Record<string, string> = {
   egipcio:  '𓆣 Término Egipcio',
@@ -17,6 +18,7 @@ interface Props {
 
 export function GlossaryModal({ word, onClose }: Props) {
   const entry = GLOSSARY_MAP[word.toLowerCase()]
+  const { ref, dialogProps } = useModalA11y(onClose)
   if (!entry) return null
 
   return (
@@ -29,6 +31,9 @@ export function GlossaryModal({ word, onClose }: Props) {
       onClick={onClose}
     >
       <motion.div
+        ref={ref}
+        {...dialogProps}
+        aria-label={word}
         className="gmod"
         initial={{ opacity: 0, y: 20, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}

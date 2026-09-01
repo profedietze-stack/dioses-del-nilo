@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { DIDACTIC } from '../../data/didactic'
+import { useModalA11y } from '../../hooks/useModalA11y'
 
 interface Props {
   onClose: () => void
@@ -7,11 +8,12 @@ interface Props {
 
 export function InfoModal({ onClose }: Props) {
   const [tab, setTab] = useState<'student' | 'teacher'>('student')
+  const { ref, dialogProps } = useModalA11y(onClose)
 
   return (
     <div className="overlay" onClick={e => { if (e.target === e.currentTarget) onClose() }}>
-      <div className="modal">
-        <button className="modal-x" onClick={onClose}>✕</button>
+      <div ref={ref} {...dialogProps} aria-label="Información Didáctica" className="modal">
+        <button className="modal-x" onClick={onClose} aria-label="Cerrar">✕</button>
         <h3 className="modal-title">📚 Información Didáctica</h3>
         <div className="tabs">
           <button className={`tab${tab === 'student' ? ' active' : ''}`} onClick={() => setTab('student')}>Estudiantes</button>

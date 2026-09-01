@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import type { Stats, StatKey } from '../../types'
 import { STAT_ICONS, STAT_LABELS } from '../../data/periods'
 import { pickAdvisors, getAdvisorLine } from '../../data/advisors'
+import { useModalA11y } from '../../hooks/useModalA11y'
 
 interface Props {
   choice: string
@@ -17,6 +18,7 @@ export function ConsejerModal({ choice, fx, onContinue }: Props) {
   const a2stat = affected.find(([k]) => k === a2.stat)?.[1] ?? 0
   const a1line = getAdvisorLine(a1, a1stat)
   const a2line = getAdvisorLine(a2, a2stat)
+  const { ref, dialogProps } = useModalA11y(onContinue)
 
   return (
     <motion.div
@@ -28,6 +30,9 @@ export function ConsejerModal({ choice, fx, onContinue }: Props) {
       onClick={onContinue}
     >
       <motion.div
+        ref={ref}
+        {...dialogProps}
+        aria-label="Tus consejeros hablan"
         className="cmod"
         initial={{ opacity: 0, y: 32, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}

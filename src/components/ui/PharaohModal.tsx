@@ -23,12 +23,18 @@ export function PharaohModal({ pharaoh, onDone }: Props) {
   const handleMission = (m: PharaohMission) => {
     setMission(m)
     setStep('response')
-    setTimeout(() => onDone(blessing!.fx, m.fx), 2400)
+  }
+
+  const finish = () => {
+    if (blessing && mission) onDone(blessing.fx, mission.fx)
   }
 
   return (
     <motion.div
       className="pharaoh-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Coronación de ${pharaoh.name}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -120,6 +126,10 @@ export function PharaohModal({ pharaoh, onDone }: Props) {
             <p className="pharaoh-ka-close">
               𓇳 El Ka Eterno acepta las palabras del faraón. El Imperio avanza.
             </p>
+
+            <button className="btn-g pharaoh-continue-btn" onClick={finish}>
+              Continuar →
+            </button>
           </motion.div>
         )}
 

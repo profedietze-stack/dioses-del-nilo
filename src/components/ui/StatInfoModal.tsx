@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import type { StatKey } from '../../types'
 import { STAT_ICONS, STAT_LABELS, STAT_DESC, STAT_TIPS, STAT_COLORS } from '../../data/periods'
+import { useModalA11y } from '../../hooks/useModalA11y'
 
 interface Props {
   statKey: StatKey
@@ -13,6 +14,7 @@ export function StatInfoModal({ statKey, onClose }: Props) {
   const desc = STAT_DESC[statKey]
   const tips = STAT_TIPS[statKey] ?? []
   const color = STAT_COLORS[statKey]
+  const { ref, dialogProps } = useModalA11y(onClose)
 
   return (
     <motion.div
@@ -23,6 +25,9 @@ export function StatInfoModal({ statKey, onClose }: Props) {
       onClick={onClose}
     >
       <motion.div
+        ref={ref}
+        {...dialogProps}
+        aria-label={label}
         className="si-card"
         initial={{ opacity: 0, y: 24, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}

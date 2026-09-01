@@ -37,6 +37,9 @@ function pick(pool: GameEvent[], n: number): GameEvent[] {
   return shuffle(pool).slice(0, Math.min(n, pool.length))
 }
 
+// Position within each period block where the fixed pharaoh event is inserted.
+export const PHARAOH_INSERT_POS = 4
+
 function insertAt(events: GameEvent[], pharaoh: GameEvent, pos: number): GameEvent[] {
   const r = [...events]
   r.splice(pos, 0, pharaoh)
@@ -45,7 +48,7 @@ function insertAt(events: GameEvent[], pharaoh: GameEvent, pos: number): GameEve
 
 /**
  * Build a random game with perPeriod total slots per period.
- * One slot per period is a fixed pharaoh event at position 4 within each period block.
+ * One slot per period is a fixed pharaoh event at PHARAOH_INSERT_POS within each period block.
  * Remaining (perPeriod - 1) slots are random normal events.
  */
 export function buildGameEvents(perPeriod = 8): GameEvent[] {
@@ -57,14 +60,24 @@ export function buildGameEvents(perPeriod = 8): GameEvent[] {
   const tardio  = pick(POOL_TARDIO,  perPeriod - 1)
 
   return [
-    ...insertAt(antiguo, ph0, 4),
-    ...insertAt(medio,   ph1, 4),
-    ...insertAt(nuevo,   ph2, 4),
-    ...insertAt(tardio,  ph3, 4),
+    ...insertAt(antiguo, ph0, PHARAOH_INSERT_POS),
+    ...insertAt(medio,   ph1, PHARAOH_INSERT_POS),
+    ...insertAt(nuevo,   ph2, PHARAOH_INSERT_POS),
+    ...insertAt(tardio,  ph3, PHARAOH_INSERT_POS),
   ]
 }
 
-/** Reconstruct event list from saved IDs (for continue — includes pharaoh placeholders) */
-export function getEventsById(ids: number[]): GameEvent[] {
-  return ids.map(id => ALL_EVENTS.find(e => e.id === id)).filter(Boolean) as GameEvent[]
+/**
+ * Reconstruct event list from saved IDs (for continue — includes pharaoh placeholders).
+ * Returns null if any ID fails to resolve, so callers can fall back to a fresh game
+ * instead of silently producing a shorter list that desyncs from the saved evIdx.
+ */
+export function getEventsById(ids: number[]): GameEvent[] | null {
+  const out: GameEvent[] = []
+  for (const id of ids) {
+    const ev = ALL_EVENTS.find(e => e.id === id)
+    if (!ev) return null
+    out.push(ev)
+  }
+  return out
 }

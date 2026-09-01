@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import type { God } from '../../types'
+import { useModalA11y } from '../../hooks/useModalA11y'
 
 interface Props {
   god: God
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export function GodModal({ god, approval, encouragement, fact, onClose }: Props) {
+  const { ref, dialogProps } = useModalA11y(onClose)
   return (
     <motion.div
       className="gm-overlay"
@@ -19,6 +21,9 @@ export function GodModal({ god, approval, encouragement, fact, onClose }: Props)
       onClick={onClose}
     >
       <motion.div
+        ref={ref}
+        {...dialogProps}
+        aria-label={`Mensaje de ${god.name}`}
         className="gm-card"
         initial={{ opacity: 0, y: 32, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}

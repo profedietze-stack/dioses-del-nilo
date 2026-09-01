@@ -1,11 +1,29 @@
 import type { SaveData } from '../types'
 
 const SAVE_KEY = 'diosesNilo_v3'
+const SAVE_VERSION = 3
+
+function isValidSave(d: unknown): d is SaveData {
+  if (!d || typeof d !== 'object') return false
+  const s = d as Record<string, unknown>
+  return (
+    typeof s.godId === 'string' &&
+    typeof s.stats === 'object' && s.stats !== null &&
+    typeof s.evIdx === 'number' &&
+    Array.isArray(s.eventIds) &&
+    Array.isArray(s.history)
+  )
+}
 
 export function loadSave(): SaveData | null {
   try {
     const d = localStorage.getItem(SAVE_KEY)
-    return d ? (JSON.parse(d) as SaveData) : null
+    if (!d) return null
+    const parsed = JSON.parse(d) as Record<string, unknown>
+    // Reject saves from an incompatible schema version.
+    if (parsed.v !== undefined && parsed.v !== SAVE_VERSION) return null
+    if (!isValidSave(parsed)) return null
+    return parsed as SaveData
   } catch {
     return null
   }
@@ -13,7 +31,7 @@ export function loadSave(): SaveData | null {
 
 export function writeSave(d: SaveData): void {
   try {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(d))
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ ...d, v: SAVE_VERSION }))
   } catch {
     // localStorage full or blocked
   }

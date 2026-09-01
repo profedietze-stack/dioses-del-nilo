@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import type { Advisor, Urgency } from '../../data/advisors'
+import { useModalA11y } from '../../hooks/useModalA11y'
 
 interface Props {
   advisor: Advisor
@@ -12,6 +13,7 @@ export function AdvisorModal({ advisor, advice, urgency, onClose }: Props) {
   const urgencyLabel =
     urgency === 'critical' ? '⚠ SITUACIÓN CRÍTICA' :
     urgency === 'warning'  ? '! ATENCIÓN REQUERIDA' : null
+  const { ref, dialogProps } = useModalA11y(onClose)
 
   return (
     <motion.div
@@ -22,6 +24,9 @@ export function AdvisorModal({ advisor, advice, urgency, onClose }: Props) {
       onClick={onClose}
     >
       <motion.div
+        ref={ref}
+        {...dialogProps}
+        aria-label={`Consejo de ${advisor.name}`}
         className="advm-card"
         style={{ '--advm-col': advisor.color } as React.CSSProperties}
         initial={{ opacity: 0, y: 24, scale: 0.96 }}
