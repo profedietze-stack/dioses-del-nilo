@@ -29,7 +29,9 @@ export function GodSelectScreen({ onSelect, onBack }: Props) {
               key={g.id}
               className={`god-card${hov?.id === g.id ? ' sel' : ''}`}
               style={{
-                borderColor: hov?.id === g.id ? g.col : undefined,
+                borderTopColor: hov?.id === g.id ? g.col : undefined,
+                borderRightColor: hov?.id === g.id ? g.col : undefined,
+                borderBottomColor: hov?.id === g.id ? g.col : undefined,
                 borderLeftColor: g.col,
                 boxShadow: hov?.id === g.id ? `0 0 20px ${g.col}55` : undefined,
               }}

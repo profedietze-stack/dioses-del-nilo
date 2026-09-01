@@ -42,6 +42,9 @@ export function MenuScreen({ hasSave, onNew, onContinue, onAchievements, onInfo,
           alt=""
           aria-hidden="true"
           className="menu-bg-photo"
+          // @ts-expect-error React 18 types don't know fetchpriority; browsers support the lowercase attribute
+          fetchpriority="high"
+          decoding="async"
           onError={() => setBgImgErr(true)}
         />
       )}

@@ -42,6 +42,7 @@ export function PeriodTransitionScreen({ data, onContinue }: Props) {
             alt=""
             aria-hidden="true"
             className="pt-header-photo"
+            decoding="async"
             onError={() => setImgErr(true)}
           />
         )}

@@ -10,7 +10,15 @@ export function SplashScreen() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6, ease: 'easeInOut' }}
     >
-      <img src={SPLASH_BG_SRC} alt="" aria-hidden="true" className="splash-bg-photo" />
+      <img
+        src={SPLASH_BG_SRC}
+        alt=""
+        aria-hidden="true"
+        className="splash-bg-photo"
+        // @ts-expect-error React 18 types don't know fetchpriority; browsers support the lowercase attribute
+        fetchpriority="high"
+        decoding="async"
+      />
       <div className="splash-overlay" />
       <motion.div
         className="splash-c"

@@ -67,6 +67,8 @@ function CatImage({ cat }: { cat: string }) {
       alt=""
       aria-hidden="true"
       className="ev-cat-img"
+      loading="lazy"
+      decoding="async"
       onError={() => setErr(true)}
     />
   )
@@ -216,7 +218,11 @@ export function App() {
     setEvIdx(savedIdx); setHistory(resolved ? (sv.history ?? []) : [])
     setAchievements(resolved ? (sv.achievements ?? []) : [])
     nextGodModalAt.current = savedIdx + 3 + Math.floor(Math.random() * 3)
-    setScreen('game')
+    // A save written right as the game ended can have evIdx === events.length
+    // (one past the last valid index) — resuming into 'game' would try to
+    // render gameEvents[evIdx], which is undefined, and get stuck on the
+    // "Cargando..." fallback forever. Send it straight to the end screen.
+    setScreen(savedIdx >= events.length ? 'end' : 'game')
   }
 
   const handleChoice = (opt: EventOption) => {
