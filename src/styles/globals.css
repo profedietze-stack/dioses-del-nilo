@@ -1746,3 +1746,8 @@ button { font-family: inherit; cursor: pointer; }
   }
   .lazy-fallback { animation: none !important; opacity: 1; }
 }
+
+.lazy-fallback--inline {
+  position: static; height: 200px; font-size: 2rem;
+  background: transparent; color: var(--gold);
+}

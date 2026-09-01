@@ -12,20 +12,23 @@ import { loadSave, writeSave, clearSave } from './utils/save'
 import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngine'
 import { MenuScreen } from './components/screens/MenuScreen'
 import { NameScreen } from './components/screens/NameScreen'
+import { IntroScreen } from './components/screens/IntroScreen'
+import { GodSelectScreen } from './components/screens/GodSelectScreen'
+import { PapirosScreen } from './components/screens/PapirosScreen'
+import { EndScreen } from './components/screens/EndScreen'
+import { PeriodTransitionScreen } from './components/screens/PeriodTransitionScreen'
 import { DebugPanel } from './components/dev/DebugPanel'
 import { parseDevParams } from './utils/devParams'
 import { useDevTools } from './hooks/useDevTools'
 
-// Code-split: secondary screens & puzzles load on demand to shrink initial bundle.
-const IntroScreen           = lazy(() => import('./components/screens/IntroScreen').then(m => ({ default: m.IntroScreen })))
-const GodSelectScreen       = lazy(() => import('./components/screens/GodSelectScreen').then(m => ({ default: m.GodSelectScreen })))
-const PapirosScreen         = lazy(() => import('./components/screens/PapirosScreen').then(m => ({ default: m.PapirosScreen })))
-const EndScreen             = lazy(() => import('./components/screens/EndScreen').then(m => ({ default: m.EndScreen })))
-const PeriodTransitionScreen = lazy(() => import('./components/screens/PeriodTransitionScreen').then(m => ({ default: m.PeriodTransitionScreen })))
-const GlyphPuzzle           = lazy(() => import('./components/puzzles/GlyphPuzzle').then(m => ({ default: m.GlyphPuzzle })))
-const WordOrder             = lazy(() => import('./components/puzzles/WordOrder').then(m => ({ default: m.WordOrder })))
-const MaatScale             = lazy(() => import('./components/puzzles/MaatScale').then(m => ({ default: m.MaatScale })))
-const PharaohTimeline       = lazy(() => import('./components/puzzles/PharaohTimeline').then(m => ({ default: m.PharaohTimeline })))
+// Code-split: puzzles load on demand. Screens are NOT lazy — they're swapped
+// via AnimatePresence, and React.lazy's Suspense boundary breaks framer-motion's
+// exit-animation unmount cycle (old screens get stuck mounted forever when the
+// incoming lazy screen suspends). Verified regression on the live site.
+const GlyphPuzzle     = lazy(() => import('./components/puzzles/GlyphPuzzle').then(m => ({ default: m.GlyphPuzzle })))
+const WordOrder       = lazy(() => import('./components/puzzles/WordOrder').then(m => ({ default: m.WordOrder })))
+const MaatScale       = lazy(() => import('./components/puzzles/MaatScale').then(m => ({ default: m.MaatScale })))
+const PharaohTimeline = lazy(() => import('./components/puzzles/PharaohTimeline').then(m => ({ default: m.PharaohTimeline })))
 import { InfoModal } from './components/ui/InfoModal'
 import { ConsejerModal } from './components/ui/ConsejerModal'
 import { AdvisorPanel } from './components/ui/AdvisorPanel'
@@ -390,10 +393,15 @@ export function App() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
             >
-              {curPuzDef.type === 'glifos' && <GlyphPuzzle puz={curPuzDef} onDone={handlePuzDone} />}
-              {curPuzDef.type === 'ordenar' && <WordOrder puz={curPuzDef} onDone={handlePuzDone} />}
-              {curPuzDef.type === 'balanza' && <MaatScale puz={curPuzDef} onDone={handlePuzDone} />}
-              {curPuzDef.type === 'faraones' && <PharaohTimeline puz={curPuzDef} onDone={handlePuzDone} />}
+              {/* Local Suspense boundary: a puzzle chunk suspending must only
+                  blank this panel, not bubble up and interrupt the parent
+                  AnimatePresence screen-transition (see lazy-loading note above). */}
+              <Suspense fallback={<div className="lazy-fallback lazy-fallback--inline">𓇳</div>}>
+                {curPuzDef.type === 'glifos' && <GlyphPuzzle puz={curPuzDef} onDone={handlePuzDone} />}
+                {curPuzDef.type === 'ordenar' && <WordOrder puz={curPuzDef} onDone={handlePuzDone} />}
+                {curPuzDef.type === 'balanza' && <MaatScale puz={curPuzDef} onDone={handlePuzDone} />}
+                {curPuzDef.type === 'faraones' && <PharaohTimeline puz={curPuzDef} onDone={handlePuzDone} />}
+              </Suspense>
             </motion.div>
           ) : ev?.isPharaoh ? (
             <motion.div
@@ -566,9 +574,7 @@ export function App() {
 
   return (
     <>
-      <Suspense fallback={<div className="lazy-fallback">𓇳</div>}>
-        <AnimatePresence>{renderScreen()}</AnimatePresence>
-      </Suspense>
+      <AnimatePresence>{renderScreen()}</AnimatePresence>
       {showModal && <InfoModal onClose={() => setShowModal(false)} />}
       {import.meta.env.DEV && (
         <DebugPanel actions={{
