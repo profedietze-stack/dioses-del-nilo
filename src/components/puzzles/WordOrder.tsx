@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { PuzzleDef } from '../../types'
+import { barajarDesordenado } from '../../utils/barajar'
 
 interface Props {
   puz: PuzzleDef
@@ -9,7 +10,11 @@ interface Props {
 export function WordOrder({ puz, onDone }: Props) {
   const words = puz.words ?? []
   const [slots, setSlots] = useState<(string | null)[]>(Array(words.length).fill(null))
-  const [avail, setAvail] = useState<string[]>(() => [...words].sort(() => Math.random() - 0.5))
+  // Nunca se entrega la frase ya ordenada: con cinco palabras y el barajado
+  // viejo pasaba una de cada once veces, y ahi el chico no resuelve nada.
+  const [avail, setAvail] = useState<string[]>(
+    () => barajarDesordenado(words, (o) => o.every((w, i) => w === words[i])),
+  )
   const [done, setDone] = useState(false)
   const [statDelta, setStatDelta] = useState(0)
 

@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from 'react'
 import type { PuzzleDef } from '../../types'
 import { PHARAOHS_BY_PERIOD, type PharaohCard } from '../../data/pharaohCards'
+import { barajarDesordenado } from '../../utils/barajar'
 
 interface Props {
   puz: PuzzleDef
@@ -12,7 +13,10 @@ export function PharaohTimeline({ puz, onDone }: Props) {
   const allCards = PHARAOHS_BY_PERIOD[periodKey] ?? []
   const correct = [...allCards].sort((a, b) => b.yearBC - a.yearBC)
 
-  const [hand] = useState<PharaohCard[]>(() => [...allCards].sort(() => Math.random() - 0.5))
+  // Idem: seis faraones ya cronologicos salian el 4,6% de las veces.
+  const [hand] = useState<PharaohCard[]>(
+    () => barajarDesordenado(allCards, (o) => o.every((c, i) => c.id === correct[i]?.id)),
+  )
   const [slots, setSlots] = useState<(PharaohCard | null)[]>(Array(6).fill(null))
   const [done, setDone] = useState(false)
   const [dragOver, setDragOver] = useState<number | 'pool' | null>(null)

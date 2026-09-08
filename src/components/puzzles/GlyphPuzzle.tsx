@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { PuzzleDef, Glyph } from '../../types'
+import { barajar } from '../../utils/barajar'
 
 interface Props {
   puz: PuzzleDef
@@ -7,7 +8,7 @@ interface Props {
 }
 
 export function GlyphPuzzle({ puz, onDone }: Props) {
-  const [glyphs] = useState<Glyph[]>(() => [...(puz.glyphs ?? [])].sort(() => Math.random() - 0.5))
+  const [glyphs] = useState<Glyph[]>(() => barajar(puz.glyphs ?? []))
   const [clicked, setClicked] = useState<Set<number>>(new Set())
   const [time, setTime] = useState(puz.timeLimit ?? 40)
   const [ended, setEnded] = useState(false)
