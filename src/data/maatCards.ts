@@ -1,3 +1,4 @@
+import { barajar } from '../utils/barajar'
 export interface MaatCard {
   id: string
   label: string
@@ -37,6 +38,8 @@ export const MAAT_CARD_POOL: MaatCard[] = [
 ]
 
 export function dealMaatCards(count = 8): MaatCard[] {
-  const shuffled = [...MAAT_CARD_POOL].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, count)
+  // Con `sort(() => Math.random() - 0.5)`, las cartas escritas al principio del
+  // pool salían mucho más seguido que las del final: el chico veía siempre las
+  // mismas virtudes y los mismos pecados.
+  return barajar(MAAT_CARD_POOL).slice(0, count)
 }

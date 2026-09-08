@@ -81,3 +81,26 @@ describe('barajarDesordenado', () => {
     }
   })
 })
+
+describe('reparto de las cartas de Maat', () => {
+  it('ninguna carta del pool queda condenada al fondo', async () => {
+    const { dealMaatCards, MAAT_CARD_POOL } = await import('../data/maatCards')
+    const veces: Record<string, number> = {}
+    const N = 4000
+    for (let i = 0; i < N; i++) {
+      for (const c of dealMaatCards(8)) veces[c.id] = (veces[c.id] ?? 0) + 1
+    }
+    expect(Object.keys(veces).length, 'hay cartas que no salen nunca').toBe(MAAT_CARD_POOL.length)
+    // Se reparten 8 de las que haya: todas deberían salir con la misma
+    // frecuencia. Con el comparador viejo, las primeras del archivo salían
+    // bastante más que las últimas.
+    const esperado = 8 / MAAT_CARD_POOL.length
+    for (const [id, n] of Object.entries(veces)) {
+      const p = n / N
+      expect(
+        Math.abs(p - esperado) / esperado,
+        `"${id}" sale el ${(p * 100).toFixed(1)}% de las veces y debería salir el ${(esperado * 100).toFixed(1)}%`,
+      ).toBeLessThan(0.12)
+    }
+  })
+})
