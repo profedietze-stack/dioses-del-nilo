@@ -31,7 +31,7 @@ export const MAAT_CARD_POOL: MaatCard[] = [
   { id: 'envidia',      label: 'Envidia',       icon: '𓁹', weight: +5, type: 'pecado', hint: 'Desear el bien ajeno corrompía el espíritu y lo alejaba de la gracia de Osiris.' },
   { id: 'ira',          label: 'Ira',           icon: '𓆙', weight: +7, type: 'pecado', hint: 'La ira sin control era signo de un alma desequilibrada, contraria a Maat.' },
   { id: 'avaricia',     label: 'Avaricia',      icon: '𓏾', weight: +6, type: 'pecado', hint: 'Acumular sin compartir rompía el ciclo sagrado de abundancia del Nilo.' },
-  { id: 'blasfemia',    label: 'Blasfemia',     icon: '𓃭', weight: +7, type: 'pecado', hint: 'Hablar mal de los dioses llenaba el corazón de plomo ante la balanza de Anubis.' },
+  { id: 'blasfemia',    label: 'Blasfemia',     icon: '𓃭', weight: +7, type: 'pecado', hint: 'Hablar mal de los dioses llenaba el corazón de plomo ante la balanza de Maat.' },
   { id: 'violencia',    label: 'Violencia',     icon: '𓌀', weight: +9, type: 'pecado', hint: 'Derramar sangre inocente era una de las 42 confesiones negativas del Libro de los Muertos.' },
   { id: 'pereza',       label: 'Pereza',        icon: '𓇾', weight: +4, type: 'pecado', hint: 'No trabajar la tierra sagrada del Nilo era un desprecio al don de los dioses.' },
   { id: 'engano',       label: 'Engaño',        icon: '𓈗', weight: +6, type: 'pecado', hint: 'Engañar al prójimo era actuar contra la Maat, el orden que sostenía el universo.' },

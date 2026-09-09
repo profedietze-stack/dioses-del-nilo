@@ -16,11 +16,11 @@ const GLYPH_SET_1: Glyph[] = [
 ]
 
 const GLYPH_SET_2: Glyph[] = [
-  { s: '𓁹', c: true, lbl: 'Ojo de Wadjet', desc: 'El ojo de la cobra Wadjet, protectora del Bajo Egipto y del faraón.' },
+  { s: '𓁹', c: true, lbl: 'Ojo (jeroglífico ir)', desc: 'Signo D4: el ojo humano. Vale por "ir", ver. No confundir con el udjat, el ojo de Horus.' },
   { s: '𓂧', c: true, lbl: 'Mano (jeroglífico D)', desc: 'Signo fonético para el sonido "d". Clave en la escritura jeroglífica egipcia.' },
-  { s: '𓆑', c: true, lbl: 'Cobra uraeus', desc: 'La cobra real en posición de ataque: símbolo de poder en la corona del faraón.' },
+  { s: '𓆑', c: true, lbl: 'Víbora cornuda (jeroglífico F)', desc: 'Signo I9: la víbora cornuda del desierto. Vale por el sonido "f" y sirve de pronombre «el, su».' },
   { s: '𓂋', c: true, lbl: 'Boca (jeroglífico R)', desc: 'Representa la boca. Usado para el sonido "r" en escritura egipcia.' },
-  { s: '𓏌', c: true, lbl: 'Papiro enrollado', desc: 'Símbolo de escritura y conocimiento. Los escribas usaban papiro para sus textos.' },
+  { s: '𓏌', c: true, lbl: 'Vasija de barro (nu)', desc: 'Signo W24: una vasija. Vale por el grupo de sonidos "nu" y aparece en muchísimas palabras.' },
   { s: '𓇋', c: true, lbl: 'Caña (jeroglífico I)', desc: 'Jeroglífico fonético para el sonido "i". Frecuente en nombres de faraones.' },
   { s: '卐', c: false, lbl: 'Svástika (sánscrito)', desc: 'Símbolo de buena suerte en culturas indoeuropeas y asiáticas. No es egipcio.' },
   { s: '⛤', c: false, lbl: 'Pentagrama', desc: 'Símbolo de la tradición esotérica occidental medieval. Ajeno al mundo egipcio.' },
@@ -39,7 +39,7 @@ export const PUZZLES_DEF: PuzzleDef[] = [
   { id: 6, type: 'ordenar', afterEvent: 18, tpl: 'Hatshepsut gobernó como [FARAONA] durante 20 años. Organizó expediciones a [PUNT] y construyó el templo de [DEIR]. Su [MEMORIA] fue borrada por sus sucesores pero rescatada por la arqueología.', words: ['FARAONA', 'PUNT', 'DEIR', 'MEMORIA'], penalty: 3 },
   { id: 7, type: 'glifos', afterEvent: 21, cat: 'Jeroglíficos del Imperio Nuevo y Período Tardío', timeLimit: 45, target: 65, glyphs: GLYPH_SET_2, penalty: 3 },
   { id: 8, type: 'ordenar', afterEvent: 24, tpl: 'Akenatón impuso el culto al dios [ATON], prohibiendo a los demás. Su capital fue [AMARNA]. Fue la primera forma de [MONOTEISMO] documentada en la historia. Su sucesor [TUTANKAMON] restauró el culto tradicional.', words: ['ATON', 'AMARNA', 'MONOTEISMO', 'TUTANKAMON'], penalty: 3 },
-  { id: 9, type: 'ordenar', afterEvent: 27, tpl: 'El [LIBRO] de los Muertos guiaba al alma a través del [DUAT]. El corazón del difunto era pesado en la balanza de [MAAT] frente al dios [ANUBIS], juez de los muertos.', words: ['LIBRO', 'DUAT', 'MAAT', 'ANUBIS'], penalty: 3 },
+  { id: 9, type: 'ordenar', afterEvent: 27, tpl: 'El [LIBRO] de los Muertos guiaba al alma a través del [DUAT]. El corazón del difunto se pesaba contra la pluma de [MAAT]: el dios [ANUBIS] sostenía la balanza y Osiris, sentado en su trono, dictaba el veredicto.', words: ['LIBRO', 'DUAT', 'MAAT', 'ANUBIS'], penalty: 3 },
   { id: 10, type: 'balanza',   afterEvent: 16, timeLimit: 60, cardCount: 8, statKeys: ['fe', 'cultura', 'estabilidad'], penalty: 3 },
   { id: 11, type: 'balanza',   afterEvent: 25, timeLimit: 50, cardCount: 8, statKeys: ['fe', 'cultura', 'estabilidad'], penalty: 3 },
   { id: 12, type: 'faraones',  afterEvent: 7,  pharaohPeriod: 'antiguo', statKeys: ['cultura', 'influencia'], penalty: 3 },

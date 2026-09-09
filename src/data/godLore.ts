@@ -11,7 +11,7 @@ export const GOD_APPROVAL: Record<string, Record<string, string[]>> = {
   },
   osiris: {
     cultural:    ['El papiro que preserva el saber vence a la muerte. Has honrado mi legado.', 'La cultura es el Nilo del espíritu: quien lo riega, cosecha inmortalidad.'],
-    social:      ['Los humildes también tienen nombre en el Libro de los Muertos. Los recuerdas vivos.', 'Cada alma que protegiste pesa una pluma menos en la balanza de Anubis.'],
+    social:      ['Los humildes también tienen nombre en el Libro de los Muertos. Los recuerdas vivos.', 'Cada alma que protegiste pesa una pluma menos cuando Anubis ajusta la balanza de Maat.'],
     militar:     ['La guerra tiene su tiempo y la paz el suyo. Espero que este sea su tiempo.', 'Osiris conoce el peso de cada acción. Que esta victoria no pese demasiado.'],
     economico:   ['Los graneros de Osiris nunca están vacíos para quien cuida su cosecha.', 'La abundancia es regalo de los dioses a quienes administran con justicia.'],
     diplomatico: ['La diplomacia transforma el conflicto en vida: es mi resurrección aplicada.', 'Osiris tendió puentes entre vivos y muertos. Tú entre pueblos. Bien hecho.'],
