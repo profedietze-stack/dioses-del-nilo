@@ -67,3 +67,49 @@ describe('getDivineTitle', () => {
     expect(getDivineTitle(0)).toBe('Iniciado del Templo')
   })
 })
+
+/**
+ * Un guardado editado deja las estadísticas en NaN, y el juego no lo nota.
+ *
+ * `clamp` era `Math.max(0, Math.min(100, v))`, que **deja pasar el NaN**: las dos
+ * comparaciones con NaN son falsas y sale intacto por el medio. Y `loadSave`
+ * comprobaba que `stats` fuera un objeto, no que sus valores fueran números.
+ *
+ * Con una sola estadística en texto, `"mucha" + 5` da `"mucha5"` y de ahí en más
+ * todo es NaN: el promedio, el puntaje y el ancho de las barras (`width: NaN%`).
+ * Lo peor es lo callado que es. `getDivineTitle(NaN)` falla todas sus
+ * comparaciones y cae al último caso, así que el alumno termina de «Iniciado del
+ * Templo» sin importar lo bien que haya jugado, y el veredicto se va a «Imperio
+ * Frágil» por el mismo camino. Ni un error en consola.
+ */
+describe('las estadísticas aguantan un guardado editado', () => {
+  it('clamp devuelve siempre un número usable', () => {
+    for (const basura of [NaN, undefined, null, 'mucha', {}, [1, 2], Infinity, -Infinity]) {
+      const v = clamp(basura as unknown as number)
+      expect(Number.isFinite(v), `clamp(${JSON.stringify(basura)}) = ${v}`).toBe(true)
+      expect(v).toBeGreaterThanOrEqual(0)
+      expect(v).toBeLessThanOrEqual(100)
+    }
+  })
+
+  it('y los números de verdad siguen pasando acotados', () => {
+    expect(clamp(50)).toBe(50)
+    expect(clamp(-20)).toBe(0)
+    expect(clamp(180)).toBe(100)
+  })
+
+  it('una estadística que vino como texto no contagia al resto', () => {
+    const sucias = { ...INIT, estabilidad: 'mucha' as unknown as number }
+    const r = applyFx(sucias, { estabilidad: 5, riqueza: 3 })
+    for (const [k, v] of Object.entries(r)) {
+      expect(Number.isFinite(v), `${k} quedó en ${v}`).toBe(true)
+    }
+  })
+
+  it('y el puntaje sigue siendo un número, así que el título no miente', () => {
+    const sucias = { ...INIT, cultura: NaN }
+    const score = calcScore(applyFx(sucias, { cultura: 10 }), 3, 1)
+    expect(Number.isFinite(score), `score = ${score}`).toBe(true)
+    expect(getDivineTitle(score)).not.toBe('Iniciado del Templo')
+  })
+})
