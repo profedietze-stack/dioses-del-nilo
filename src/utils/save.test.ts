@@ -11,6 +11,10 @@ const baseSave: SaveData = {
   eventIds: [1, 2, 3],
   history: [],
   achievements: [],
+  puzDone: [3, 6],
+  puzOk: 1,
+  puzFail: 1,
+  gs: { mil: 1, peace: 2, revived: false, stabStr: 3, infMax: 55, cruel: 0 },
   t: Date.now(),
 }
 
@@ -50,6 +54,47 @@ describe('writeSave / loadSave', () => {
     void playerName
     localStorage.setItem('diosesNilo_v3', JSON.stringify({ ...legacy, v: 3 }))
     expect(loadSave()?.playerName).toBe('')
+  })
+})
+
+describe('el avance de los puzzles sobrevive a recargar', () => {
+  it('guarda qué puzzles se hicieron y cuántos salieron bien o mal', () => {
+    writeSave(baseSave)
+    const l = loadSave()!
+    expect([l.puzDone, l.puzOk, l.puzFail]).toEqual([[3, 6], 1, 1])
+  })
+
+  it('un guardado de antes, sin ese avance, no vuelve a pedir los puzzles que ya quedaron atrás', () => {
+    const { puzDone, puzOk, puzFail, gs, ...viejo } = { ...baseSave, evIdx: 11 }
+    void puzDone; void puzOk; void puzFail; void gs
+    localStorage.setItem('diosesNilo_v3', JSON.stringify({ ...viejo, v: 3 }))
+    const l = loadSave()!
+    expect(l.puzDone).toEqual(expect.arrayContaining([1, 2, 3])) // afterEvent 3, 6, 9
+    expect(l.puzDone).not.toContain(4) // afterEvent 12: todavía no
+    expect([l.puzOk, l.puzFail]).toEqual([0, 0])
+  })
+})
+
+describe('un guardado editado no rompe el arranque', () => {
+  it('una estadística en texto no contamina a las demás', () => {
+    localStorage.setItem('diosesNilo_v3', JSON.stringify({ ...baseSave, stats: { ...INIT, fe: 'mucha', riqueza: null }, v: 3 }))
+    const l = loadSave()!
+    for (const v of Object.values(l.stats)) expect(Number.isFinite(v)).toBe(true)
+    expect(l.stats.estabilidad).toBe(INIT.estabilidad)
+  })
+
+  it('el historial con entradas rotas se descarta entrada por entrada', () => {
+    localStorage.setItem('diosesNilo_v3', JSON.stringify({ ...baseSave, history: [null, 7, { eventId: 'x' }, { eventId: 1, choice: 'a', effects: {}, statsAfter: INIT }], v: 3 }))
+    expect(loadSave()!.history).toHaveLength(1)
+  })
+
+  it('listas con basura y contadores con el tipo cambiado se limpian', () => {
+    localStorage.setItem('diosesNilo_v3', JSON.stringify({ ...baseSave, achievements: ['a', 3, null], puzDone: [1, 'z'], puzOk: 'x', gs: 'no', v: 3 }))
+    const l = loadSave()!
+    expect(l.achievements).toEqual(['a'])
+    expect(l.puzDone).toEqual([1])
+    expect(l.puzOk).toBe(0)
+    expect(l.gs.cruel).toBe(0)
   })
 })
 

@@ -16,7 +16,9 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    // 1280x900: a 720 de alto el mazo del puzzle de faraones queda al borde de la
+    // pantalla y el arrastre del test no suelta (ver el hallazgo de la auditoría).
+    { name: 'chromium', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 900 } } },
     { name: 'mobile-chrome', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {

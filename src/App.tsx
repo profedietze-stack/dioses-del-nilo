@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
-import type { God, Stats, StatKey, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData } from './types'
+import type { God, Stats, StatKey, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData, SaveData } from './types'
 import { GODS } from './data/gods'
 import { PERIODS } from './data/periods'
 import { PLAY_STYLES, PERIOD_LORE, getLegacyVerdict } from './data/periodLore'
@@ -9,6 +9,8 @@ import { buildGameEvents, getEventsById } from './data/eventPools'
 import { PUZZLES_DEF } from './data/puzzles'
 import { INIT, clamp, applyFx } from './utils/gameLogic'
 import { loadSave, writeSave, clearSave } from './utils/save'
+import { pendingPuzzle } from './utils/puzzleSchedule'
+import { evaluateAchievements } from './utils/achievements'
 import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngine'
 import { SplashScreen } from './components/screens/SplashScreen'
 import { MenuScreen } from './components/screens/MenuScreen'
@@ -41,6 +43,8 @@ import { ConfirmModal } from './components/ui/ConfirmModal'
 import { PHARAOHS } from './data/pharaohs'
 import { buildGodModal } from './data/godLore'
 import { processGlossary } from './utils/processGlossary'
+
+const EMPTY_GS: GameStats = { mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 }
 
 const OPT_TYPE_ICONS: Record<string, string> = {
   militar:     '⚔️',
@@ -92,14 +96,13 @@ export function App() {
   const [achievements, setAchievements] = useState<string[]>([])
   const [puzFail, setPuzFail] = useState(0)
   const [puzOk, setPuzOk] = useState(0)
-  const [puzIdx, setPuzIdx] = useState(0)
-  const [showPuz, setShowPuz] = useState(false)
+  const [puzDone, setPuzDone] = useState<number[]>([])
   const [showModal, setShowModal] = useState(false)
   const [animKey, setAnimKey] = useState(0)
   const [consejer, setConsejer] = useState<{ fx: Partial<Stats>; choice: string } | null>(null)
   const [glossWord, setGlossWord] = useState<string | null>(null)
   const [musicOn, setMusicOn] = useState(true)
-  const [gs, setGs] = useState<GameStats>({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
+  const [gs, setGs] = useState<GameStats>(EMPTY_GS)
   const [periodTransData, setPeriodTransData] = useState<PeriodTransitionData | null>(null)
   const [godModalData, setGodModalData] = useState<{ approval: string; encouragement: string; fact: string } | null>(null)
   const [statInfoKey, setStatInfoKey] = useState<StatKey | null>(null)
@@ -132,7 +135,7 @@ export function App() {
         for (const k in g.bon) baseStats[k as keyof typeof baseStats] = clamp(50 + g.bon[k as keyof typeof baseStats])
         const s = p.stats ? { ...baseStats, ...p.stats } : baseStats
         const idx = p.evIdx ?? 0
-        writeSave({ godId: g.id, playerName: 'Faraón', stats: s, evIdx: idx, eventIds: events.map(e => e.id), history: [], achievements: [], t: Date.now() })
+        writeSave({ godId: g.id, playerName: 'Faraón', stats: s, evIdx: idx, eventIds: events.map(e => e.id), history: [], achievements: [], puzDone: [], puzOk: 0, puzFail: 0, gs: EMPTY_GS, t: Date.now() })
         setGod(g); setStats(s); setEvIdx(idx); setGameEvents(events); setHistory([])
         setScreen((p.screen as Screen) ?? 'game')
         console.info('[DEV] URL params applied:', p)
@@ -141,49 +144,33 @@ export function App() {
   }, [])
 
   const hasSave = !!loadSave()
-  const curPuzDef = PUZZLES_DEF[puzIdx]
+  // El puzzle pendiente se deduce del avance, no de un contador: ver puzzleSchedule.
+  // Mientras toca una coronación el puzzle espera, para que no se pisen.
+  const evNow = gameEvents[evIdx]
+  const curPuzDef = screen === 'game' && evNow && !evNow.isPharaoh ? pendingPuzzle(evIdx, puzDone) : undefined
 
   useEffect(() => {
-    if (curPuzDef && evIdx === curPuzDef.afterEvent && !showPuz) {
-      setShowPuz(true)
-      playSound('puzzle_open')
-    }
-  }, [evIdx, puzIdx, curPuzDef, showPuz])
+    if (curPuzDef) playSound('puzzle_open')
+  }, [curPuzDef?.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const checkAch = useCallback((ns: Stats, nh: HistoryEntry[], ngs: GameStats, nPF: number, nPO: number) => {
-    const gid = god?.id
-    const pt = Date.now() - startTime.current
-    const checks: Record<string, boolean> = {
-      escriba: nPF <= 1,
-      conquistador: ns.influencia > 68,
-      artesano: ns.cultura > 72,
-      mercader: ns.riqueza > 68,
-      guardian: ns.estabilidad > 72,
-      puzzlemaster: nPO >= 5,
-      speedrun: pt < 3600000,
-      equilibrio: nh.every(h2 => h2.statsAfter && Object.values(h2.statsAfter).every(v => v >= 40 && v <= 60)),
-      tragedia: ngs.cruel >= 3,
-      resurrector: ngs.revived,
-      ra_solar: gid === 'ra' && Object.values(ns).every(v => v > 58),
-      ra_fuego: gid === 'ra' && ngs.stabStr >= 10,
-      osiris_cosecha: gid === 'osiris' && ns.riqueza > 70 && ns.estabilidad > 68,
-      osiris_renacer: gid === 'osiris' && ngs.revived,
-      thoth_ibis: gid === 'thoth' && ns.cultura > 75,
-      horus_halcon: gid === 'horus' && ns.influencia > 75,
-      horus_vengador: gid === 'horus' && ngs.mil >= 5,
-      hathor_armonia: gid === 'hathor' && Object.values(ns).filter(v => v > 62).length >= 2,
-      hathor_amor: gid === 'hathor' && nh.length > 0 && (ngs.peace / nh.length) >= 0.7,
-      sekhmet_leona: gid === 'sekhmet' && ns.influencia > 70 && ns.riqueza > 62,
-      anubis_guardian: gid === 'anubis' && ns.cultura > 68,
-      anubis_guia: gid === 'anubis' && ngs.infMax <= 50,
-      bastet_gato: gid === 'bastet' && ngs.stabStr >= 20,
-      bastet_gracia: gid === 'bastet' && ns.influencia > 62 && ns.estabilidad > 68,
-    }
-    setAchievements(prev => {
-      const newOnes = Object.entries(checks).filter(([id, ok]) => ok && !prev.includes(id)).map(([id]) => id)
-      return newOnes.length ? [...prev, ...newOnes] : prev
+  /** La partida tal como está ahora, con los valores nuevos que todavía no pasaron por el estado. */
+  const persist = (over: Partial<SaveData>) => {
+    if (!god) return
+    writeSave({
+      godId: god.id, playerName: playerName || 'Faraón', stats, evIdx,
+      eventIds: gameEvents.map(e => e.id), history, achievements,
+      puzDone, puzOk, puzFail, gs, t: Date.now(), ...over,
     })
-  }, [god])
+  }
+
+  const updateAchievements = (ns: Stats, nh: HistoryEntry[], ngs: GameStats, final: boolean): string[] => {
+    const ach = evaluateAchievements({
+      godId: god?.id, stats: ns, history: nh, gs: ngs, puzOk, puzFail,
+      puzTotal: PUZZLES_DEF.length, elapsedMs: Date.now() - startTime.current,
+    }, achievements, final)
+    setAchievements(ach)
+    return ach
+  }
 
   const startGame = (g: God) => {
     requestFS()
@@ -194,11 +181,11 @@ export function App() {
     const events = buildGameEvents(8)
     setGod(g); setStats(s); setEvIdx(0); setHistory([]); setLastFx(null)
     setGameEvents(events)
-    setAchievements([]); setPuzFail(0); setPuzOk(0); setShowPuz(false); setPuzIdx(0)
-    setGs({ mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 })
+    setAchievements([]); setPuzFail(0); setPuzOk(0); setPuzDone([])
+    setGs(EMPTY_GS)
     startTime.current = Date.now()
     nextGodModalAt.current = 3 + Math.floor(Math.random() * 3)
-    writeSave({ godId: g.id, playerName: playerName || 'Faraón', stats: s, evIdx: 0, eventIds: events.map(e => e.id), history: [], achievements: [], t: Date.now() })
+    writeSave({ godId: g.id, playerName: playerName || 'Faraón', stats: s, evIdx: 0, eventIds: events.map(e => e.id), history: [], achievements: [], puzDone: [], puzOk: 0, puzFail: 0, gs: EMPTY_GS, t: Date.now() })
     setScreen('game')
   }
 
@@ -216,7 +203,9 @@ export function App() {
     setPlayerName(sv.playerName || 'Faraón')
     setGameEvents(events)
     setEvIdx(savedIdx); setHistory(resolved ? (sv.history ?? []) : [])
-    setAchievements(resolved ? (sv.achievements ?? []) : [])
+    setAchievements(resolved ? sv.achievements : [])
+    setPuzDone(resolved ? sv.puzDone : []); setPuzOk(resolved ? sv.puzOk : 0); setPuzFail(resolved ? sv.puzFail : 0)
+    setGs(resolved ? sv.gs : EMPTY_GS)
     nextGodModalAt.current = savedIdx + 3 + Math.floor(Math.random() * 3)
     // A save written right as the game ended can have evIdx === events.length
     // (one past the last valid index) — resuming into 'game' would try to
@@ -246,8 +235,8 @@ export function App() {
     setEvIdx(nIdx)
     playSound('event_result')
     setConsejer({ fx: opt.fx, choice: opt.t })
-    checkAch(ns, nh, ngs, puzFail, puzOk)
-    if (god) writeSave({ godId: god.id, playerName: playerName || 'Faraón', stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
+    const ach = updateAchievements(ns, nh, ngs, nIdx >= gameEvents.length)
+    persist({ stats: ns, evIdx: nIdx, history: nh, achievements: ach, gs: ngs })
     // god modal trigger — every 3-5 events, not on last event
     if (nIdx >= nextGodModalAt.current && nIdx < gameEvents.length && god) {
       const vals = Object.values(ns); const avg = vals.reduce((a, b) => a + b, 0) / vals.length
@@ -285,19 +274,22 @@ export function App() {
   }
 
   const handlePuzDone = (ok: boolean, statDelta: number) => {
-    setShowPuz(false)
-    setPuzIdx(p => p + 1)
-    if (ok) { setPuzOk(p => p + 1); playSound('success') }
-    else { setPuzFail(p => p + 1); playSound('error') }
+    if (!curPuzDef) return
+    const nDone = [...puzDone, curPuzDef.id]
+    const nOk = puzOk + (ok ? 1 : 0)
+    const nFail = puzFail + (ok ? 0 : 1)
+    setPuzDone(nDone); setPuzOk(nOk); setPuzFail(nFail)
+    playSound(ok ? 'success' : 'error')
+    let ns = stats
     if (statDelta !== 0) {
-      const keys = curPuzDef?.statKeys ?? (Object.keys(INIT) as (keyof Stats)[])
-      const perStat = curPuzDef?.statKeys ? statDelta : Math.round(statDelta / 2)
-      setStats(prev => {
-        const n = { ...prev }
-        for (const k of keys) n[k] = clamp(n[k] + perStat)
-        return n
-      })
+      const keys = curPuzDef.statKeys ?? (Object.keys(INIT) as (keyof Stats)[])
+      const perStat = curPuzDef.statKeys ? statDelta : Math.round(statDelta / 2)
+      ns = { ...stats }
+      for (const k of keys) ns[k] = clamp(ns[k] + perStat)
+      setStats(ns)
     }
+    // Lo que el alumno hizo en el puzzle se guarda ya, no recién en la próxima decisión.
+    persist({ stats: ns, puzDone: nDone, puzOk: nOk, puzFail: nFail })
   }
 
   const handlePharaohDone = (bFx: Partial<Stats>, mFx: Partial<Stats>) => {
@@ -327,9 +319,8 @@ export function App() {
     setAnimKey(k => k + 1)
     setEvIdx(nIdx)
     playSound('event_result')
-    checkAch(ns, nh, ngs, puzFail, puzOk)
-
-    if (god) writeSave({ godId: god.id, playerName: playerName || 'Faraón', stats: ns, evIdx: nIdx, eventIds: gameEvents.map(e => e.id), history: nh, achievements: [...achievements], t: Date.now() })
+    const ach = updateAchievements(ns, nh, ngs, nIdx >= gameEvents.length)
+    persist({ stats: ns, evIdx: nIdx, history: nh, achievements: ach, gs: ngs })
 
     if (nIdx >= gameEvents.length) {
       setScreen('end')
@@ -416,8 +407,9 @@ export function App() {
 
         {/* Event / Puzzle */}
         <main className="event-panel">
-          {showPuz && curPuzDef ? (
+          {curPuzDef ? (
             <motion.div
+              key={`puz-${curPuzDef.id}`}
               className="puz-wrap"
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
