@@ -27,20 +27,21 @@ async function runClickBurst(page: Page, iterations: number) {
     for (let i = 0; i < max; i++) {
       await sleep(150)
 
+      const anyModal = document.querySelector(
+        '.gm-overlay button, .god-modal-overlay button, .cmod-overlay button, .pharaoh-overlay button, .pmod-overlay button, .modal-overlay button'
+      )
+      if (anyModal) {
+        const overlayCount = document.querySelectorAll('.gm-overlay, .god-modal-overlay, .cmod-overlay, .pharaoh-overlay, .pmod-overlay, .modal-overlay').length;
+        (anyModal as HTMLButtonElement).click();
+        log.push(`modal:"${(anyModal.textContent ?? '').slice(0, 20)}" overlays=${overlayCount}`)
+        continue
+      }
+
+      // Only after any modal is closed (the advisor modal covers the puzzle).
       // A drag-only puzzle is waiting for the test runner — stop and hand back.
       if (document.querySelector('.maat-hand-cards .maat-card, .pht-pool-cards .pht-card')) {
         log.push('DRAG_PUZZLE_PENDING')
         break
-      }
-
-      const anyModal = document.querySelector(
-        '.god-modal-overlay button, .cmod-overlay button, .pharaoh-overlay button, .pmod-overlay button, .modal-overlay button'
-      )
-      if (anyModal) {
-        const overlayCount = document.querySelectorAll('.god-modal-overlay, .cmod-overlay, .pharaoh-overlay, .pmod-overlay, .modal-overlay').length;
-        (anyModal as HTMLButtonElement).click();
-        log.push(`modal:"${(anyModal.textContent ?? '').slice(0, 20)}" overlays=${overlayCount}`)
-        continue
       }
 
       if (document.querySelector('.puz-wrap')) {
@@ -97,7 +98,7 @@ async function solveMaatScale(page: Page) {
   let count = await cards.count()
   let i = 0
   while (count > 0 && i < 20) {
-    await cards.first().dragTo(i % 2 === 0 ? heart : feather)
+    await cards.first().dragTo(i % 2 === 0 ? heart : feather, { timeout: 5000 }).catch(() => undefined)
     await page.waitForTimeout(150)
     count = await cards.count()
     i++
@@ -106,18 +107,17 @@ async function solveMaatScale(page: Page) {
 
 async function solvePharaohTimeline(page: Page) {
   const pool = page.locator('.pht-pool-cards .pht-card')
-  const slots = page.locator('.pht-slot')
-  let count = await pool.count()
-  let i = 0
-  while (count > 0 && i < 10) {
-    await pool.first().dragTo(slots.nth(i))
+  // Siempre al primer hueco vacío: no depende de cuántos arrastres anteriores salieron bien.
+  const firstEmpty = page.locator('.pht-slot.empty').first()
+  let tries = 0
+  while ((await pool.count()) > 0 && tries < 20) {
+    await pool.first().dragTo(firstEmpty, { timeout: 5000 }).catch(() => undefined)
     await page.waitForTimeout(150)
-    count = await pool.count()
-    i++
+    tries++
   }
 }
 
-async function playThrough(page: Page, godName: string) {
+async function startNewGame(page: Page, godName: string) {
   await page.goto('/')
   await page.getByRole('button', { name: /Nueva Partida/ }).click()
 
@@ -129,10 +129,63 @@ async function playThrough(page: Page, godName: string) {
 
   await page.locator('.god-card').filter({ has: page.locator('.god-name', { hasText: new RegExp(`^${godName}$`) }) }).click()
   await expect(page.locator('.ev-num').first()).toBeVisible({ timeout: 10000 })
+}
 
+/** Juega hasta el final, o hasta que aparezca el evento `stopAtEvent` (paso a paso). */
+async function playOn(page: Page, stopAtEvent?: number) {
   const fullLog: string[] = []
-  for (let burst = 0; burst < 30; burst++) {
-    const chunk = await runClickBurst(page, 25)
+  let modalOnly = 0
+  for (let burst = 0; burst < 400; burst++) {
+    if (stopAtEvent) {
+      // evaluate, no locator: durante un puzzle no hay .ev-num y un locator esperaría ahí hasta el timeout.
+      const n = await page.evaluate(() => document.querySelector('.ev-num')?.textContent ?? null)
+      if (n && new RegExp(`Evento ${stopAtEvent} /`).test(n)) break
+    }
+    const chunk = await runClickBurst(page, stopAtEvent ? 1 : 25)
+    // Atasco: una ráfaga entera de «modal» sin que nada avance. Intermitente y sin explicar:
+    // en vez de esperar al timeout, fallamos rápido y con el estado del modal a la vista.
+    modalOnly = chunk.length >= (stopAtEvent ? 1 : 20) && chunk.every(l => l.startsWith('modal:')) ? modalOnly + 1 : 0
+    if (modalOnly >= (stopAtEvent ? 15 : 4)) {
+      const est = await page.evaluate(async () => {
+        const ov = document.querySelector('.cmod-overlay, .gm-overlay, .pharaoh-overlay, .pmod-overlay, .modal-overlay')
+        const raf = await new Promise<boolean>(res => { requestAnimationFrame(() => res(true)); setTimeout(() => res(false), 700) })
+        return {
+          overlay: ov?.className, style: ov?.getAttribute('style'), raf, animations: document.getAnimations().length,
+          visibility: document.visibilityState, fullscreen: !!document.fullscreenElement, viewport: `${innerWidth}x${innerHeight}`,
+          ev: document.querySelector('.ev-num')?.textContent,
+        }
+      })
+      // ¿Cierra con un clic real (ratón de Playwright) o también lo ignora?
+      const real = await page.getByRole('button', { name: /Continuar/ }).first().click({ timeout: 3000 }).then(() => 'clic real ok', e => 'clic real falló: ' + String(e).split(String.fromCharCode(10))[0])
+      await page.waitForTimeout(800)
+      const sigue = await page.evaluate(() => !!document.querySelector('.cmod-overlay, .gm-overlay, .pharaoh-overlay'))
+      const props = await page.evaluate(() => {
+        const b = document.querySelector('.cmod-overlay button, .gm-overlay button') as HTMLElement | null
+        if (!b) return 'sin botón'
+        const k = Object.keys(b).find(x => x.startsWith('__reactProps'))
+        return k ? Object.keys((b as unknown as Record<string, Record<string, unknown>>)[k]).join(',') : 'sin __reactProps'
+      })
+      const estado = await page.evaluate(() => {
+        // Estado de los hooks de <App>, leído desde el fiber de React (sólo diagnóstico).
+        const el = document.querySelector('.cmod-overlay, .gm-overlay') as HTMLElement | null
+        if (!el) return 'sin overlay'
+        const fk = Object.keys(el).find(x => x.startsWith('__reactFiber'))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let f: any = fk ? (el as any)[fk] : null
+        while (f && !(f.type && f.type.name === 'App')) f = f.return
+        if (!f) return 'sin fiber App'
+        const out: string[] = []
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        for (let h: any = f.memoizedState, i = 0; h && i < 40; h = h.next, i++) {
+          const v = h.memoizedState
+          if (v === null || typeof v !== 'object' || Array.isArray(v) || 'current' in v || 'tag' in v) {
+            try { out.push(i + ':' + JSON.stringify(v)?.slice(0, 50)) } catch { out.push(i + ':?') }
+          }
+        }
+        return out.join(' ')
+      })
+      throw new Error('el modal no se cierra tras varias ráfagas de «Continuar»: estado App=' + estado + ' || ' + JSON.stringify(est) + ' | ' + real + ' | sigue abierto tras clic real: ' + sigue + ' | props del botón: ' + props)
+    }
     fullLog.push(...chunk)
     const last = chunk[chunk.length - 1]
 
@@ -158,9 +211,18 @@ async function playThrough(page: Page, godName: string) {
   return fullLog
 }
 
+async function playThrough(page: Page, godName: string) {
+  await startNewGame(page, godName)
+  return playOn(page)
+}
+
 test.describe('full playthrough', () => {
+  // Los puzzles de arrastre se resuelven con el mouse de Playwright; el arrastre
+  // táctil (touchstart/move/end) es otro camino del código y no lo cubre este test.
+  test.skip(({ isMobile }) => isMobile, 'drag solver uses mouse events')
+
   test('completes a full game with Ra without console errors', async ({ page }) => {
-    test.setTimeout(120_000)
+    test.setTimeout(180_000)
     const errors: string[] = []
     page.on('console', (msg: ConsoleMessage) => {
       if (msg.type() === 'error') errors.push(msg.text())
@@ -171,6 +233,13 @@ test.describe('full playthrough', () => {
 
     expect(log).toContain('END')
     expect(log.filter(l => l === 'UNKNOWN')).toHaveLength(0)
+
+    // Los quince puzzles tienen que aparecer. Antes salían nueve: seis (las
+    // balanzas de Maat y las líneas de faraones) quedaban fuera por el orden del
+    // arreglo y este test seguía en verde porque nunca miraba cuántos salían.
+    expect(log.filter(l => l === 'puzzle:continue')).toHaveLength(15)
+    expect(log).toContain('maat:dragged')
+    expect(log).toContain('pht:dragged')
 
     const transitions = log.filter(l => l.startsWith('period-transition'))
     expect(transitions.length).toBeGreaterThan(0)
@@ -186,8 +255,25 @@ test.describe('full playthrough', () => {
     expect(errors, `Console errors during playthrough:\n${errors.join('\n')}`).toHaveLength(0)
   })
 
+  test('resuming mid-game keeps the remaining puzzles', async ({ page }) => {
+    test.setTimeout(180_000)
+    await startNewGame(page, 'THOTH')
+    const before = await playOn(page, 11) // pasaron los puzzles de los eventos 3, 6, 7 y 9
+    const seenBefore = before.filter(l => l === 'puzzle:continue').length
+    expect(seenBefore).toBeGreaterThan(0)
+
+    await page.goto('/')
+    await page.getByRole('button', { name: /Continuar Partida/ }).click()
+    await expect(page.locator('.ev-num').first()).toBeVisible({ timeout: 10000 })
+
+    const after = await playOn(page)
+    expect(after).toContain('END')
+    // Ni se repiten los ya hechos ni se pierden los que faltaban: en total, quince.
+    expect(seenBefore + after.filter(l => l === 'puzzle:continue').length).toBe(15)
+  })
+
   test('resuming a save written at game end goes straight to the end screen', async ({ page }) => {
-    test.setTimeout(120_000)
+    test.setTimeout(180_000)
     const errors: string[] = []
     page.on('console', (msg: ConsoleMessage) => {
       if (msg.type() === 'error') errors.push(msg.text())

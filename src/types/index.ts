@@ -162,6 +162,10 @@ export interface SaveData {
   eventIds: number[]
   history: HistoryEntry[]
   achievements: string[]
+  puzDone: number[]
+  puzOk: number
+  puzFail: number
+  gs: GameStats
   t: number
   v?: number
 }

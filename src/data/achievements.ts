@@ -7,7 +7,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: 'artesano', name: 'Artesano de Amón', ico: '🎨', type: 'papiro', secret: false, title: 'Patrón de las Artes', desc: 'Terminar con Cultura > 72' },
   { id: 'mercader', name: 'Mercader del Oro', ico: '💰', type: 'papiro', secret: false, title: 'El Próspero', desc: 'Terminar con Riqueza > 68' },
   { id: 'guardian', name: 'Guardián del Orden', ico: '🛡️', type: 'papiro', secret: false, title: 'Protector del Equilibrio', desc: 'Terminar con Estabilidad > 72' },
-  { id: 'puzzlemaster', name: 'Puzzle Master', ico: '🧩', type: 'ankh', secret: false, title: 'Maestro de Jeroglíficos', desc: 'Acertar los 5 puzzles sin errores' },
+  { id: 'puzzlemaster', name: 'Puzzle Master', ico: '🧩', type: 'ankh', secret: false, title: 'Maestro de Jeroglíficos', desc: 'Acertar todos los puzzles sin errores' },
   { id: 'speedrun', name: 'Speed Runner del Nilo', ico: '⏱️', type: 'papiro', secret: false, title: 'Viajero Veloz', desc: 'Completar en menos de 1 hora' },
   { id: 'tragedia', name: 'No Hay Opción Buena', ico: '🪲', type: 'escarabajo', secret: true, title: 'Portador de Tragedia', desc: 'Elegir 3 opciones crueles' },
   { id: 'resurrector', name: 'Resurrector', ico: '💀', type: 'ankh', secret: true, title: 'Renacido de Duat', desc: 'Recuperar un stat de 0 a 50+' },
