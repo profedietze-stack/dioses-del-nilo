@@ -21,6 +21,9 @@ export function PharaohTimeline({ puz, onDone }: Props) {
   const [done, setDone] = useState(false)
   const [dragOver, setDragOver] = useState<number | 'pool' | null>(null)
   const [draggingId, setDraggingId] = useState<string | null>(null)
+  // Tocar para colocar: alternativa al arrastre (a 720 px de alto o con el dedo, arrastrar es incómodo).
+  const [sel, setSel] = useState<{ card: PharaohCard; fromSlot: number | null } | null>(null)
+  const movedRef = useRef(false)
 
   // touch drag
   const ghostRef = useRef<HTMLDivElement | null>(null)
@@ -47,6 +50,29 @@ export function PharaohTimeline({ puz, onDone }: Props) {
     if (done) return
     setSlots(prev => { const n = [...prev]; n[slotIdx] = null; return n })
   }, [done])
+
+  // ── Tocar para colocar ─────────────────────────────────────────────────────
+  // Tocás un faraón (del mazo o ya colocado) y después el lugar donde va; tocar el
+  // mazo con uno colocado lo devuelve. Funciona con mouse, teclado y toque.
+  const tapCard = (card: PharaohCard, fromSlot: number | null) => {
+    if (done) return
+    if (sel && sel.card.id === card.id) { setSel(null); return }
+    if (sel && fromSlot !== null) { placeInSlot(sel.card, fromSlot, sel.fromSlot); setSel(null); return }
+    setSel({ card, fromSlot })
+  }
+  const tapSlot = (i: number) => {
+    if (done || !sel) return
+    placeInSlot(sel.card, i, sel.fromSlot)
+    setSel(null)
+  }
+  const tapPool = () => {
+    if (done || !sel || sel.fromSlot === null) return
+    returnToPool(sel.fromSlot)
+    setSel(null)
+  }
+  const onKey = (fn: () => void) => (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn() }
+  }
 
   // ── HTML5 drag ─────────────────────────────────────────────────────────────
   const onDragStartPool = (e: React.DragEvent, card: PharaohCard) => {
@@ -92,6 +118,7 @@ export function PharaohTimeline({ puz, onDone }: Props) {
   const onTouchStartPool = (e: React.TouchEvent, card: PharaohCard) => {
     e.preventDefault()
     touchCardRef.current = { card, fromSlot: null }
+    movedRef.current = false
     setDraggingId(card.id)
     const t = e.touches[0]
     createGhost(card, t.clientX, t.clientY)
@@ -101,6 +128,7 @@ export function PharaohTimeline({ puz, onDone }: Props) {
     if (done) return
     e.preventDefault()
     touchCardRef.current = { card, fromSlot: slotIdx }
+    movedRef.current = false
     setDraggingId(card.id)
     const t = e.touches[0]
     createGhost(card, t.clientX, t.clientY)
@@ -109,6 +137,7 @@ export function PharaohTimeline({ puz, onDone }: Props) {
   const onTouchMove = (e: React.TouchEvent) => {
     if (!ghostRef.current) return
     e.preventDefault()
+    movedRef.current = true
     const t = e.touches[0]
     ghostRef.current.style.left = `${t.clientX}px`
     ghostRef.current.style.top = `${t.clientY}px`
@@ -124,7 +153,10 @@ export function PharaohTimeline({ puz, onDone }: Props) {
     const t = e.changedTouches[0]
     const el = document.elementFromPoint(t.clientX, t.clientY)
     const ref = touchCardRef.current
-    if (ref) {
+    // Un toque sin movimiento no es un arrastre: es tocar para colocar.
+    if (ref && !movedRef.current) {
+      tapCard(ref.card, ref.fromSlot)
+    } else if (ref) {
       let target: number | null = null
       slotRefs.current.forEach((r, i) => { if (r?.contains(el as Node)) target = i })
       if (target !== null) {
@@ -171,7 +203,46 @@ export function PharaohTimeline({ puz, onDone }: Props) {
     <div className="puz">
       <div className="puz-ico">👑</div>
       <h3>LÍNEA DE TIEMPO — {periodLabels[periodKey]?.toUpperCase()}</h3>
-      <p className="puz-hint">Arrastrá los faraones del más antiguo (arriba) al más reciente (abajo).</p>
+      <p className="puz-hint">Ordená los faraones del más antiguo (arriba) al más reciente (abajo): arrastrá cada uno a su lugar, o tocalo y después tocá el lugar.</p>
+
+      {/* Pool */}
+      {!done && (
+        <div
+          ref={poolRef}
+          className="pht-pool"
+          onDragOver={e => { e.preventDefault(); setDragOver('pool') }}
+          onDragLeave={() => setDragOver(null)}
+          onDrop={onDropPool}
+          onClick={tapPool}
+          style={{ outline: dragOver === 'pool' ? '2px dashed rgba(212,160,23,.5)' : '2px dashed transparent' }}
+        >
+          <div className="pht-pool-lbl">Faraones disponibles — {pool.length} restantes</div>
+          <div className="pht-pool-cards">
+            {pool.map(c => (
+              <div
+                key={c.id}
+                className={`pht-card pool${sel?.card.id === c.id ? ' selected' : ''}${draggingId === c.id ? ' dragging' : ''}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={sel?.card.id === c.id}
+                onClick={e => { e.stopPropagation(); tapCard(c, null) }}
+                onKeyDown={onKey(() => tapCard(c, null))}
+                draggable
+                onDragStart={e => onDragStartPool(e, c)}
+                onDragEnd={onDragEnd}
+                onTouchStart={e => onTouchStartPool(e, c)}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
+                <span className="pht-card-ico">{c.icon}</span>
+                <div className="pht-card-info">
+                  <span className="pht-card-name">{c.name}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Timeline slots */}
       <div className="pht-timeline">
@@ -185,12 +256,22 @@ export function PharaohTimeline({ puz, onDone }: Props) {
             onDragOver={e => { e.preventDefault(); setDragOver(i) }}
             onDragLeave={() => setDragOver(null)}
             onDrop={e => onDropSlot(e, i)}
+            onClick={() => tapSlot(i)}
+            onKeyDown={onKey(() => tapSlot(i))}
+            role="button"
+            tabIndex={done ? -1 : 0}
+            aria-label={slots[i] ? `Lugar ${i + 1}: ${slots[i]!.name}` : `Lugar ${i + 1}, vacío`}
           >
             <span className="pht-slot-num">{i + 1}</span>
             {slots[i] ? (
               <div
-                className={`pht-card placed${draggingId === slots[i]!.id ? ' dragging' : ''}${done ? (slots[i]!.id === correct[i]?.id ? ' ok' : ' fail') : ''}`}
+                className={`pht-card placed${sel?.card.id === slots[i]!.id ? ' selected' : ''}${draggingId === slots[i]!.id ? ' dragging' : ''}${done ? (slots[i]!.id === correct[i]?.id ? ' ok' : ' fail') : ''}`}
                 draggable={!done}
+                onClick={e => { e.stopPropagation(); tapCard(slots[i]!, i) }}
+                onKeyDown={e => { e.stopPropagation(); onKey(() => tapCard(slots[i]!, i))(e) }}
+                role="button"
+                tabIndex={done ? -1 : 0}
+                aria-pressed={sel?.card.id === slots[i]!.id}
                 onDragStart={e => onDragStartSlot(e, slots[i]!, i)}
                 onDragEnd={onDragEnd}
                 onTouchStart={e => onTouchStartSlot(e, slots[i]!, i)}
@@ -215,39 +296,6 @@ export function PharaohTimeline({ puz, onDone }: Props) {
         ))}
         <div className="pht-axis-label pht-axis-bot">⬇ Más reciente</div>
       </div>
-
-      {/* Pool */}
-      {!done && (
-        <div
-          ref={poolRef}
-          className="pht-pool"
-          onDragOver={e => { e.preventDefault(); setDragOver('pool') }}
-          onDragLeave={() => setDragOver(null)}
-          onDrop={onDropPool}
-          style={{ outline: dragOver === 'pool' ? '2px dashed rgba(212,160,23,.5)' : '2px dashed transparent' }}
-        >
-          <div className="pht-pool-lbl">Faraones disponibles — {pool.length} restantes</div>
-          <div className="pht-pool-cards">
-            {pool.map(c => (
-              <div
-                key={c.id}
-                className={`pht-card pool${draggingId === c.id ? ' dragging' : ''}`}
-                draggable
-                onDragStart={e => onDragStartPool(e, c)}
-                onDragEnd={onDragEnd}
-                onTouchStart={e => onTouchStartPool(e, c)}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
-              >
-                <span className="pht-card-ico">{c.icon}</span>
-                <div className="pht-card-info">
-                  <span className="pht-card-name">{c.name}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {!done && allFilled && (
         <button className="btn-g" style={{ marginTop: 12, width: '100%' }} onClick={confirm}>

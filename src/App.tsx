@@ -11,6 +11,7 @@ import { INIT, clamp, applyFx } from './utils/gameLogic'
 import { loadSave, writeSave, clearSave } from './utils/save'
 import { pendingPuzzle } from './utils/puzzleSchedule'
 import { barajar } from './utils/barajar'
+import { applyGodPower } from './utils/godPowers'
 import { evaluateAchievements } from './utils/achievements'
 import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngine'
 import { SplashScreen } from './components/screens/SplashScreen'
@@ -100,7 +101,7 @@ export function App() {
   const [puzDone, setPuzDone] = useState<number[]>([])
   const [showModal, setShowModal] = useState(false)
   const [animKey, setAnimKey] = useState(0)
-  const [consejer, setConsejer] = useState<{ fx: Partial<Stats>; choice: string } | null>(null)
+  const [consejer, setConsejer] = useState<{ fx: Partial<Stats>; choice: string; power: { name: string; note: Partial<Stats> } | null } | null>(null)
   const [glossWord, setGlossWord] = useState<string | null>(null)
   const [musicOn, setMusicOn] = useState(true)
   const [gs, setGs] = useState<GameStats>(EMPTY_GS)
@@ -131,7 +132,7 @@ export function App() {
     if (p.godId) {
       const g = GODS.find(x => x.id === p.godId)
       if (g) {
-        const events = buildGameEvents(8)
+        const events = buildGameEvents(8, g.id)
         const baseStats = { ...INIT }
         for (const k in g.bon) baseStats[k as keyof typeof baseStats] = clamp(50 + g.bon[k as keyof typeof baseStats])
         const s = p.stats ? { ...baseStats, ...p.stats } : baseStats
@@ -179,7 +180,7 @@ export function App() {
     startMusic()
     const s = { ...INIT }
     for (const k in g.bon) s[k as keyof Stats] = clamp(50 + g.bon[k as keyof Stats])
-    const events = buildGameEvents(8)
+    const events = buildGameEvents(8, g.id)
     setGod(g); setStats(s); setEvIdx(0); setHistory([]); setLastFx(null)
     setGameEvents(events)
     setAchievements([]); setPuzFail(0); setPuzOk(0); setPuzDone([])
@@ -196,7 +197,7 @@ export function App() {
     // Resolve saved event IDs; if any fail (e.g. pools changed since save), start fresh
     // rather than desyncing evIdx from a shorter list.
     const resolved = sv.eventIds?.length ? getEventsById(sv.eventIds) : null
-    const events = resolved ?? buildGameEvents(8)
+    const events = resolved ?? buildGameEvents(8, g.id)
     const savedIdx = resolved ? Math.min(sv.evIdx ?? 0, events.length) : 0
     requestFS()
     startMusic()
@@ -216,7 +217,10 @@ export function App() {
   }
 
   const handleChoice = (opt: EventOption) => {
-    const ns = applyFx(stats, opt.fx)
+    // La afinidad del dios se suma acá: el resto del juego (barras, historial, logros) ve el efecto final.
+    const powered = applyGodPower(god?.id, opt)
+    const fx = powered.fx
+    const ns = applyFx(stats, fx)
     const ev = gameEvents[evIdx]
     const ngs = { ...gs }
     if (opt.type === 'militar') ngs.mil++
@@ -224,18 +228,18 @@ export function App() {
     if (opt.type === 'cruel') ngs.cruel++
     const hadLow = Object.values(stats).some(v => v <= 5)
     if (hadLow && Object.values(ns).every(v => v >= 50)) ngs.revived = true
-    const noLoss = Object.values(opt.fx).every(v => v >= 0)
+    const noLoss = Object.values(fx).every(v => (v ?? 0) >= 0)
     ngs.stabStr = noLoss ? ngs.stabStr + 1 : 0
     ngs.infMax = Math.max(ngs.infMax, ns.influencia)
 
-    const nh = [...history, { eventId: ev.id, choice: opt.t, effects: opt.fx, statsAfter: ns }]
+    const nh = [...history, { eventId: ev.id, choice: opt.t, effects: fx, statsAfter: ns }]
     const nIdx = evIdx + 1
 
-    setStats(ns); setHistory(nh); setLastFx(opt.fx); setGs(ngs)
+    setStats(ns); setHistory(nh); setLastFx(fx); setGs(ngs)
     setAnimKey(k => k + 1)
     setEvIdx(nIdx)
     playSound('event_result')
-    setConsejer({ fx: opt.fx, choice: opt.t })
+    setConsejer({ fx, choice: opt.t, power: powered.powerName ? { name: powered.powerName, note: powered.note } : null })
     const ach = updateAchievements(ns, nh, ngs, nIdx >= gameEvents.length)
     persist({ stats: ns, evIdx: nIdx, history: nh, achievements: ach, gs: ngs })
     // god modal trigger — every 3-5 events, not on last event
@@ -455,6 +459,7 @@ export function App() {
                 <span className="ev-num">Evento {evIdx + 1} / {totalEvents}</span>
                 {evPeriod && <span className="ev-tag period">{evPeriod.name}</span>}
                 <span className="ev-tag cat">{ev.cat.toUpperCase()}</span>
+                {ev.godOnly && god && <span className="ev-tag god" style={{ borderColor: god.col, color: god.col }}>{god.icon} Evento de {god.name}</span>}
               </div>
               <h2 className="ev-title">{ev.title}</h2>
               <p className="ev-desc">{processGlossary(ev.desc, setGlossWord)}</p>
@@ -522,31 +527,6 @@ export function App() {
         )}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {consejer && (
-          <ConsejerModal
-            key="cmod"
-            choice={consejer.choice}
-            fx={consejer.fx}
-            onContinue={() => {
-              setConsejer(null)
-              if (pendingGodModal.current) {
-                const d = pendingGodModal.current
-                pendingGodModal.current = null
-                setGodModalData(d)
-              } else if (pendingEnd.current) {
-                pendingEnd.current = false
-                setScreen('end')
-              } else if (pendingPeriodTrans.current) {
-                const d = pendingPeriodTrans.current
-                pendingPeriodTrans.current = null
-                setPeriodTransData(d)
-                setScreen('periodTransition')
-              }
-            }}
-          />
-        )}
-      </AnimatePresence>
 
       <AnimatePresence>
         {statInfoKey && (
@@ -606,6 +586,35 @@ export function App() {
     <>
       <AnimatePresence>{showSplash && <SplashScreen key="splash" />}</AnimatePresence>
       <AnimatePresence>{renderScreen()}</AnimatePresence>
+      {/* Fuera de `gameJSX`, a propósito. Está en la raíz de <App>, como InfoModal, y sin AnimatePresence.
+          En ~1 de cada 10 partidas del e2e el primer modal de consejeros quedaba en pantalla con
+          `consejer === null`: el árbol de React lo seguía teniendo bajo la cadena
+          cmod < game < game, o sea dentro de una copia vieja del elemento `game` que conserva el
+          AnimatePresence de las pantallas. Acá su cierre depende sólo de su propio estado. */}
+      {consejer && (
+        <ConsejerModal
+          key="cmod"
+          choice={consejer.choice}
+          fx={consejer.fx}
+          power={consejer.power}
+          onContinue={() => {
+            setConsejer(null)
+            if (pendingGodModal.current) {
+              const d = pendingGodModal.current
+              pendingGodModal.current = null
+              setGodModalData(d)
+            } else if (pendingEnd.current) {
+              pendingEnd.current = false
+              setScreen('end')
+            } else if (pendingPeriodTrans.current) {
+              const d = pendingPeriodTrans.current
+              pendingPeriodTrans.current = null
+              setPeriodTransData(d)
+              setScreen('periodTransition')
+            }
+          }}
+        />
+      )}
       {showModal && <InfoModal onClose={() => setShowModal(false)} />}
       {import.meta.env.DEV && (
         <DebugPanel actions={{

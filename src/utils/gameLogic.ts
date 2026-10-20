@@ -23,18 +23,3 @@ export function applyFx(stats: Stats, fx: Partial<Stats>): Stats {
   }
   return n
 }
-
-export function calcScore(stats: Stats, puzOk: number, puzFail: number): number {
-  const vals = Object.values(stats)
-  const statAvg = vals.reduce((a, b) => a + b, 0) / vals.length
-  const puzBonus = puzOk * 3 - puzFail * 2
-  return Math.round(statAvg + puzBonus)
-}
-
-export function getDivineTitle(score: number): string {
-  if (score >= 80) return 'Faraón de los Dos Reinos'
-  if (score >= 65) return 'Gran Visir del Imperio'
-  if (score >= 50) return 'Nomarca del Delta'
-  if (score >= 35) return 'Escriba Real'
-  return 'Iniciado del Templo'
-}

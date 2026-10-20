@@ -62,6 +62,8 @@ export interface GameEvent {
   tl: TimelineCard
   isPharaoh?: boolean
   pharaohId?: string
+  /** Evento exclusivo de un dios: sólo sale en la partida de ese dios. */
+  godOnly?: string
 }
 
 export type AchievementType = 'ankh' | 'escarabajo' | 'corona' | 'papiro'
