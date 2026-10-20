@@ -1845,3 +1845,26 @@ button { font-family: inherit; cursor: pointer; }
   .pht-card { padding: 5px 8px; }
   .pht-axis-label { padding: 0; }
 }
+
+/* -- H14: foco visible y targets tactiles ---------------------------------
+   Con teclado casi nada mostraba el foco (solo las cartas de faraones y el campo
+   del nombre cambiaba el borde). Contorno dorado en todo lo que se enfoca. */
+button:focus-visible, [role="button"]:focus-visible, a:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--gold-l); outline-offset: 2px;
+}
+.ns-input:focus-visible { box-shadow: 0 0 0 3px rgba(212,160,23,.45); }
+
+/* En pantalla tactil todo lo que se toca mide 44 px o mas (WCAG 2.5.5). Medido en
+   un Pixel 7: eran 14 targets entre 32 y 43 px. Solo con pointer: coarse, asi el
+   escritorio no cambia. */
+@media (pointer: coarse) {
+  .btn-back, .btn-o, .btn-g, .adv-chip, .intro-skip { min-height: 44px; }
+  .btn-back { display: flex; align-items: center; }
+  .stat-row--clickable { min-height: 44px; display: flex; flex-direction: column; justify-content: center; }
+  /* Los puntos del intro siguen viendose de 8 px; el boton que los envuelve mide 44. */
+  .intro-dots { gap: 0; }
+  .idot { width: 44px; height: 44px; background: none; transform: none; display: flex; align-items: center; justify-content: center; }
+  .idot::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--stone-l); transition: background .2s, transform .2s; }
+  .idot.active { background: none; transform: none; }
+  .idot.active::before { background: var(--gold); transform: scale(1.3); }
+}

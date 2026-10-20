@@ -428,7 +428,7 @@ export function IntroScreen({ onFinish, playerName }: Props) {
       <div className="intro-nav">
         <div className="intro-dots">
           {Array.from({ length: TOTAL }).map((_, i) => (
-            <button key={i} className={`idot${step === i ? ' active' : ''}`} onClick={() => go(i)} />
+            <button key={i} className={`idot${step === i ? ' active' : ''}`} onClick={() => go(i)} aria-label={`Ir al paso ${i + 1} de ${TOTAL}`} aria-current={step === i ? 'step' : undefined} />
           ))}
         </div>
         <div className="intro-nav-btns">
