@@ -19,7 +19,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Juzgarlo públicamente ante el tribunal de los 30 nobles: justicia visible para todos",fx:{estabilidad:7,riqueza:0,cultura:7,influencia:5},type:"cultural"},
     {t:"Ejecutarlo en la plaza central como advertencia a cualquier traidor potencial",fx:{estabilidad:4,riqueza:0,cultura:-5,influencia:8},type:"militar"},
     {t:"Exiliarlo al desierto y confiscar todas sus propiedades para el tesoro real",fx:{estabilidad:3,riqueza:6,cultura:0,influencia:5},type:"economico"},
-    {t:"Perdonarlo a cambio de información detallada sobre los contactos nómades",fx:{estabilidad:-4,riqueza:2,cultura:-4,influencia:-5},type:"cruel"}
+    {t:"Perdonarlo a cambio de información detallada sobre los contactos nómades",fx:{estabilidad:-4,riqueza:2,cultura:-4,influencia:-5},type:"diplomatico"}
   ],
   tl:{date:"2650 aC",ph:"Djoser (Dyeser)",ev:"Pirámide Escalonada de Saqqara — primera en piedra",tip:"Imhotep, arquitecto y médico genial, diseñó para Djoser la primera estructura de piedra de la historia. Fue tan venerado que siglos después fue deificado."}},
 
@@ -63,7 +63,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Reformar la burocracia: crear inspectores reales que supervisen a los nomarcas in situ",fx:{estabilidad:8,riqueza:-4,cultura:4,influencia:8},type:"social"},
     {t:"Negociar: autonomía fiscal limitada a cambio de tributo fijo anual y lealtad militar",fx:{estabilidad:3,riqueza:-5,cultura:0,influencia:-4},type:"politico"},
     {t:"Destituir a los nomarcas más rebeldes y reemplazarlos con funcionarios leales de Memphis",fx:{estabilidad:-5,riqueza:0,cultura:-2,influencia:8},type:"militar"},
-    {t:"Ignorar el problema: los conflictos entre provincias se resolverán solos",fx:{estabilidad:-8,riqueza:-4,cultura:-4,influencia:-7},type:"cruel"}
+    {t:"Ignorar el problema: los conflictos entre provincias se resolverán solos",fx:{estabilidad:-8,riqueza:-4,cultura:-4,influencia:-7},type:"politico"}
   ],
   tl:{date:"2200 aC",ph:"Pepi II (Neferkara)",ev:"El reinado más largo de la historia: 94 años",tip:"Pepi II ascendió al trono a los 6 años y reinó casi un siglo. En su vejez, el poder central se evaporó. Su reinado interminable es paradójicamente el inicio del fin del Antiguo Imperio."}},
 
@@ -85,7 +85,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Política de puertas abiertas: integrar a los refugiados como trabajadores agrícolas y artesanos",fx:{estabilidad:5,riqueza:4,cultura:6,influencia:-2},type:"social"},
     {t:"Admisión controlada: campamentos de cuarentena, registro y asignación de roles productivos",fx:{estabilidad:7,riqueza:2,cultura:4,influencia:0},type:"social"},
     {t:"Ayuda humanitaria exterior: provisiones en la frontera, pero ningún ingreso al territorio",fx:{estabilidad:2,riqueza:-2,cultura:0,influencia:4},type:"politico"},
-    {t:"Despliegue militar en la frontera occidental: ningún extranjero cruza las tierras del faraón",fx:{estabilidad:-4,riqueza:0,cultura:-4,influencia:6},type:"cruel"}
+    {t:"Despliegue militar en la frontera occidental: ningún extranjero cruza las tierras del faraón",fx:{estabilidad:-4,riqueza:0,cultura:-4,influencia:6},type:"militar"}
   ],
   tl:{date:"2181 aC",ph:"Fin del Antiguo Imperio",ev:"Colapso — inicio del Primer Período Intermedio",tip:"125 años de fragmentación siguieron al colapso. Los 'Textos de las Lamentaciones' describen un mundo al revés: los pobres se volvieron ricos, los templos fueron saqueados, el Nilo olía a sangre."}},
 
@@ -96,7 +96,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Sistema bicéfalo: centralismo político con autonomía económica para los nomos leales",fx:{estabilidad:8,riqueza:8,cultura:6,influencia:7},type:"politico"},
     {t:"Centralismo total: todos los nomarcas son reemplazados por burócratas designados desde Tebas",fx:{estabilidad:7,riqueza:4,cultura:0,influencia:8},type:"politico"},
     {t:"Confederación pragmática: los nomarcas conservan su poder a cambio de tributo y soldados",fx:{estabilidad:4,riqueza:6,cultura:4,influencia:4},type:"social"},
-    {t:"Dejar que los nomos se gobiernen solos mientras Tebas consolida el sur",fx:{estabilidad:-7,riqueza:-4,cultura:-2,influencia:-6},type:"cruel"}
+    {t:"Dejar que los nomos se gobiernen solos mientras Tebas consolida el sur",fx:{estabilidad:-7,riqueza:-4,cultura:-2,influencia:-6},type:"politico"}
   ],
   tl:{date:"2055 aC",ph:"Mentuhotep II (Nebhepetre)",ev:"Reunificación — inicio del Imperio Medio",tip:"Mentuhotep II reinó 51 años. Su templo funerario en Deir el-Bahari, con terrazas escalonadas y jardines de mirra, inspiró siglos después a Hatshepsut para construir su propio templo justo al lado."}},
 
@@ -140,7 +140,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Tratado comercial oficial con protección militar de las rutas y tarifa arancelaria",fx:{estabilidad:4,riqueza:8,cultura:4,influencia:7},type:"economico"},
     {t:"Monopolio estatal: el faraón compra toda la producción y la redistribuye",fx:{estabilidad:2,riqueza:8,cultura:0,influencia:4},type:"politico"},
     {t:"Comercio libre: los mercaderes privados egipcios negocian directamente",fx:{estabilidad:0,riqueza:5,cultura:2,influencia:0},type:"economico"},
-    {t:"Bloquear el comercio: el oro de Egipto no debe salir del país",fx:{estabilidad:0,riqueza:-4,cultura:-4,influencia:-4},type:"cruel"}
+    {t:"Bloquear el comercio: el oro de Egipto no debe salir del país",fx:{estabilidad:0,riqueza:-4,cultura:-4,influencia:-4},type:"economico"}
   ],
   tl:{date:"1850 aC",ph:"Amenemhat III (Nimaatra)",ev:"Apogeo comercial del Imperio Medio",tip:"Amenemhat III abrió las minas del Fayum y desarrolló la primera economía redistributiva de escala. Su retrato en el Museo Egipcio de El Cairo muestra un rostro cansado, quizás el primer realismo psicológico del arte mundial."}},
 
@@ -151,7 +151,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Integración estratégica: absorber su tecnología militar y sus conocimientos a cambio de tierras",fx:{estabilidad:4,riqueza:4,cultura:6,influencia:8},type:"militar"},
     {t:"Asentamiento controlado: zona especial en el delta oriental, sin acceso al interior",fx:{estabilidad:7,riqueza:6,cultura:4,influencia:2},type:"social"},
     {t:"Cobrar tributo a cambio de autorización formal: que paguen por quedarse",fx:{estabilidad:2,riqueza:8,cultura:-2,influencia:4},type:"economico"},
-    {t:"Campaña militar preventiva: expulsarlos antes de que arraiguen",fx:{estabilidad:-7,riqueza:-4,cultura:-4,influencia:-2},type:"cruel"}
+    {t:"Campaña militar preventiva: expulsarlos antes de que arraiguen",fx:{estabilidad:-7,riqueza:-4,cultura:-4,influencia:-2},type:"militar"}
   ],
   tl:{date:"1650 aC",ph:"Salitis (primer rey Hicso)",ev:"Hicsos establecen su capital en Avaris",tip:"Avaris (actual Tell el-Dab'a) era una ciudad cosmopolita con cerámica cananea, micénica y chipriota. Las excavaciones revelaron frescos al estilo minoico: el mundo mediterráneo estaba más conectado de lo que creíamos."}},
 
@@ -195,7 +195,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Apoyar plenamente a Hatshepsut: su reinado garantiza estabilidad y riqueza",fx:{estabilidad:8,riqueza:8,cultura:8,influencia:4},type:"politico"},
     {t:"Co-regencia equitativa: Hatshepsut y Tutmosis III gobiernan juntos con poder compartido",fx:{estabilidad:7,riqueza:5,cultura:6,influencia:7},type:"social"},
     {t:"Presionar por la abdicación: Tutmosis III ya es mayor y debe tomar el trono solo",fx:{estabilidad:-4,riqueza:0,cultura:-8,influencia:4},type:"politico"},
-    {t:"Conspirar con los generales para deponer a Hatshepsut y entronizar a Tutmosis",fx:{estabilidad:-8,riqueza:-2,cultura:-8,influencia:-4},type:"cruel"}
+    {t:"Conspirar con los generales para deponer a Hatshepsut y entronizar a Tutmosis",fx:{estabilidad:-8,riqueza:-2,cultura:-8,influencia:-4},type:"politico"}
   ],
   tl:{date:"1479 aC",ph:"Hatshepsut (Maatkara)",ev:"Coronación — la faraona más exitosa de la historia",tip:"En 1903, Howard Carter descubrió la tumba de Hatshepsut pero no encontró su momia. En 2007, Zahi Hawass identificó sus restos mediante un diente encontrado en una caja con su nombre: había estado oculta entre momias anónimas durante 3.500 años."}},
 
@@ -206,7 +206,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Diplomacia del oro: regalos estratégicos a aliados clave para construir una red de influencia",fx:{estabilidad:4,riqueza:-4,cultura:2,influencia:8},type:"diplomatico"},
     {t:"Gran programa de construcción: templos, ciudades, canales que duren milenios",fx:{estabilidad:5,riqueza:-5,cultura:8,influencia:4},type:"cultural"},
     {t:"Maximizar la extracción con más trabajadores para acumular reservas estratégicas",fx:{estabilidad:-2,riqueza:8,cultura:0,influencia:6},type:"economico"},
-    {t:"Acumular en secreto: el tesoro es poder, nadie debe saber cuánto oro tiene el faraón",fx:{estabilidad:-4,riqueza:8,cultura:-4,influencia:-2},type:"cruel"}
+    {t:"Acumular en secreto: el tesoro es poder, nadie debe saber cuánto oro tiene el faraón",fx:{estabilidad:-4,riqueza:8,cultura:-4,influencia:-2},type:"economico"}
   ],
   tl:{date:"1450 aC",ph:"Tutmosis III (Menkheperra)",ev:"El mayor Imperio Egipcio: del Éufrates a la 4ª catarata",tip:"Tutmosis III ganó 17 campañas militares en 20 años. Su victoria en Meguido (1457 aC) es la primera batalla de la historia documentada en detalle. Napoleón la estudió 3.000 años después como modelo estratégico."}},
 
@@ -217,7 +217,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Apoyar la reforma: un dios único centraliza el poder espiritual en el faraón divino",fx:{estabilidad:-7,riqueza:4,cultura:-4,influencia:8},type:"politico"},
     {t:"Resistencia discreta: proteger los cultos tradicionales en secreto mientras Akenatón gobierna",fx:{estabilidad:4,riqueza:0,cultura:7,influencia:-4},type:"cultural"},
     {t:"Mediación teológica: proponer que Atón sea el dios principal pero no el único",fx:{estabilidad:7,riqueza:0,cultura:4,influencia:0},type:"social"},
-    {t:"Coalición sacerdotal: organizar resistencia abierta de los templos de Amón y Ra",fx:{estabilidad:-4,riqueza:-4,cultura:4,influencia:-7},type:"cruel"}
+    {t:"Coalición sacerdotal: organizar resistencia abierta de los templos de Amón y Ra",fx:{estabilidad:-4,riqueza:-4,cultura:4,influencia:-7},type:"religioso"}
   ],
   tl:{date:"1346 aC",ph:"Akenatón (Amenhotep IV)",ev:"Primera revolución monoteísta de la historia",tip:"El busto de Nefertiti (Berlín, 1345 aC) es quizás el retrato más famoso del mundo antiguo. Akenatón y Nefertiti desarrollaron un arte completamente nuevo: figuras alargadas, escenas íntimas de familia real, representaciones del sol derramando vida."}},
 
@@ -228,7 +228,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Firmar el tratado completo con alianza matrimonial: paz duradera sobre gloria efímera",fx:{estabilidad:8,riqueza:7,cultura:7,influencia:4},type:"diplomatico"},
     {t:"Firmar la paz sin el matrimonio: acuerdo de no agresión sin compromisos dinásticos",fx:{estabilidad:7,riqueza:4,cultura:4,influencia:4},type:"diplomatico"},
     {t:"Exigir concesiones territoriales adicionales antes de firmar",fx:{estabilidad:-2,riqueza:7,cultura:0,influencia:7},type:"politico"},
-    {t:"Rechazar el tratado y relanzar la guerra: Egipto no negocia con iguales",fx:{estabilidad:-8,riqueza:-8,cultura:-4,influencia:-4},type:"cruel"}
+    {t:"Rechazar el tratado y relanzar la guerra: Egipto no negocia con iguales",fx:{estabilidad:-8,riqueza:-8,cultura:-4,influencia:-4},type:"militar"}
   ],
   tl:{date:"1259 aC",ph:"Ramsés II (Usermaatra Setepenra)",ev:"Tratado de Qadesh — el primero de la historia",tip:"Ramsés II reinó 66 años y tuvo más de 100 hijos. Encargó que se grabara su 'victoria' en Qadesh en cinco templos, aunque estratégicamente fue un empate. La propaganda política tiene raíces muy antiguas."}},
 
@@ -250,7 +250,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Defensa integral: todo el ejército y la flota en el Delta, más mercenarios libios y nubios",fx:{estabilidad:-4,riqueza:-8,cultura:0,influencia:8},type:"militar"},
     {t:"Táctica diplomática: absorber a parte de los Pueblos del Mar como mercenarios del faraón",fx:{estabilidad:2,riqueza:-4,cultura:2,influencia:7},type:"diplomatico"},
     {t:"Defensa del núcleo: sacrificar el Delta oriental para concentrar fuerzas en el interior",fx:{estabilidad:-7,riqueza:-4,cultura:-4,influencia:4},type:"politico"},
-    {t:"Rendición negociada: ceder tierras del Delta a cambio de que cesen las hostilidades",fx:{estabilidad:-8,riqueza:-4,cultura:-8,influencia:-8},type:"cruel"}
+    {t:"Rendición negociada: ceder tierras del Delta a cambio de que cesen las hostilidades",fx:{estabilidad:-8,riqueza:-4,cultura:-8,influencia:-8},type:"diplomatico"}
   ],
   tl:{date:"1177 aC",ph:"Ramsés III (Usermaatre Meryamun)",ev:"Victoria en el Delta — última gran victoria egipcia",tip:"Los bajorrelieves de Medinet Habu documentan la batalla naval: los egipcios usaron ganchos para capturar los barcos enemigos. Fue la primera batalla naval documentada en detalle en la historia."}},
 
@@ -261,7 +261,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Alianza matrimonial: el faraón se casa con la hija del sumo sacerdote, uniendo las dos líneas",fx:{estabilidad:7,riqueza:4,cultura:4,influencia:4},type:"diplomatico"},
     {t:"Reforma constitucional: decreto que separa el poder civil del religioso con límites claros",fx:{estabilidad:-6,riqueza:7,cultura:-4,influencia:7},type:"politico"},
     {t:"Golpe de estado con apoyo libio: el ejército mercenario desplaza a los sacerdotes",fx:{estabilidad:-4,riqueza:0,cultura:-7,influencia:8},type:"militar"},
-    {t:"Aceptación resignada: mejor ser faraón ceremonial que provocar una guerra civil",fx:{estabilidad:4,riqueza:0,cultura:0,influencia:-8},type:"cruel"}
+    {t:"Aceptación resignada: mejor ser faraón ceremonial que provocar una guerra civil",fx:{estabilidad:4,riqueza:0,cultura:0,influencia:-8},type:"politico"}
   ],
   tl:{date:"1070 aC",ph:"Herhor (Sumo Sacerdote de Amón)",ev:"Inicio del Tercer Período Intermedio — Egipto dividido",tip:"El Relato de Unamón (1070 aC) documenta la humillación de un enviado egipcio en Biblos: el príncipe fenicio ya no le teme al faraón y lo hace esperar semanas. Es el retrato literario de un Imperio que agoniza."}},
 
@@ -272,7 +272,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Resistencia guerrillera: usar el Nilo, el desierto y el conocimiento local como armas",fx:{estabilidad:-8,riqueza:-6,cultura:4,influencia:8},type:"militar"},
     {t:"Capitulación estratégica: aceptar el vasallaje a cambio de preservar los templos y la cultura",fx:{estabilidad:4,riqueza:-4,cultura:7,influencia:-7},type:"diplomatico"},
     {t:"Alianza helénica: negociar apoyo militar griego a cambio de concesiones comerciales",fx:{estabilidad:2,riqueza:-2,cultura:7,influencia:7},type:"diplomatico"},
-    {t:"Sacrificar Tebas: retirar todas las fuerzas al Delta y dejar que el sur caiga",fx:{estabilidad:-8,riqueza:0,cultura:-8,influencia:-8},type:"cruel"}
+    {t:"Sacrificar Tebas: retirar todas las fuerzas al Delta y dejar que el sur caiga",fx:{estabilidad:-8,riqueza:0,cultura:-8,influencia:-8},type:"militar"}
   ],
   tl:{date:"663 aC",ph:"Taharqa (faraón nubio de la Dinastía XXV)",ev:"Saqueo asirio de Tebas — el mayor trauma del Período Tardío",tip:"Asurbanipal llevó a Nínive estatuas, textos y tesoros de 3.000 años de historia egipcia. Paradójicamente, su biblioteca en Nínive preservó miles de textos mesopotámicos que de otro modo se habrían perdido."}},
 
@@ -305,7 +305,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Resistencia total aliada con griegos: usar la red de Naucratis para obtener apoyo del Egeo",fx:{estabilidad:-7,riqueza:-8,cultura:7,influencia:4},type:"militar"},
     {t:"Rendición negociada: aceptar la soberanía persa preservando los templos y la religión",fx:{estabilidad:4,riqueza:-2,cultura:7,influencia:-7},type:"diplomatico"},
     {t:"Retirada estratégica al sur: ceder el norte y defender Tebas y Nubia",fx:{estabilidad:-2,riqueza:-4,cultura:4,influencia:0},type:"politico"},
-    {t:"Colaboración: entregarse personalmente a Cambises a cambio de título de gobernador",fx:{estabilidad:2,riqueza:4,cultura:-8,influencia:-8},type:"cruel"}
+    {t:"Colaboración: entregarse personalmente a Cambises a cambio de título de gobernador",fx:{estabilidad:2,riqueza:4,cultura:-8,influencia:-8},type:"diplomatico"}
   ],
   tl:{date:"525 aC",ph:"Psamético III (Ankhkaenra)",ev:"Conquista persa — fin de la soberanía faraónica nativa",tip:"Herodoto escribe que Cambises profanó el templo de Ptah y mató al buey sagrado Apis. Los egipcios nunca lo perdonaron. Los arqueólogos modernos no han encontrado evidencia de esa profanación, sugiriendo que pudo ser propaganda."}},
 
@@ -316,7 +316,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Coronación plena con todos los ritos faraónicos: legitimidad divina a cambio de respeto cultural",fx:{estabilidad:8,riqueza:7,cultura:8,influencia:4},type:"diplomatico"},
     {t:"Alianza militar estratégica: usar el poder macedonio para reafirmar el dominio egipcio en el Mediterráneo",fx:{estabilidad:4,riqueza:4,cultura:4,influencia:8},type:"militar"},
     {t:"Colaboración mínima: cumplir los rituales formalmente pero preservar la autonomía interna",fx:{estabilidad:2,riqueza:0,cultura:7,influencia:-2},type:"cultural"},
-    {t:"Resistencia: organizar una rebelión nativa aprovechando que el ejército macedonio avanza hacia Persia",fx:{estabilidad:-8,riqueza:-8,cultura:-8,influencia:-8},type:"cruel"}
+    {t:"Resistencia: organizar una rebelión nativa aprovechando que el ejército macedonio avanza hacia Persia",fx:{estabilidad:-8,riqueza:-8,cultura:-8,influencia:-8},type:"militar"}
   ],
   tl:{date:"332 aC",ph:"Alejandro III el Grande (faraón macedonio)",ev:"Fundación de Alejandría — nuevo centro del mundo",tip:"Cuando Alejandro trazó los planos de Alejandría, no tenía cal. Usó harina de cebada. Pájaros bajaron a comerse la harina: los augures lo interpretaron como señal de que la ciudad alimentaría al mundo. No se equivocaron."}},
 

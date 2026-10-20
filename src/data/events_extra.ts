@@ -8,7 +8,7 @@ export const EVENTS_ANTIGUO_EXTRA: GameEvent[] = [
     {t:"Síntesis cultural: adoptar los dioses, tradiciones y títulos de ambos reinos por igual",fx:{estabilidad:8,riqueza:4,cultura:8,influencia:6},type:"politico"},
     {t:"Primacía del sur: el Alto Egipto impone su administración y sus dioses al norte",fx:{estabilidad:-4,riqueza:2,cultura:-4,influencia:8},type:"militar"},
     {t:"Sistema de nomos: autonomía provincial bajo supervisión de vizires reales",fx:{estabilidad:7,riqueza:6,cultura:6,influencia:4},type:"social"},
-    {t:"Dejar que los reinos funcionen separados bajo un faraón común en lo ceremonial",fx:{estabilidad:-6,riqueza:0,cultura:0,influencia:-4},type:"cruel"}
+    {t:"Dejar que los reinos funcionen separados bajo un faraón común en lo ceremonial",fx:{estabilidad:-6,riqueza:0,cultura:0,influencia:-4},type:"politico"}
   ],
   tl:{date:"3100 aC",ph:"Narmer / Menes",ev:"Unificación del Alto y Bajo Egipto — nacimiento del Estado",tip:"La doble corona del faraón (el pschent) combinaba la corona blanca del sur con la roja del norte. Era más que un símbolo: era el contrato político de la unificación. Llevarla era gobernar la tensión entre dos mundos."}},
 
@@ -109,7 +109,7 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
     {t:"Negociar en igualdad: tratado comercial con precio justo a cambio de suministro garantizado",fx:{estabilidad:4,riqueza:-5,cultura:5,influencia:7},type:"diplomatico"},
     {t:"Misión diplomática de alto rango con regalo de oro para restablecer el prestigio",fx:{estabilidad:2,riqueza:-6,cultura:3,influencia:8},type:"diplomatico"},
     {t:"Alternativas al cedro: desarrollo de técnicas de construcción con papiro comprimido y palma",fx:{estabilidad:4,riqueza:2,cultura:6,influencia:-2},type:"cultural"},
-    {t:"Expedición militar al Levante para recordar a Biblos quién manda",fx:{estabilidad:-5,riqueza:-7,cultura:-4,influencia:4},type:"cruel"}
+    {t:"Expedición militar al Levante para recordar a Biblos quién manda",fx:{estabilidad:-5,riqueza:-7,cultura:-4,influencia:4},type:"militar"}
   ],
   tl:{date:"1900 aC aprox.",ph:"Imperio Medio",ev:"Comercio estable con Biblos — el cedro fluye al Nilo",tip:"El cedro del Líbano era tan valioso que los faraones lo llamaban 'el árbol de los dioses'. Los ataúdes de los nobles del Imperio Nuevo eran de cedro traído de Biblos. Un ataúd de cedro era señal inequívoca de riqueza."}},
 
@@ -142,7 +142,7 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
     {t:"Mantener las fortalezas y reforzarlas: el control del Nilo hasta la Tercera Catarata no se negocia",fx:{estabilidad:4,riqueza:-6,cultura:2,influencia:8},type:"militar"},
     {t:"Tratado comercial con Kush: retirar las guarniciones intermedias y mantener solo las más al norte",fx:{estabilidad:6,riqueza:4,cultura:4,influencia:4},type:"diplomatico"},
     {t:"Expandir las fortalezas hacia el sur para controlar las minas directamente",fx:{estabilidad:-2,riqueza:-8,cultura:0,influencia:7},type:"militar"},
-    {t:"Retirarse completamente del sur de la Segunda Catarata y concentrar fuerzas en el norte",fx:{estabilidad:2,riqueza:4,cultura:-2,influencia:-6},type:"cruel"}
+    {t:"Retirarse completamente del sur de la Segunda Catarata y concentrar fuerzas en el norte",fx:{estabilidad:2,riqueza:4,cultura:-2,influencia:-6},type:"militar"}
   ],
   tl:{date:"1870 aC",ph:"Senuseret III (Khakaura)",ev:"Construcción de la cadena de fortalezas en la Segunda Catarata",tip:"Senuseret III fue tan venerado en Nubia que tras su muerte lo adoraron como dios local. Las fortalezas de Nubia son la primera red de defensa estratégica coordinada de la historia militar."}},
 
@@ -164,7 +164,7 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
     {t:"Juicio público de todos los implicados: la corrupción sistémica exige respuesta visible",fx:{estabilidad:5,riqueza:4,cultura:7,influencia:4},type:"cultural"},
     {t:"Reforma silenciosa: recuperar lo robado discretamente y rediseñar el sistema de control",fx:{estabilidad:8,riqueza:5,cultura:2,influencia:2},type:"economico"},
     {t:"Ejecutar a los cuatro vizires como advertencia y redistribuir sus bienes entre el pueblo",fx:{estabilidad:-2,riqueza:6,cultura:-4,influencia:8},type:"militar"},
-    {t:"Ignorarlo: perseguir a los vizires crearía inestabilidad política en plena campaña nubia",fx:{estabilidad:-7,riqueza:-4,cultura:-6,influencia:-6},type:"cruel"}
+    {t:"Ignorarlo: perseguir a los vizires crearía inestabilidad política en plena campaña nubia",fx:{estabilidad:-7,riqueza:-4,cultura:-6,influencia:-6},type:"politico"}
   ],
   tl:{date:"1900 aC",ph:"Amenemhat II (Nebwenenra)",ev:"Consolidación del sistema burocrático del Imperio Medio",tip:"Los papiros de Lahun (Kahun) son los archivos más completos del Imperio Medio: incluyen contratos de trabajo, registros médicos, correspondencia privada y hasta listas de ratas en los graneros. La burocracia egipcia era extraordinariamente detallista."}},
 
@@ -188,7 +188,7 @@ export const EVENTS_NUEVO_EXTRA: GameEvent[] = [
     {t:"Adoptar el Valle de los Reyes: secreto, profundidad y trampa son la mejor protección",fx:{estabilidad:4,riqueza:4,cultura:8,influencia:4},type:"cultural"},
     {t:"Pirámide simbólica modesta más tumba secreta subterránea: lo mejor de ambos mundos",fx:{estabilidad:6,riqueza:-4,cultura:6,influencia:2},type:"social"},
     {t:"Continuar la tradición piramidal: la forma es teológicamente imprescindible",fx:{estabilidad:5,riqueza:-6,cultura:5,influencia:6},type:"cultural"},
-    {t:"Enterramiento secreto sin tumba elaborada: el faraón no necesita monumentos, vive en sus obras",fx:{estabilidad:-2,riqueza:5,cultura:-4,influencia:0},type:"cruel"}
+    {t:"Enterramiento secreto sin tumba elaborada: el faraón no necesita monumentos, vive en sus obras",fx:{estabilidad:-2,riqueza:5,cultura:-4,influencia:0},type:"politico"}
   ],
   tl:{date:"1504 aC",ph:"Tutmosis I (Akheperkara)",ev:"Primera tumba en el Valle de los Reyes",tip:"Howard Carter tardó seis años en encontrar la tumba de Tutankamón. Abrió la cámara principal el 26 de noviembre de 1922. Al asomarse con una vela preguntó: '¿Ves algo?' Su respuesta se hizo famosa: 'Sí, cosas maravillosas.'"}},
 
@@ -199,7 +199,7 @@ export const EVENTS_NUEVO_EXTRA: GameEvent[] = [
     {t:"Conceder el permiso matrimonial: la lealtad se gana con confianza, no con encierro",fx:{estabilidad:7,riqueza:0,cultura:6,influencia:2},type:"social"},
     {t:"Conceder el permiso solo para artesanos retirados que ya no trabajen en las tumbas activas",fx:{estabilidad:5,riqueza:0,cultura:4,influencia:2},type:"politico"},
     {t:"Compensación económica: mejor salario y tierras propias a cambio de mantener las restricciones",fx:{estabilidad:4,riqueza:-5,cultura:3,influencia:4},type:"economico"},
-    {t:"Mantener las restricciones totales: el secreto de las tumbas es más importante que la libertad individual",fx:{estabilidad:-6,riqueza:0,cultura:-6,influencia:0},type:"cruel"}
+    {t:"Mantener las restricciones totales: el secreto de las tumbas es más importante que la libertad individual",fx:{estabilidad:-6,riqueza:0,cultura:-6,influencia:0},type:"politico"}
   ],
   tl:{date:"1350 aC",ph:"Imperio Nuevo",ev:"Florecimiento de Deir el-Medina — aldea de artesanos",tip:"En Deir el-Medina se encontraron los primeros relojes de agua (clepsidras) para medir turnos de trabajo, la primera huelga documentada, y poemas de amor de una sofisticación que sorprende: 'Mi corazón salta cuando pienso en tu amor como en los lotos que crecen en el pantano.'"}},
 
@@ -210,7 +210,7 @@ export const EVENTS_NUEVO_EXTRA: GameEvent[] = [
     {t:"Restauración total e inmediata: todos los templos reabiertos, sacerdotes reinstalados, tierras devueltas",fx:{estabilidad:8,riqueza:-6,cultura:8,influencia:4},type:"cultural"},
     {t:"Restauración gradual por prioridades: primero Amón de Tebas, luego los demás cultos",fx:{estabilidad:6,riqueza:-4,cultura:7,influencia:4},type:"politico"},
     {t:"Restaurar los cultos pero mantener Atón como dios oficial secundario del Estado",fx:{estabilidad:2,riqueza:-2,cultura:4,influencia:2},type:"politico"},
-    {t:"Esperar diez años para restaurar: la transición lenta evita conflictos con los atonistas que quedan",fx:{estabilidad:-4,riqueza:0,cultura:-4,influencia:-4},type:"cruel"}
+    {t:"Esperar diez años para restaurar: la transición lenta evita conflictos con los atonistas que quedan",fx:{estabilidad:-4,riqueza:0,cultura:-4,influencia:-4},type:"politico"}
   ],
   tl:{date:"1332 aC",ph:"Tutankamón (Nebkheperura)",ev:"Restauración de los cultos tradicionales post-Akenatón",tip:"Tutankamón murió a los 18-19 años, posiblemente de malaria complicada con una fractura de pierna. Su tumba, la KV62, contenía más de 5.000 objetos. Su máscara funeraria de oro macizo pesa 10,23 kg. Es el símbolo más reconocido del Antiguo Egipto."}},
 
@@ -221,7 +221,7 @@ export const EVENTS_NUEVO_EXTRA: GameEvent[] = [
     {t:"Resistencia desesperada: Ramsés combate personalmente para dar tiempo a que lleguen refuerzos",fx:{estabilidad:-2,riqueza:-4,cultura:4,influencia:8},type:"militar"},
     {t:"Retirada ordenada: preservar el ejército y negociar desde una posición menos comprometida",fx:{estabilidad:4,riqueza:-2,cultura:-4,influencia:4},type:"militar"},
     {t:"Contraataque rápido usando los carros ligeros de la guardia personal real",fx:{estabilidad:-4,riqueza:-6,cultura:2,influencia:7},type:"militar"},
-    {t:"Enviar emisarios a Muwatalli: ofrecer Qadesh a cambio de armisticio inmediato",fx:{estabilidad:2,riqueza:0,cultura:-6,influencia:-4},type:"cruel"}
+    {t:"Enviar emisarios a Muwatalli: ofrecer Qadesh a cambio de armisticio inmediato",fx:{estabilidad:2,riqueza:0,cultura:-6,influencia:-4},type:"diplomatico"}
   ],
   tl:{date:"1274 aC",ph:"Ramsés II (Usermaatra Setepenra)",ev:"Batalla de Qadesh — mayor choque de carros de la historia",tip:"Ramsés II mandó grabar su 'victoria' en Qadesh en cinco templos. El Poema de Pentaur lo describe como un semidios que combatió solo contra miles. Los textos hititas describen un empate. La diferencia entre historia y propaganda tiene 3.300 años."}},
 
@@ -232,7 +232,7 @@ export const EVENTS_NUEVO_EXTRA: GameEvent[] = [
     {t:"Aprobar el proyecto completo incluyendo la precisión astronómica: la perfección o nada",fx:{estabilidad:3,riqueza:-8,cultura:8,influencia:8},type:"cultural"},
     {t:"Templo monumental sin la complejidad astronómica: más rápido y menos costoso",fx:{estabilidad:4,riqueza:-5,cultura:6,influencia:6},type:"cultural"},
     {t:"Dos templos más pequeños en lugar de uno colosal: mejor distribución del impacto político",fx:{estabilidad:5,riqueza:-6,cultura:7,influencia:7},type:"politico"},
-    {t:"Redirigir los fondos a fortalezas militares en Nubia: la arquitectura no frena ejércitos",fx:{estabilidad:4,riqueza:-2,cultura:-5,influencia:4},type:"cruel"}
+    {t:"Redirigir los fondos a fortalezas militares en Nubia: la arquitectura no frena ejércitos",fx:{estabilidad:4,riqueza:-2,cultura:-5,influencia:4},type:"militar"}
   ],
   tl:{date:"1264 aC",ph:"Ramsés II (Usermaatra Setepenra)",ev:"Construcción del Gran Templo de Abu Simbel",tip:"La orientación solar de Abu Simbel se calculó para el 22 de febrero (cumpleaños de Ramsés) y el 22 de octubre (su coronación). Solo la estatua de Ptah, dios de la oscuridad, permanece siempre en sombra. El azar o el genio — todavía se debate."}},
 
@@ -278,7 +278,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
     {t:"Reconocer plenamente a los faraones nubios: la legitimidad viene de la cultura, no del origen",fx:{estabilidad:8,riqueza:6,cultura:8,influencia:4},type:"cultural"},
     {t:"Alianza pragmática: los kushitas gobiernan el sur, el Delta mantiene autonomía",fx:{estabilidad:6,riqueza:4,cultura:6,influencia:4},type:"politico"},
     {t:"Resistencia pasiva: cooperar en lo mínimo indispensable mientras se buscan aliados asirios",fx:{estabilidad:-4,riqueza:0,cultura:-2,influencia:4},type:"politico"},
-    {t:"Rebelión abierta del Delta contra los faraones kushitas",fx:{estabilidad:-8,riqueza:-6,cultura:-4,influencia:-6},type:"cruel"}
+    {t:"Rebelión abierta del Delta contra los faraones kushitas",fx:{estabilidad:-8,riqueza:-6,cultura:-4,influencia:-6},type:"militar"}
   ],
   tl:{date:"747 aC",ph:"Piye (Pianjy) — Dinastía XXV kushita",ev:"Conquista kushita — faraones de piel negra gobiernan Egipto",tip:"Las pirámides de Meroe en Sudán son más altas y empinadas que las egipcias. Los faraones kushitas construyeron más pirámides que ningún faraón egipcio individual. El Museo de Berlín guarda la colección más completa de arte meroítico del mundo."}},
 
@@ -289,7 +289,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
     {t:"Completar el canal sin importar el costo humano: el beneficio estratégico lo justifica",fx:{estabilidad:-4,riqueza:8,cultura:-2,influencia:8},type:"economico"},
     {t:"Canal más corto solo entre el Nilo y los Lagos Amargos, reduciendo el costo y el tiempo",fx:{estabilidad:4,riqueza:5,cultura:2,influencia:4},type:"economico"},
     {t:"Abandonar el canal y construir en su lugar una flota en el Mar Rojo para comercio directo",fx:{estabilidad:4,riqueza:4,cultura:2,influencia:4},type:"economico"},
-    {t:"Suspender el proyecto al conocer la profecía: el oráculo no se desafía",fx:{estabilidad:6,riqueza:-2,cultura:2,influencia:-2},type:"cruel"}
+    {t:"Suspender el proyecto al conocer la profecía: el oráculo no se desafía",fx:{estabilidad:6,riqueza:-2,cultura:2,influencia:-2},type:"religioso"}
   ],
   tl:{date:"600 aC",ph:"Neco II (Wehemibre)",ev:"Inicio del canal Nilo-Mar Rojo — precursor del Canal de Suez",tip:"Heródoto afirma que el canal podían navegar dos trirremes en paralelo. Darío I lo terminó y grabó una estela en su honor. Los arqueólogos encontraron en 2019 restos del canal en El Qantara, confirmando su existencia y la ruta descrita por los antiguos."}},
 
@@ -300,7 +300,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
     {t:"Financiamiento total del Estado: la Biblioteca como proyecto nacional de Egipto",fx:{estabilidad:4,riqueza:-8,cultura:8,influencia:8},type:"cultural"},
     {t:"Biblioteca más Mouseion: centro de investigación donde los científicos reciben salario del Estado",fx:{estabilidad:2,riqueza:-8,cultura:8,influencia:8},type:"cultural"},
     {t:"Biblioteca selectiva: solo los mejores textos de cada tradición, sin la obsesión por la cantidad",fx:{estabilidad:4,riqueza:-4,cultura:7,influencia:6},type:"cultural"},
-    {t:"Rechazar el proyecto: el conocimiento concentrado en un lugar puede ser destruido en un día",fx:{estabilidad:2,riqueza:4,cultura:-8,influencia:-4},type:"cruel"}
+    {t:"Rechazar el proyecto: el conocimiento concentrado en un lugar puede ser destruido en un día",fx:{estabilidad:2,riqueza:4,cultura:-8,influencia:-4},type:"politico"}
   ],
   tl:{date:"285 aC",ph:"Ptolomeo I Sóter",ev:"Fundación de la Biblioteca de Alejandría",tip:"Eratóstenes calculó la circunferencia de la Tierra en Alejandría circa 240 aC usando la diferencia de ángulos del sol en Siena y Alejandría en el solsticio de verano. Su resultado fue de 39.375 km. El valor real es 40.075 km. Error: 1,7%."}},
 
@@ -311,7 +311,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
     {t:"Adoptar la moneda: crear una casa de la moneda real y acuñar el primer dracma egipcio",fx:{estabilidad:4,riqueza:8,cultura:6,influencia:6},type:"economico"},
     {t:"Sistema mixto: moneda para el comercio exterior, redistribución estatal para el interior",fx:{estabilidad:6,riqueza:6,cultura:4,influencia:4},type:"economico"},
     {t:"Rechazar la moneda y reforzar el sistema redistributivo: Egipto no necesita lo que inventaron los griegos",fx:{estabilidad:5,riqueza:-2,cultura:4,influencia:-4},type:"politico"},
-    {t:"Adoptar la moneda griega directamente sin acuñar una propia: más rápido, menos costo",fx:{estabilidad:2,riqueza:6,cultura:-4,influencia:-4},type:"cruel"}
+    {t:"Adoptar la moneda griega directamente sin acuñar una propia: más rápido, menos costo",fx:{estabilidad:2,riqueza:6,cultura:-4,influencia:-4},type:"economico"}
   ],
   tl:{date:"500 aC",ph:"Período Tardío bajo influencia persa y griega",ev:"Introducción de la moneda metálica en Egipto",tip:"La primera moneda acuñada en Egipto con sello real egipcio apareció bajo los Ptolomeos (siglo III aC). Antes, los egipcios usaban 'pesos de plata' sin forma estándar. La estandarización monetaria tardó 2.500 años de historia faraónica."}},
 
@@ -333,7 +333,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
     {t:"Alianza plena con César: Egipto como socio privilegiado de Roma, no como provincia",fx:{estabilidad:6,riqueza:6,cultura:6,influencia:8},type:"diplomatico"},
     {t:"Neutralidad estratégica: no tomar partido en la guerra civil romana",fx:{estabilidad:7,riqueza:4,cultura:4,influencia:2},type:"politico"},
     {t:"Apoyar a Pompeyo: el perdedor de Farsalia como carta de revancha futura",fx:{estabilidad:-6,riqueza:-4,cultura:0,influencia:-6},type:"militar"},
-    {t:"Aprovechar el caos romano para declarar independencia total de influencias externas",fx:{estabilidad:-4,riqueza:2,cultura:4,influencia:-8},type:"cruel"}
+    {t:"Aprovechar el caos romano para declarar independencia total de influencias externas",fx:{estabilidad:-4,riqueza:2,cultura:4,influencia:-8},type:"politico"}
   ],
   tl:{date:"48 aC",ph:"Cleopatra VII Filopátor",ev:"Llegada de César a Alejandría — inicio de la era romano-egipcia",tip:"El incendio de la Biblioteca de Alejandría durante la guerra civil entre César y Ptolomeo XIII destruyó al menos 40.000 rollos según las fuentes antiguas. No fue la única vez que la Biblioteca ardió: sufrió daños bajo Julio César, Aureliano (270 dC) y el califa Omar (640 dC), según distintas fuentes."}},
 
@@ -344,7 +344,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
     {t:"Emitir el decreto en los tres idiomas: el alcance simbólico vale la complejidad",fx:{estabilidad:7,riqueza:-4,cultura:8,influencia:6},type:"cultural"},
     {t:"Solo en griego y demótico: los jeroglíficos son ya un idioma muerto en uso administrativo",fx:{estabilidad:5,riqueza:-2,cultura:5,influencia:4},type:"politico"},
     {t:"Decreto verbal sin piedra: las concesiones se hacen, pero sin documento que las fije",fx:{estabilidad:3,riqueza:0,cultura:2,influencia:2},type:"politico"},
-    {t:"Rechazar la negociación: el faraón no mendiga legitimidad de sus propios sacerdotes",fx:{estabilidad:-8,riqueza:2,cultura:-5,influencia:-6},type:"cruel"}
+    {t:"Rechazar la negociación: el faraón no mendiga legitimidad de sus propios sacerdotes",fx:{estabilidad:-8,riqueza:2,cultura:-5,influencia:-6},type:"politico"}
   ],
   tl:{date:"196 aC",ph:"Ptolomeo V Epífanes",ev:"Emisión del Decreto de Menfis — la Piedra de Rosetta",tip:"Champollion tenía 32 años cuando descifró los jeroglíficos en 1822. Cayó desmayado de la emoción, literalmente. No pudo levantarse durante cinco días. Cuando volvió en sí, dijo solo: 'Je tiens l'affaire!' (¡Lo tengo!). Murió diez años después, a los 41."}},
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from 'react'
+import { useState, useEffect, useMemo, useRef, lazy, Suspense } from 'react'
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
 import type { God, Stats, StatKey, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData, SaveData } from './types'
 import { GODS } from './data/gods'
@@ -10,6 +10,7 @@ import { PUZZLES_DEF } from './data/puzzles'
 import { INIT, clamp, applyFx } from './utils/gameLogic'
 import { loadSave, writeSave, clearSave } from './utils/save'
 import { pendingPuzzle } from './utils/puzzleSchedule'
+import { barajar } from './utils/barajar'
 import { evaluateAchievements } from './utils/achievements'
 import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngine'
 import { SplashScreen } from './components/screens/SplashScreen'
@@ -333,6 +334,12 @@ export function App() {
   const ev = gameEvents[evIdx]
   const evPeriod = ev && PERIODS.find(p => p.id === ev.per)
 
+  // Las opciones se escriben con la «trampa» (la cruel) al final y la mejor casi siempre
+  // arriba: medido sobre los 62 eventos, la cruel cae en la D 59 veces y la mejor en la A
+  // el 60 %. Sin barajar, el alumno aprende el patrón en diez minutos y no lee. El orden
+  // vive acá, en el estado de la pantalla, y `handleChoice` recibe la opción, no un índice.
+  const shownOpts = useMemo(() => (ev ? barajar(ev.opts) : []), [ev])
+
   const gameJSX = (
     <motion.div
       key="game"
@@ -457,7 +464,7 @@ export function App() {
               </div>
               <AdvisorPanel stats={stats} eventCat={ev.cat} />
               <div className="opts">
-                {ev.opts.map((opt, i) => (
+                {shownOpts.map((opt, i) => (
                   <button key={i} className={`opt ${opt.type}`} onClick={() => handleChoice(opt)}>
                     <span className="opt-type-badge">
                       {OPT_TYPE_ICONS[opt.type] ?? '⚡'} {OPTION_TYPE_LABELS[opt.type] ?? opt.type}
