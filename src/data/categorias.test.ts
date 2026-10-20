@@ -48,3 +48,23 @@ describe('reparto de categorías', () => {
     expect(conDosMilitares / N).toBeGreaterThan(0.9)
   })
 })
+
+/* La huelga de Deir el-Medina (año 29 de Ramsés III, ~1157 aC) estaba en el Antiguo Imperio con la
+   fecha 1170: nada comparaba la fecha de la tarjeta con el período del evento. Los límites incluyen
+   los períodos intermedios que el juego no nombra. */
+describe('fecha de cada evento y su período', () => {
+  const RANGO: Record<string, [number, number]> = {
+    antiguo: [3100, 2055], medio: [2055, 1550], nuevo: [1550, 1070], tardio: [1070, 30],
+  }
+  it('el año de la tarjeta cae dentro del período del evento', () => {
+    const fuera: string[] = []
+    for (const e of [...COMUNES, ...EVENTS_DIOSES]) {
+      const m = e.tl.date.match(/(\d[\d.]*)\s*a\.?\s*C/i)
+      if (!m) continue
+      const año = Number(m[1].replace('.', ''))
+      const [desde, hasta] = RANGO[e.per]
+      if (año > desde || año < hasta) fuera.push(`ev${e.id} (${e.per}): ${e.tl.date}`)
+    }
+    expect(fuera).toEqual([])
+  })
+})

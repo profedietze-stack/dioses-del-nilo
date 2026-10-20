@@ -23,7 +23,7 @@ export const EVENTS: GameEvent[] =[
   ],
   tl:{date:"2650 aC",ph:"Djoser (Dyeser)",ev:"Pirámide Escalonada de Saqqara — primera en piedra",tip:"Imhotep, arquitecto y médico genial, diseñó para Djoser la primera estructura de piedra de la historia. Fue tan venerado que siglos después fue deificado."}},
 
-  {id:3,per:"antiguo",cat:"religion",title:"El Oráculo de Amón Habla",
+  {id:3,per:"nuevo",cat:"religion",title:"El Oráculo de Amón Habla",
   desc:"En medio de la noche, el sumo sacerdote llega a tu cámara con los ojos encendidos: el oráculo de Amón en Karnak ha profetizado. Una plaga de langostas devastará los campos si no se erige un nuevo santuario en su honor antes de la próxima inundación. Los sacerdotes muestran los papiros: la señal es clara. Pero el tesoro real está comprometido con la construcción de la nueva necrópolis. Construir el santuario requeriría desviar miles de trabajadores y toneladas de piedra caliza.",
   ctx:"Los oráculos eran la voz política de los dioses: el clero de Amón usaba la estatua procesional para 'responder' preguntas inclinándose hacia adelante (sí) o atrás (no). Este sistema concentró tanto poder en los sacerdotes que en el Período Tardío gobernaron el sur de Egipto.",
   opts:[
@@ -32,7 +32,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Ordenar estudios astrológicos adicionales antes de comprometer recursos",fx:{estabilidad:-3,riqueza:0,cultura:2,influencia:-2},type:"social"},
     {t:"Declarar que el oráculo fue mal interpretado y destituir al sumo sacerdote",fx:{estabilidad:-7,riqueza:2,cultura:-8,influencia:4},type:"cruel"}
   ],
-  tl:{date:"2560 aC",ph:"Keops (Jufu)",ev:"Gran Pirámide de Guiza — 2.3 millones de bloques",tip:"La Gran Pirámide tardó 20 años y 25.000 trabajadores. Era la estructura más alta del mundo durante 3.800 años, hasta la catedral de Lincoln en 1311 dC."}},
+  tl:{date:"1470 aC aprox.",ph:"Hatshepsut y Tutmosis III",ev:"Los reyes citan el oráculo de Amón para legitimar su reinado",tip:"Hatshepsut y Tutmosis III dejaron grabado en los templos de Karnak que Amón los había elegido. Los primeros textos claros sobre oráculos son del Imperio Nuevo."}},
 
   {id:4,per:"antiguo",cat:"sociedad",title:"Los Trabajadores del Gran Templo se Niegan",
   desc:"El capataz llega con malas noticias: los obreros de la cantera de Tura han abandonado las herramientas. Llevan tres días sin moverse. El calor es insoportable, la comida escasea, y dos hombres murieron aplastados por bloques mal asegurados. Son hombres libres, campesinos que sirven su turno de trabajo obligatorio al Estado, la corvée. Sus familias esperan en las aldeas del delta. Sin ellos, la construcción se detiene.",
@@ -80,7 +80,7 @@ export const EVENTS: GameEvent[] =[
 
   {id:8,per:"antiguo",cat:"sociedad",title:"La Gran Sequía del Sahara",
   desc:"Desde el oeste llegan caravanas desesperadas. La gran sequía que comenzó hace décadas avanza: los pastizales del Sahara se han vuelto desierto, las tribus que antes vivían de sus rebaños ahora huyen. Traen consigo ovejas, cabras, conocimientos sobre pozos y pastoreo... pero también enfermedades que el cuerpo egipcio no conoce. El delta ya recibe a cientos de familias. Pronto serán miles.",
-  ctx:"El 'Evento de 4.2 kiloyears' fue una megasequía global circa 2200 aC que transformó el Sahara verde en desierto árido. Arqueólogos como de Menocal lo vinculan directamente con el colapso del Antiguo Imperio y el caos del Primer Período Intermedio.",
+  ctx:"El Sahara fue una sabana verde hasta que, hace entre 6.000 y 5.000 años, terminó el «Período Húmedo Africano»: las lluvias se retiraron de forma gradual y los pastores se acercaron al Nilo. Hacia el 2200 aC hubo además una sequía fuerte (el «evento de 4,2 mil años») que coincide con el final del Antiguo Imperio; muchos investigadores la vinculan con crecidas bajas del Nilo, aunque se discute cuánto pesó frente a otras causas.",
   opts:[
     {t:"Política de puertas abiertas: integrar a los refugiados como trabajadores agrícolas y artesanos",fx:{estabilidad:5,riqueza:4,cultura:6,influencia:-2},type:"social"},
     {t:"Admisión controlada: campamentos de cuarentena, registro y asignación de roles productivos",fx:{estabilidad:7,riqueza:2,cultura:4,influencia:0},type:"social"},
@@ -277,15 +277,15 @@ export const EVENTS: GameEvent[] =[
   tl:{date:"663 aC",ph:"Taharqa (faraón nubio de la Dinastía XXV)",ev:"Saqueo asirio de Tebas — el mayor trauma del Período Tardío",tip:"Asurbanipal llevó a Nínive estatuas, textos y tesoros de 3.000 años de historia egipcia. Paradójicamente, su biblioteca en Nínive preservó miles de textos mesopotámicos que de otro modo se habrían perdido."}},
 
   {id:26,per:"tardio",cat:"economia",title:"Los Griegos de Naucratis",
-  desc:"Miletos, Corinto, Samos, Rodas: los mercaderes griegos que comercian en el Delta proponen algo inédito. Quieren una ciudad propia en suelo egipcio: Naucratis, en el Delta occidental. Una ciudad con sus propias leyes, sus propios templos, su propio puerto. Traerían plata del Ática, cerámica de Corinto, vino del Egeo, mercenarios espartanos. Y también: filosofía, ciencia, nuevas formas de pensar. Pero también sus dioses, sus costumbres extrañas, su diferente concepción del mundo.",
-  ctx:"Naucratis (fundada circa 620 aC) fue la primera ciudad griega en suelo egipcio. La plata ática y la cerámica griega se volvieron omnipresentes en Egipto. El contacto fue profundo en ambos sentidos: Tales, Pitágoras y Platón viajaron a Egipto. Los griegos afirmaban que toda su ciencia vino del Nilo.",
+  desc:"Miletos, Corinto, Samos, Rodas: los mercaderes griegos que comercian en el Delta proponen algo inédito. Quieren una ciudad propia en suelo egipcio: Naucratis, en el Delta occidental. Una ciudad con sus propias leyes, sus propios templos, su propio puerto. Traerían plata, cerámica de Corinto, vino del Egeo y mercenarios jonios y carios. Y también: filosofía, ciencia, nuevas formas de pensar. Pero también sus dioses, sus costumbres extrañas, su diferente concepción del mundo.",
+  ctx:"Naucratis fue el principal puerto griego en suelo egipcio. Los primeros asentamientos son de hacia el 625 aC, con Psamético I, que contrató mercenarios jonios y carios; según Heródoto, Amasis II (570-526 aC) les dio la ciudad y el comercio exclusivo. La cerámica griega se volvió frecuente en Egipto. La tradición griega decía que Tales, Pitágoras y Platón viajaron a Egipto, y Heródoto sostenía que los griegos debían mucho a los egipcios.",
   opts:[
     {t:"Naucratis como zona económica especial: ciudad griega con autonomía jurídica y monopolio comercial",fx:{estabilidad:4,riqueza:8,cultura:8,influencia:1},type:"economico"},
     {t:"Licencia comercial sin ciudad propia: los griegos pueden comerciar pero no asentarse",fx:{estabilidad:2,riqueza:6,cultura:2,influencia:2},type:"politico"},
     {t:"Asociación estratégica plena: griegos como aliados militares y socios comerciales",fx:{estabilidad:4,riqueza:7,cultura:8,influencia:8,fe:-1},type:"diplomatico"},
     {t:"Rechazar la propuesta: Egipto no necesita comerciantes bárbaros del norte",fx:{estabilidad:0,riqueza:-6,cultura:-4,influencia:-4},type:"cruel"}
   ],
-  tl:{date:"620 aC",ph:"Amasis II (Ahmose II)",ev:"Fundación de Naucratis — primer contacto sistemático Grecia-Egipto",tip:"Heródoto visitó Egipto circa 450 aC y describió sus maravillas en detalle. Declaró que los griegos habían aprendido la geometría, la astronomía y la medicina de los sacerdotes egipcios. La deuda cultural fue inmensa."}},
+  tl:{date:"625 aC aprox.",ph:"Psamético I y Amasis II",ev:"Fundación de Naucratis — primer contacto sistemático Grecia-Egipto",tip:"Heródoto visitó Egipto hacia el 450 aC y describió sus costumbres. Sostuvo que los griegos habían aprendido de los egipcios, por ejemplo, la geometría: es su opinión, no un hecho comprobado."}},
 
   {id:27,per:"tardio",cat:"religion",title:"El Renacimiento del Pasado",
   desc:"Los faraones de Sais, en el Delta, han tomado una decisión política y espiritual al mismo tiempo: volver a las fuentes. Los artistas reciben instrucciones de copiar exactamente el estilo del Antiguo Imperio, como si hubieran transcurrido 1.500 años de historia en lugar de vivirlos. Los escribas transcriben papiros con ortografía arcaica. Los arquitectos estudian las proporciones de las pirámides. Es una apuesta por la identidad en tiempos de incertidumbre.",

@@ -198,7 +198,7 @@ export function IntroScreen({ onFinish, playerName }: Props) {
                   </div>
                   <div className="intro-fact-box">
                     <span className="ifb-ico">🕰️</span>
-                    <p>En este juego gobernarás cuatro períodos históricos, desde el <strong>Antiguo Imperio</strong> (3100 a.C.) hasta el <strong>Período Tardío</strong> (332 a.C.).</p>
+                    <p>En este juego gobernarás cuatro períodos históricos, desde el <strong>Antiguo Imperio</strong> (3100 a.C.) hasta el <strong>Período Tardío</strong> (30 a.C.).</p>
                   </div>
                 </div>
               </div>
