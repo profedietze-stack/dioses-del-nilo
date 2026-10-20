@@ -6,6 +6,7 @@ import {
   EVENTS_TARDIO_EXTRA,
 } from './events_extra'
 import { EVENTS_DIOSES } from './events_dioses'
+import { EVENTS_EQUILIBRIO } from './events_equilibrio'
 import { PHARAOH_PLACEHOLDER_EVENTS } from './pharaohs'
 import type { GameEvent } from '../types'
 
@@ -15,6 +16,7 @@ const NORMAL_EVENTS = [
   ...EVENTS_MEDIO_EXTRA,
   ...EVENTS_NUEVO_EXTRA,
   ...EVENTS_TARDIO_EXTRA,
+  ...EVENTS_EQUILIBRIO,
 ]
 
 // Includes pharaoh placeholders so getEventsById can reconstruct saved games

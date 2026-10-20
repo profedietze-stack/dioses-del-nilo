@@ -135,8 +135,8 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
   ],
   tl:{date:"1875 aC",ph:"Senuseret I (Kheperkara)",ev:"Composición de la Historia de Sinuhé",tip:"Sinuhé regresa a Egipto anciano, recibe del faraón una tumba, un ajuar funerario y el perdón. El texto termina con las palabras 'ha terminado felizmente de principio a fin, como se encontró por escrito'. Los egipcios inventaron también los finales felices."}},
 
-  {id:205,per:"medio",cat:"politica",title:"Las Fortalezas de Nubia",
-  desc:"El general Ikhernofret regresa del sur con su informe: la frontera con Kush en la Segunda Catarata está asegurada, pero el costo es alto. Mantener ocho fortalezas con 5.000 soldados consume el 15% del presupuesto militar. Los nubios de Kush son formidables guerreros y comerciantes astutos. Proponen una alternativa: tratado de comercio en lugar de ocupación militar, permitir el libre flujo de marfil, ébano y esclavos a cambio de retirar las guarniciones. Significaría ceder el control de las minas de oro.",
+  {id:205,per:"medio",cat:"militar",title:"Las Fortalezas de Nubia",
+  desc:"El comandante de la frontera sur regresa con su informe: la frontera con Kush en la Segunda Catarata está asegurada, pero el costo es alto. Mantener ocho fortalezas con 5.000 soldados consume el 15% del presupuesto militar. Los nubios de Kush son formidables guerreros y comerciantes astutos. Proponen una alternativa: tratado de comercio en lugar de ocupación militar, permitir el libre flujo de marfil, ébano y esclavos a cambio de retirar las guarniciones. Significaría ceder el control de las minas de oro.",
   ctx:"La cadena de fortalezas de Senuseret III en Nubia (circa 1850 aC) incluía Buhen, Mirgissa y otras seis. Tenían sistemas de comunicación por señales de fuego, fosos secos y bastiones angulados: ingeniería militar sin igual en el mundo de su tiempo. Las inundaciones del lago Nasser las sepultaron en los años 60.",
   opts:[
     {t:"Mantener las fortalezas y reforzarlas: el control del Nilo hasta la Tercera Catarata no se negocia",fx:{estabilidad:4,riqueza:-6,cultura:2,influencia:8},type:"militar"},

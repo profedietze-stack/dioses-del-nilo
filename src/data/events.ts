@@ -177,7 +177,7 @@ export const EVENTS: GameEvent[] =[
   ],
   tl:{date:"1806 aC",ph:"Sobekneferu (Neferusobek)",ev:"Primera faraona que gobierna Egipto en solitario",tip:"El nombre Sobekneferu significa 'las perfecciones de Sobek', el cocodrilo. Gobernó 4 años y sus monumentos se han encontrado en Hawara, Heracleópolis y el Delta. Fue el último faraón del Imperio Medio."}},
 
-  {id:17,per:"nuevo",cat:"politica",title:"La Expulsión de los Hicsos",
+  {id:17,per:"nuevo",cat:"militar",title:"La Expulsión de los Hicsos",
   desc:"El momento que tres generaciones de tebanos soñaron ha llegado. El faraón Seqenenra Tao murió en batalla —su momia muestra cinco golpes de hacha en el cráneo, una carnicería—. Su hijo Kamose comenzó la reconquista. Ahora tú, Ahmose, tienes los barcos fluviales, los carros de guerra y los soldados que los propios Hicsos nos enseñaron a usar. Avaris está a cuatro días de navegación. Pero una campaña total exige vaciar el tesoro y sangrar al ejército.",
   ctx:"Ahmose I (1550-1525 aC) expulsó a los Hicsos y fundó la Dinastía XVIII, la más gloriosa de Egipto. La ironía histórica perfecta: usó exactamente las tecnologías militares que los Hicsos introdujeron —carros, arcos compuestos, espadas de bronce— para expulsarlos.",
   opts:[
@@ -243,7 +243,7 @@ export const EVENTS: GameEvent[] =[
   ],
   tl:{date:"1550 aC aprox.",ph:"Inicio del Imperio Nuevo",ev:"Compilación del Libro de los Muertos",tip:"El papiro de Ani mide 24 metros de largo. La escena del pesaje del corazón muestra a Ani ante 42 jueces confesando que no mató, no robó, no mintió. Es el primer código ético escrito de la historia."}},
 
-  {id:23,per:"nuevo",cat:"sociedad",title:"Los Pueblos del Mar",
+  {id:23,per:"nuevo",cat:"militar",title:"Los Pueblos del Mar",
   desc:"El caos llega desde el mar. En doce años, los Pueblos del Mar —coalición misteriosa de migrantes guerreros del Egeo y Anatolia— han destruido el Imperio Hitita, saqueado Ugarit y arrasado Chipre. Ahora sus flotas y ejércitos convergen sobre el Delta. Traen hierro, cuando Egipto aún vive en la Edad del Bronce. Sus barcos son más rápidos. Sus espadas, más afiladas. Ramsés III los espera en las orillas del Delta con lo que queda del ejército más poderoso del mundo.",
   ctx:"El colapso de la Edad de Bronce (1200-1150 aC) fue la primera gran catástrofe civilizatoria de la historia: colapsaron simultáneamente los Hititas, Micenas, Troya, Ugarit y el Imperio Chipriota. Solo Egipto sobrevivió, gravemente herido. Las causas siguen siendo debatidas: sequía, invasiones, terremotos, colapso del comercio.",
   opts:[
@@ -265,7 +265,7 @@ export const EVENTS: GameEvent[] =[
   ],
   tl:{date:"1070 aC",ph:"Herhor (Sumo Sacerdote de Amón)",ev:"Inicio del Tercer Período Intermedio — Egipto dividido",tip:"El Relato de Unamón (1070 aC) documenta la humillación de un enviado egipcio en Biblos: el príncipe fenicio ya no le teme al faraón y lo hace esperar semanas. Es el retrato literario de un Imperio que agoniza."}},
 
-  {id:25,per:"tardio",cat:"sociedad",title:"La Sombra de Asiria",
+  {id:25,per:"tardio",cat:"militar",title:"La Sombra de Asiria",
   desc:"Asurbanipal, rey de Asiria, ha cruzado el Sinaí. Menfis ha caído en dos semanas. Ahora sus ejércitos marchan hacia Tebas, la ciudad sagrada de Amón, con sus millones de habitantes y sus templos centenarios de oro. Los asirios son conocidos por su brutalidad: ciudades enteras reducidas a cenizas, poblaciones deportadas a Mesopotamia. El faraón nubio Taharqa huyó al sur. El ejército egipcio está desmoralizado. Tebas, sin murallas, espera.",
   ctx:"El saqueo de Tebas (663 aC) impactó tanto al mundo antiguo que el profeta bíblico Nahúm lo citó décadas después como el ejemplo definitivo de destrucción de una gran ciudad. La potencia que había dominado el mundo durante mil años era ahora provincia de un imperio extranjero.",
   opts:[
@@ -298,7 +298,7 @@ export const EVENTS: GameEvent[] =[
   ],
   tl:{date:"664 aC",ph:"Psamético I (Wahibra)",ev:"Fundación de la Dinastía Saíta — último renacimiento nativo",tip:"Psamético I unificó Egipto con apoyo de mercenarios griegos (los carios) y expulsó a los gobernadores asirios. Su reinado de 54 años fue una última era dorada antes de la conquista persa."}},
 
-  {id:28,per:"tardio",cat:"politica",title:"El Imperio Persa Llama a la Puerta",
+  {id:28,per:"tardio",cat:"militar",title:"El Imperio Persa Llama a la Puerta",
   desc:"Cambises II, rey de reyes de Persia, ha marchado desde Babilonia con el ejército más grande que el mundo ha visto: 200.000 soldados, elefantes de guerra, ingenieros que construyen puentes de barcas sobre el Nilo. Sus espías ya están en la corte. El traidor Polícrates de Samos le ha entregado los planos de las defensas egipcias. En la batalla de Peluso, el ejército egipcio, a pesar de su coraje, está a punto de romperse. El faraón Psamético III tiene pocas horas para decidir.",
   ctx:"La conquista persa (525 aC) marcó el fin de 2.500 años de soberanía faraónica nativa. Paradójicamente, los persas respetaron la religión egipcia y Cambises adoptó el título de faraón. Egipto no volvería a tener un gobernante nativo hasta la Revolución de 1952, 2.477 años después.",
   opts:[
