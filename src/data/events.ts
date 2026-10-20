@@ -49,7 +49,7 @@ export const EVENTS: GameEvent[] =[
   desc:"El almirante Nehsi llega ante ti con mapas y propuestas: los mercaderes de Punt, la tierra misteriosa al sur del Mar Rojo, ofrecen mirra para los templos, ébano negro como la noche, incienso para las ceremonias y marfil de elefante. Pero el viaje exige diez barcos, doscientos marineros, meses de travesía por mares desconocidos y fondos considerables del tesoro. La última expedición fue hace cincuenta años. Algunos de los marineros no regresaron.",
   ctx:"Punt era probablemente la actual Somalia, Eritrea o Yemen. El ébano y la mirra eran imprescindibles en la vida religiosa egipcia. La reina Hatshepsut envió la expedición más famosa circa 1495 aC, documentada en bajorrelieves del templo de Deir el-Bahari.",
   opts:[
-    {t:"Financiar la expedición completa: el prestigio y las riquezas de Punt bien valen el riesgo",fx:{estabilidad:0,riqueza:8,cultura:5,influencia:5},type:"economico"},
+    {t:"Financiar la expedición completa: el prestigio y las riquezas de Punt bien valen el riesgo",fx:{estabilidad:-2,riqueza:8,cultura:5,influencia:5},type:"economico"},
     {t:"Expedición mixta: asociarse con mercaderes fenicios para compartir costos y riesgos",fx:{estabilidad:0,riqueza:5,cultura:2,influencia:2},type:"economico"},
     {t:"Declinar: los riesgos superan los beneficios, reforzar el comercio terrestre con Nubia",fx:{estabilidad:3,riqueza:-2,cultura:-2,influencia:-2},type:"social"},
     {t:"Ordenar la expedición como corvée militar: los marineros irán quieran o no",fx:{estabilidad:-4,riqueza:7,cultura:-4,influencia:-5},type:"cruel"}
@@ -60,7 +60,7 @@ export const EVENTS: GameEvent[] =[
   desc:"Los nomarcas del Alto Egipto han enviado un documento conjunto: reclaman el derecho a recaudar sus propios impuestos, a nombrar a sus propios jueces y a mantener milicias privadas. Su argumento es seductor: las provincias distantes conocen mejor sus necesidades. Pero tú sabes lo que esto significa en realidad. Cuando el poder del faraón se fragmenta, Egipto se rompe. Ya ocurrió antes. Puede volver a ocurrir.",
   ctx:"La fragmentación del poder en los nomos fue la causa directa del Primer Período Intermedio (2181-2055 aC), cuando Egipto se dividió en reinos menores durante 125 años de guerras civiles, hambrunas y caos. Los textos de Heracleópolis describen el horror de ese período.",
   opts:[
-    {t:"Reformar la burocracia: crear inspectores reales que supervisen a los nomarcas in situ",fx:{estabilidad:8,riqueza:-4,cultura:4,influencia:8},type:"social"},
+    {t:"Reformar la burocracia: crear inspectores reales que supervisen a los nomarcas in situ",fx:{estabilidad:8,riqueza:-6,cultura:4,influencia:8},type:"social"},
     {t:"Negociar: autonomía fiscal limitada a cambio de tributo fijo anual y lealtad militar",fx:{estabilidad:3,riqueza:-5,cultura:0,influencia:-4},type:"politico"},
     {t:"Destituir a los nomarcas más rebeldes y reemplazarlos con funcionarios leales de Memphis",fx:{estabilidad:-5,riqueza:0,cultura:-2,influencia:8},type:"militar"},
     {t:"Ignorar el problema: los conflictos entre provincias se resolverán solos",fx:{estabilidad:-8,riqueza:-4,cultura:-4,influencia:-7},type:"politico"}
@@ -93,7 +93,7 @@ export const EVENTS: GameEvent[] =[
   desc:"Mentuhotep II ha reunificado los Dos Reinos después de 125 años de caos. El ejército tebano ha vencido. Pero ahora llega la pregunta más difícil: ¿cómo gobernar un Egipto quebrado, desconfiado y con heridas que aún sangran? Los nomarcas del norte miran con recelo al nuevo faraón del sur. Los templos necesitan reconstrucción. El pueblo quiere orden. Tú decides la arquitectura del nuevo poder.",
   ctx:"Mentuhotep II (2055-2004 aC) es considerado el segundo gran unificador de Egipto. Su estrategia fue pragmática: mantuvo a algunos nomarcas locales pero instaló funcionarios reales como supervisores. Inauguró el Imperio Medio y un siglo de prosperidad.",
   opts:[
-    {t:"Sistema bicéfalo: centralismo político con autonomía económica para los nomos leales",fx:{estabilidad:8,riqueza:8,cultura:6,influencia:7},type:"politico"},
+    {t:"Sistema bicéfalo: centralismo político con autonomía económica para los nomos leales",fx:{estabilidad:8,riqueza:5,cultura:6,influencia:7},type:"politico"},
     {t:"Centralismo total: todos los nomarcas son reemplazados por burócratas designados desde Tebas",fx:{estabilidad:7,riqueza:4,cultura:0,influencia:8},type:"politico"},
     {t:"Confederación pragmática: los nomarcas conservan su poder a cambio de tributo y soldados",fx:{estabilidad:4,riqueza:6,cultura:4,influencia:4},type:"social"},
     {t:"Dejar que los nomos se gobiernen solos mientras Tebas consolida el sur",fx:{estabilidad:-7,riqueza:-4,cultura:-2,influencia:-6},type:"politico"}
@@ -104,7 +104,7 @@ export const EVENTS: GameEvent[] =[
   desc:"El explorador Harkhuf regresa de una expedición al Sinaí con muestras de turquesa verde-azul del color del cielo al amanecer, y pepitas de cobre brillante. Las vetas son ricas, posiblemente las más ricas del mundo conocido. Pero la región está habitada por tribus beduinas que llevan generaciones extrayendo esos mismos minerales. Ellos conocen los pozos de agua, los caminos seguros, los peligros del desierto. Sin su cooperación, cualquier expedición podría terminar en desastre.",
   ctx:"Las minas de Serabit el-Jadim en el Sinaí fueron explotadas intermitentemente desde el Antiguo Imperio. Allí se encontraron los primeros textos proto-sinaíticos (1850 aC), el eslabón entre los jeroglíficos egipcios y el alfabeto fenicio-semítico, padre de todos los alfabetos actuales.",
   opts:[
-    {t:"Contrato justo: contratar a los beduinos como guías, mineros y protectores a cambio de pago",fx:{estabilidad:7,riqueza:8,cultura:4,influencia:4},type:"social"},
+    {t:"Contrato justo: contratar a los beduinos como guías, mineros y protectores a cambio de pago",fx:{estabilidad:7,riqueza:6,cultura:4,influencia:4},type:"social"},
     {t:"Negociar el acceso: pagar tributo anual a los líderes beduinos por el derecho de explotación",fx:{estabilidad:4,riqueza:7,cultura:2,influencia:0},type:"economico"},
     {t:"Ocupación militar: una guarnición permanente garantizará el acceso sin depender de los beduinos",fx:{estabilidad:-2,riqueza:8,cultura:-4,influencia:7},type:"militar"},
     {t:"Desplazar a las tribus hacia el interior del desierto por la fuerza",fx:{estabilidad:-8,riqueza:8,cultura:-8,influencia:-4},type:"cruel"}
@@ -137,7 +137,7 @@ export const EVENTS: GameEvent[] =[
   desc:"Una caravana llegó de Canaán con muestras: aceite de oliva en ánforas de barro rojo, vino tinto perfumado con resina de pino, y tablas de cedro del Líbano cuyo aroma llena el salón del trono. A cambio piden papiro, lino fino y, siempre, oro. La ruta comercial existe desde hace siglos, pero nunca fue tan lucrativa. Sin embargo, las caravanas cruzan tierras de tribus inciertas. El acuerdo requiere protección o el riesgo de perder los cargamentos.",
   ctx:"El comercio con Canaán era vital porque Egipto carecía de madera de calidad. El cedro libanés era imprescindible para barcos, ataúdes de lujo y estructuras de templos. Los textos de Amarna (siglo XIV aC) revelan que el intercambio de regalos diplomáticos era inseparable del comercio.",
   opts:[
-    {t:"Tratado comercial oficial con protección militar de las rutas y tarifa arancelaria",fx:{estabilidad:4,riqueza:8,cultura:4,influencia:7},type:"economico"},
+    {t:"Tratado comercial oficial con protección militar de las rutas y tarifa arancelaria",fx:{estabilidad:4,riqueza:8,cultura:4,influencia:7,comercio:-2},type:"economico"},
     {t:"Monopolio estatal: el faraón compra toda la producción y la redistribuye",fx:{estabilidad:2,riqueza:8,cultura:0,influencia:4},type:"politico"},
     {t:"Comercio libre: los mercaderes privados egipcios negocian directamente",fx:{estabilidad:0,riqueza:5,cultura:2,influencia:0},type:"economico"},
     {t:"Bloquear el comercio: el oro de Egipto no debe salir del país",fx:{estabilidad:0,riqueza:-4,cultura:-4,influencia:-4},type:"economico"}
@@ -160,7 +160,7 @@ export const EVENTS: GameEvent[] =[
   ctx:"Los Textos de los Ataúdes (2100-1650 aC) extendieron a las clases medias el derecho a la vida eterna. Este fenómeno, llamado 'democratización del Más Allá', fue una revolución social silenciosa: la muerte igualaba a quien pudiera pagar los ritos. El Libro de los Muertos sería su continuación.",
   opts:[
     {t:"Apoyar el movimiento: financiar la escritura de textos sagrados para los templos de provincias",fx:{estabilidad:8,riqueza:-7,cultura:8,influencia:0},type:"cultural"},
-    {t:"Regularlo: crear un sistema de licencias para los sacerdotes que venden los textos",fx:{estabilidad:4,riqueza:4,cultura:5,influencia:6},type:"politico"},
+    {t:"Regularlo: crear un sistema de licencias para los sacerdotes que venden los textos",fx:{estabilidad:4,riqueza:4,cultura:5,influencia:6,fe:-2},type:"politico"},
     {t:"No intervenir: que el mercado espiritual funcione libremente",fx:{estabilidad:4,riqueza:0,cultura:5,influencia:0},type:"social"},
     {t:"Prohibirlo: la vida eterna es prerrogativa del faraón y los grandes nobles",fx:{estabilidad:-8,riqueza:0,cultura:-8,influencia:-4},type:"cruel"}
   ],
@@ -170,8 +170,8 @@ export const EVENTS: GameEvent[] =[
   desc:"La reina Sobekneferu es hija de Amenemhat III y hermana del faraón recién fallecido sin herederos varones. Es brillante, política, conocedora de los textos sagrados. Lleva años administrando el estado en la sombra. Ahora reclama el doble trono en su propio nombre, con peluca de faraón, barba postiza y kilt masculino. Los generales están inquietos. Los sacerdotes buscan precedentes en los textos. Tú debes decidir.",
   ctx:"Sobekneferu (Neferusobek, circa 1806-1802 aC) fue la primera faraona documentada que gobernó sola. Adoptó la titulatura masculina completa pero combinó los títulos femeninos con los masculinos: una solución sin precedentes al problema de una mujer en el trono.",
   opts:[
-    {t:"Reconocerla plenamente: Sobekneferu gobierna con todos los poderes del faraón",fx:{estabilidad:7,riqueza:0,cultura:8,influencia:4},type:"cultural"},
-    {t:"Co-regencia simbólica: gobierna en nombre del futuro heredero mientras se busca uno",fx:{estabilidad:5,riqueza:0,cultura:4,influencia:4},type:"social"},
+    {t:"Reconocerla plenamente: Sobekneferu gobierna con todos los poderes del faraón",fx:{estabilidad:7,riqueza:-1,cultura:8,influencia:3},type:"cultural"},
+    {t:"Co-regencia simbólica: gobierna en nombre del futuro heredero mientras se busca uno",fx:{estabilidad:5,riqueza:0,cultura:4,influencia:3},type:"social"},
     {t:"Consejo de regencia masculino con Sobekneferu como figura ceremonial",fx:{estabilidad:-2,riqueza:0,cultura:-7,influencia:4},type:"politico"},
     {t:"Confinamiento: la sucesión debe recaer en un noble varón de la sangre real",fx:{estabilidad:-7,riqueza:0,cultura:-8,influencia:-4},type:"cruel"}
   ],
@@ -192,8 +192,8 @@ export const EVENTS: GameEvent[] =[
   desc:"Hatshepsut lleva cinco años como regente del joven Tutmosis III cuando da el paso que nadie esperaba: se corona faraona con plena titulatura real, barba postiza de oro, corona del Alto y Bajo Egipto. Sus monumentos empiezan a mostrarla como hombre. Su arquitecto y favorito, Senenmut, diseña para ella el templo más bello del mundo en las laderas de Deir el-Bahari. Tutmosis III, que ya tiene dieciséis años y mira desde las sombras, espera.",
   ctx:"Hatshepsut (1479-1458 aC) reinó 20 años en paz y prosperidad. Expandió el comercio, construyó más que cualquier faraón anterior, y organizó la expedición a Punt. Tutmosis III, después de su muerte, borró sistemáticamente su nombre de los monumentos — pero no pudo borrar su historia.",
   opts:[
-    {t:"Apoyar plenamente a Hatshepsut: su reinado garantiza estabilidad y riqueza",fx:{estabilidad:8,riqueza:8,cultura:8,influencia:4},type:"politico"},
-    {t:"Co-regencia equitativa: Hatshepsut y Tutmosis III gobiernan juntos con poder compartido",fx:{estabilidad:7,riqueza:5,cultura:6,influencia:7},type:"social"},
+    {t:"Apoyar plenamente a Hatshepsut: su reinado garantiza estabilidad y riqueza",fx:{estabilidad:8,riqueza:8,cultura:8,influencia:3},type:"politico"},
+    {t:"Co-regencia equitativa: Hatshepsut y Tutmosis III gobiernan juntos con poder compartido",fx:{estabilidad:7,riqueza:5,cultura:6,influencia:7,fe:-1},type:"social"},
     {t:"Presionar por la abdicación: Tutmosis III ya es mayor y debe tomar el trono solo",fx:{estabilidad:-4,riqueza:0,cultura:-8,influencia:4},type:"politico"},
     {t:"Conspirar con los generales para deponer a Hatshepsut y entronizar a Tutmosis",fx:{estabilidad:-8,riqueza:-2,cultura:-8,influencia:-4},type:"politico"}
   ],
@@ -225,7 +225,7 @@ export const EVENTS: GameEvent[] =[
   desc:"Dieciséis años de guerra contra los Hititas han dejado miles de muertos y ningún vencedor claro. La batalla de Qadesh (1274 aC) fue el mayor choque de carros de la historia: 5.000 vehículos de guerra, 40.000 soldados. Ramsés II casi muere allí. Ahora el rey hitita Hattusili III propone algo sin precedentes: un tratado de paz permanente, hermandad entre los dos imperios, intercambio de princesas como garantía. Es una oportunidad histórica.",
   ctx:"El Tratado de Qadesh (1259 aC) es el acuerdo internacional más antiguo conservado. Una copia en cuneiforme hitita está en el Museo de Estambul; otra en jeroglíficos, en el templo de Karnak. Una reproducción fue entregada a la ONU en 1970 como símbolo del primer tratado de paz de la humanidad.",
   opts:[
-    {t:"Firmar el tratado completo con alianza matrimonial: paz duradera sobre gloria efímera",fx:{estabilidad:8,riqueza:7,cultura:7,influencia:4},type:"diplomatico"},
+    {t:"Firmar el tratado completo con alianza matrimonial: paz duradera sobre gloria efímera",fx:{estabilidad:8,riqueza:7,cultura:7,influencia:3},type:"diplomatico"},
     {t:"Firmar la paz sin el matrimonio: acuerdo de no agresión sin compromisos dinásticos",fx:{estabilidad:7,riqueza:4,cultura:4,influencia:4},type:"diplomatico"},
     {t:"Exigir concesiones territoriales adicionales antes de firmar",fx:{estabilidad:-2,riqueza:7,cultura:0,influencia:7},type:"politico"},
     {t:"Rechazar el tratado y relanzar la guerra: Egipto no negocia con iguales",fx:{estabilidad:-8,riqueza:-8,cultura:-4,influencia:-4},type:"militar"}
@@ -248,7 +248,7 @@ export const EVENTS: GameEvent[] =[
   ctx:"El colapso de la Edad de Bronce (1200-1150 aC) fue la primera gran catástrofe civilizatoria de la historia: colapsaron simultáneamente los Hititas, Micenas, Troya, Ugarit y el Imperio Chipriota. Solo Egipto sobrevivió, gravemente herido. Las causas siguen siendo debatidas: sequía, invasiones, terremotos, colapso del comercio.",
   opts:[
     {t:"Defensa integral: todo el ejército y la flota en el Delta, más mercenarios libios y nubios",fx:{estabilidad:-4,riqueza:-8,cultura:0,influencia:8},type:"militar"},
-    {t:"Táctica diplomática: absorber a parte de los Pueblos del Mar como mercenarios del faraón",fx:{estabilidad:2,riqueza:-4,cultura:2,influencia:7},type:"diplomatico"},
+    {t:"Táctica diplomática: absorber a parte de los Pueblos del Mar como mercenarios del faraón",fx:{estabilidad:2,riqueza:-5,cultura:2,influencia:7},type:"diplomatico"},
     {t:"Defensa del núcleo: sacrificar el Delta oriental para concentrar fuerzas en el interior",fx:{estabilidad:-7,riqueza:-4,cultura:-4,influencia:4},type:"politico"},
     {t:"Rendición negociada: ceder tierras del Delta a cambio de que cesen las hostilidades",fx:{estabilidad:-8,riqueza:-4,cultura:-8,influencia:-8},type:"diplomatico"}
   ],
@@ -280,9 +280,9 @@ export const EVENTS: GameEvent[] =[
   desc:"Miletos, Corinto, Samos, Rodas: los mercaderes griegos que comercian en el Delta proponen algo inédito. Quieren una ciudad propia en suelo egipcio: Naucratis, en el Delta occidental. Una ciudad con sus propias leyes, sus propios templos, su propio puerto. Traerían plata del Ática, cerámica de Corinto, vino del Egeo, mercenarios espartanos. Y también: filosofía, ciencia, nuevas formas de pensar. Pero también sus dioses, sus costumbres extrañas, su diferente concepción del mundo.",
   ctx:"Naucratis (fundada circa 620 aC) fue la primera ciudad griega en suelo egipcio. La plata ática y la cerámica griega se volvieron omnipresentes en Egipto. El contacto fue profundo en ambos sentidos: Tales, Pitágoras y Platón viajaron a Egipto. Los griegos afirmaban que toda su ciencia vino del Nilo.",
   opts:[
-    {t:"Naucratis como zona económica especial: ciudad griega con autonomía jurídica y monopolio comercial",fx:{estabilidad:4,riqueza:8,cultura:8,influencia:4},type:"economico"},
+    {t:"Naucratis como zona económica especial: ciudad griega con autonomía jurídica y monopolio comercial",fx:{estabilidad:4,riqueza:8,cultura:8,influencia:1},type:"economico"},
     {t:"Licencia comercial sin ciudad propia: los griegos pueden comerciar pero no asentarse",fx:{estabilidad:2,riqueza:6,cultura:2,influencia:2},type:"politico"},
-    {t:"Asociación estratégica plena: griegos como aliados militares y socios comerciales",fx:{estabilidad:4,riqueza:7,cultura:8,influencia:8},type:"diplomatico"},
+    {t:"Asociación estratégica plena: griegos como aliados militares y socios comerciales",fx:{estabilidad:4,riqueza:7,cultura:8,influencia:8,fe:-1},type:"diplomatico"},
     {t:"Rechazar la propuesta: Egipto no necesita comerciantes bárbaros del norte",fx:{estabilidad:0,riqueza:-6,cultura:-4,influencia:-4},type:"cruel"}
   ],
   tl:{date:"620 aC",ph:"Amasis II (Ahmose II)",ev:"Fundación de Naucratis — primer contacto sistemático Grecia-Egipto",tip:"Heródoto visitó Egipto circa 450 aC y describió sus maravillas en detalle. Declaró que los griegos habían aprendido la geometría, la astronomía y la medicina de los sacerdotes egipcios. La deuda cultural fue inmensa."}},
@@ -292,7 +292,7 @@ export const EVENTS: GameEvent[] =[
   ctx:"La Dinastía Saíta (664-525 aC) fue la última gran dinastía nativa de Egipto. Su 'arcaísmo' fue una respuesta política a la dominación extranjera: reivindicar el esplendor del pasado como afirmación de identidad. El arte saíta es extraordinariamente refinado y difícil de distinguir del Antiguo Imperio.",
   opts:[
     {t:"Gran proyecto nacional de restauración: copiar los textos sagrados, restaurar los templos",fx:{estabilidad:7,riqueza:-6,cultura:8,influencia:2},type:"cultural"},
-    {t:"Síntesis creativa: recuperar lo mejor del pasado pero incorporar innovaciones del presente",fx:{estabilidad:4,riqueza:0,cultura:7,influencia:4},type:"social"},
+    {t:"Síntesis creativa: recuperar lo mejor del pasado pero incorporar innovaciones del presente",fx:{estabilidad:3,riqueza:0,cultura:7,influencia:4},type:"social"},
     {t:"Restauración selectiva: restaurar solo los monumentos más visibles y simbólicos",fx:{estabilidad:4,riqueza:-4,cultura:4,influencia:2},type:"economico"},
     {t:"Prohibir las copias: el pasado glorioso solo sirve para recordar lo mucho que hemos perdido",fx:{estabilidad:-4,riqueza:0,cultura:-8,influencia:0},type:"cruel"}
   ],
@@ -313,7 +313,7 @@ export const EVENTS: GameEvent[] =[
   desc:"Alejandro III de Macedonia ha llegado a Egipto no como conquistador sino como liberador: los persas, odiados durante 200 años, han sido derrotados. Los egipcios le abren las puertas. En Menfis, es coronado faraón con todos los ritos. Luego emprende la travesía de 500 kilómetros al oráculo de Amón en el oasis de Siwa, en pleno desierto occidental. El oráculo, voz del mayor dios egipcio, lo proclama 'hijo de Zeus-Amón'. La noticia transforma todo.",
   ctx:"Alejandro (332-323 aC) fundó Alejandría en siete días de planificación. Murió doce años después, a los 32 años, sin volver a pisar Egipto. Pero Alejandría se convirtió en el mayor centro intelectual del mundo antiguo: su Biblioteca reunió hasta 700.000 rollos de papiro.",
   opts:[
-    {t:"Coronación plena con todos los ritos faraónicos: legitimidad divina a cambio de respeto cultural",fx:{estabilidad:8,riqueza:7,cultura:8,influencia:4},type:"diplomatico"},
+    {t:"Coronación plena con todos los ritos faraónicos: legitimidad divina a cambio de respeto cultural",fx:{estabilidad:8,riqueza:7,cultura:6,influencia:4},type:"diplomatico"},
     {t:"Alianza militar estratégica: usar el poder macedonio para reafirmar el dominio egipcio en el Mediterráneo",fx:{estabilidad:4,riqueza:4,cultura:4,influencia:8},type:"militar"},
     {t:"Colaboración mínima: cumplir los rituales formalmente pero preservar la autonomía interna",fx:{estabilidad:2,riqueza:0,cultura:7,influencia:-2},type:"cultural"},
     {t:"Resistencia: organizar una rebelión nativa aprovechando que el ejército macedonio avanza hacia Persia",fx:{estabilidad:-8,riqueza:-8,cultura:-8,influencia:-8},type:"militar"}
@@ -324,7 +324,7 @@ export const EVENTS: GameEvent[] =[
   desc:"El Mediterráneo ha decidido. Marco Antonio y Cleopatra VII fueron derrotados en Actio por Octavio, el futuro Augusto. Cleopatra, última faraona de la dinastía ptolemaica, última gobernante de Egipto antes de que se convierta en provincia romana, tiene pocas horas para decidir. Ha gobernado durante 22 años con una inteligencia política sin igual: dominaba nueve idiomas, era matemática, filósofa, estratega. Ahora, en el Mausoleo de Alejandría, toma su decisión final.",
   ctx:"Cleopatra VII (69-30 aC) fue la primera ptolemaica en aprender egipcio. Era matemática, farmacóloga, hablaba nueve lenguas. Su muerte en agosto del 30 aC terminó 3.000 años de civilización faraónica ininterrumpida. Egipto no volvería a ser independiente hasta 1952, bajo Naguib y Nasser.",
   opts:[
-    {t:"Negociar con Octavio: preservar la cultura, los templos y parte de la administración bajo Roma",fx:{estabilidad:7,riqueza:4,cultura:8,influencia:-4},type:"diplomatico"},
+    {t:"Negociar con Octavio: preservar la cultura, los templos y parte de la administración bajo Roma",fx:{estabilidad:7,riqueza:4,cultura:8,influencia:-7},type:"diplomatico"},
     {t:"Resistencia simbólica final: destruir el tesoro y la flota para que Roma no los use",fx:{estabilidad:-8,riqueza:-8,cultura:4,influencia:7},type:"militar"},
     {t:"Exilio en Etiopía con el tesoro real: preservar la línea ptolemaica para un futuro retorno",fx:{estabilidad:2,riqueza:-6,cultura:6,influencia:-6},type:"social"},
     {t:"Elegir la muerte con dignidad: morir faraona, no cautiva en el desfile triunfal de Roma",fx:{estabilidad:-4,riqueza:0,cultura:8,influencia:4},type:"cultural"}

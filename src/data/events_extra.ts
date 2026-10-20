@@ -118,7 +118,7 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
   ctx:"Las epidemias en el Antiguo Egipto están documentadas en los papiros médicos y en textos como los de Merneptah (1213 aC). El contacto con Canaán y el Mediterráneo introdujo patógenos a los que la población del Nilo no tenía inmunidad. El 'evento de 1200 aC' que derrumbó la Edad de Bronce pudo tener un componente epidémico.",
   opts:[
     {t:"Cuarentena estricta del Delta con distribución de raciones desde el exterior",fx:{estabilidad:4,riqueza:-5,cultura:4,influencia:4},type:"social"},
-    {t:"Equipos médicos enviados al Delta con los tratamientos disponibles",fx:{estabilidad:7,riqueza:-4,cultura:6,influencia:4},type:"cultural"},
+    {t:"Equipos médicos enviados al Delta con los tratamientos disponibles",fx:{estabilidad:7,riqueza:-4,cultura:6,influencia:4,fe:-1},type:"cultural"},
     {t:"Cierre total del comercio marítimo mientras dure la epidemia",fx:{estabilidad:6,riqueza:-7,cultura:2,influencia:-2},type:"politico"},
     {t:"Quemar los barcos y las casas infectadas: el fuego es el único remedio",fx:{estabilidad:-6,riqueza:-4,cultura:-4,influencia:0},type:"cruel"}
   ],
@@ -140,7 +140,7 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
   ctx:"La cadena de fortalezas de Senuseret III en Nubia (circa 1850 aC) incluía Buhen, Mirgissa y otras seis. Tenían sistemas de comunicación por señales de fuego, fosos secos y bastiones angulados: ingeniería militar sin igual en el mundo de su tiempo. Las inundaciones del lago Nasser las sepultaron en los años 60.",
   opts:[
     {t:"Mantener las fortalezas y reforzarlas: el control del Nilo hasta la Tercera Catarata no se negocia",fx:{estabilidad:4,riqueza:-6,cultura:2,influencia:8},type:"militar"},
-    {t:"Tratado comercial con Kush: retirar las guarniciones intermedias y mantener solo las más al norte",fx:{estabilidad:6,riqueza:4,cultura:4,influencia:4},type:"diplomatico"},
+    {t:"Tratado comercial con Kush: retirar las guarniciones intermedias y mantener solo las más al norte",fx:{estabilidad:6,riqueza:3,cultura:4,influencia:4},type:"diplomatico"},
     {t:"Expandir las fortalezas hacia el sur para controlar las minas directamente",fx:{estabilidad:-2,riqueza:-8,cultura:0,influencia:7},type:"militar"},
     {t:"Retirarse completamente del sur de la Segunda Catarata y concentrar fuerzas en el norte",fx:{estabilidad:2,riqueza:4,cultura:-2,influencia:-6},type:"militar"}
   ],
@@ -151,7 +151,7 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
   ctx:"El culto a Sobek floreció durante el Imperio Medio, cuando la familia real adoptó el nombre del dios cocodrilo (Amenemhat 'Sobek es grande'). Crocodilopolis (actual Medinet el-Fayum) fue uno de los centros religiosos más activos de Egipto. Los griegos la llamaron así por los cocodrilos sagrados.",
   opts:[
     {t:"Oficializar el culto de Sobek con financiamiento estatal y regulación de los sacerdotes",fx:{estabilidad:7,riqueza:-4,cultura:7,influencia:4},type:"politico"},
-    {t:"Integrar a Sobek como manifestación de Ra: Sobek-Ra, unificando los dos cultos",fx:{estabilidad:8,riqueza:-2,cultura:8,influencia:6},type:"cultural"},
+    {t:"Integrar a Sobek como manifestación de Ra: Sobek-Ra, unificando los dos cultos",fx:{estabilidad:8,riqueza:-2,cultura:8,influencia:6,fe:-1},type:"cultural"},
     {t:"Permitir el culto pero limitar el tamaño de los templos sin permiso real",fx:{estabilidad:4,riqueza:0,cultura:4,influencia:4},type:"politico"},
     {t:"Destruir el templo no autorizado: ningún santuario existe sin decreto faraónico",fx:{estabilidad:-7,riqueza:0,cultura:-7,influencia:-2},type:"cruel"}
   ],
@@ -172,7 +172,7 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
   desc:"El escriba de los registros levanta una cuestión incómoda ante el consejo: en los papiros del Imperio hay tres categorías de trabajadores forzados que en la práctica se comportan igual, pero tienen estatus legales completamente distintos. Los prisioneros de guerra son propiedad del Estado. Los deudores que no pueden pagar trabajan por su deuda. Los campesinos en corvée son ciudadanos libres que deben días de trabajo al faraón. La confusión entre categorías genera abusos: capataces que tratan a trabajadores libres como esclavos. El pueblo está resentido.",
   ctx:"Egipto no tuvo esclavitud en el sentido romano en la mayor parte de su historia. Los 'servidores del rey' eran una categoría flexible que incluía prisioneros, deudores y trabajadores estatales. El Código de Hammurabi babilónico (1754 aC) muestra cuánto más explícita era la esclavitud en otras culturas contemporáneas.",
   opts:[
-    {t:"Código laboral escrito: derechos y obligaciones de cada categoría de trabajador claramente definidos",fx:{estabilidad:8,riqueza:-3,cultura:8,influencia:4},type:"cultural"},
+    {t:"Código laboral escrito: derechos y obligaciones de cada categoría de trabajador claramente definidos",fx:{estabilidad:8,riqueza:-6,cultura:8,influencia:4},type:"cultural"},
     {t:"Unificar todas las categorías en un sistema único de trabajo estatal con salario mínimo",fx:{estabilidad:6,riqueza:-5,cultura:6,influencia:2},type:"social"},
     {t:"Eliminar el trabajo por deuda: solo prisioneros de guerra y corvée voluntaria",fx:{estabilidad:4,riqueza:-4,cultura:5,influencia:0},type:"social"},
     {t:"Formalizar la esclavitud plena como en Mesopotamia: claridad legal aunque sea cruel",fx:{estabilidad:-7,riqueza:4,cultura:-8,influencia:-4},type:"cruel"}
@@ -196,7 +196,7 @@ export const EVENTS_NUEVO_EXTRA: GameEvent[] = [
   desc:"En la aldea de Deir el-Medina, 60 familias de artesanos de élite viven en secreto absoluto: conocen la ubicación exacta de todas las tumbas reales, los mecanismos de sus trampas, los pasadizos secretos. Son los mejores grabadores, pintores y albañiles del mundo. Pero ese secreto tiene un precio: no pueden salir de la aldea sin escolta. Sus cartas están interceptadas. Sus hijos heredan la profesión obligatoriamente. Ahora piden permiso para que sus hijas puedan casarse fuera de la aldea sin restricciones.",
   ctx:"Deir el-Medina (1550-1080 aC) es el sitio arqueológico mejor documentado del Mundo Antiguo: se conservan miles de ostraca (fragmentos de cerámica) con cartas, listas de trabajo, pleitos vecinales y poemas de amor. Sabemos los nombres de los trabajadores, sus salarios, sus deudas, sus amores y sus peleas.",
   opts:[
-    {t:"Conceder el permiso matrimonial: la lealtad se gana con confianza, no con encierro",fx:{estabilidad:7,riqueza:0,cultura:6,influencia:2},type:"social"},
+    {t:"Conceder el permiso matrimonial: la lealtad se gana con confianza, no con encierro",fx:{estabilidad:7,riqueza:-1,cultura:6,influencia:2},type:"social"},
     {t:"Conceder el permiso solo para artesanos retirados que ya no trabajen en las tumbas activas",fx:{estabilidad:5,riqueza:0,cultura:4,influencia:2},type:"politico"},
     {t:"Compensación económica: mejor salario y tierras propias a cambio de mantener las restricciones",fx:{estabilidad:4,riqueza:-5,cultura:3,influencia:4},type:"economico"},
     {t:"Mantener las restricciones totales: el secreto de las tumbas es más importante que la libertad individual",fx:{estabilidad:-6,riqueza:0,cultura:-6,influencia:0},type:"politico"}
@@ -218,7 +218,7 @@ export const EVENTS_NUEVO_EXTRA: GameEvent[] = [
   desc:"El mes de mayo del año 5 de Ramsés II. El ejército egipcio marcha en cuatro divisiones hacia Qadesh, en el norte de Siria, para enfrentar al ejército hitita de Muwatalli II. Dos espías hititas capturados afirman que el ejército enemigo está lejos. Son mentira: 40.000 soldados hititas esperan ocultos. La división de Amón avanza sola, separada de las otras tres. Cuando los carros hititas atacan, Ramsés II está casi solo. Lo que ocurre en las siguientes horas decidirá el destino de dos imperios.",
   ctx:"Qadesh (1274 aC) fue la batalla de carros más grande de la historia antigua: 5.000-6.000 carros de ambos lados. Ramsés II sobrevivió según los textos egipcios gracias a su valor personal. Los historiadores modernos creen que el resultado fue un empate costoso para ambos. El tratado de paz de 1259 aC fue la consecuencia.",
   opts:[
-    {t:"Resistencia desesperada: Ramsés combate personalmente para dar tiempo a que lleguen refuerzos",fx:{estabilidad:-2,riqueza:-4,cultura:4,influencia:8},type:"militar"},
+    {t:"Resistencia desesperada: Ramsés combate personalmente para dar tiempo a que lleguen refuerzos",fx:{estabilidad:-5,riqueza:-4,cultura:4,influencia:8},type:"militar"},
     {t:"Retirada ordenada: preservar el ejército y negociar desde una posición menos comprometida",fx:{estabilidad:4,riqueza:-2,cultura:-4,influencia:4},type:"militar"},
     {t:"Contraataque rápido usando los carros ligeros de la guardia personal real",fx:{estabilidad:-4,riqueza:-6,cultura:2,influencia:7},type:"militar"},
     {t:"Enviar emisarios a Muwatalli: ofrecer Qadesh a cambio de armisticio inmediato",fx:{estabilidad:2,riqueza:0,cultura:-6,influencia:-4},type:"diplomatico"}
@@ -251,7 +251,7 @@ export const EVENTS_NUEVO_EXTRA: GameEvent[] = [
   desc:"El visir real te entrega un papiro con sellos rotos de evidencia: un grupo de altas esposas del harén, lideradas por Tiye, madre de un hijo menor del faraón, conspiró para asesinar a Ramsés III durante la fiesta de Opet. Doce conspiradores identificados, incluidos dos jueces del tribunal real que debían juzgar el caso. El escándalo amenaza con destruir la credibilidad del sistema judicial entero. Si el faraón juzga a quienes debían juzgarlo, ¿quién juzga al faraón?",
   ctx:"La Conspiración del Harén (circa 1155 aC) está documentada en el Papiro Judicial de Turín. Ramsés III fue probablemente asesinado: análisis forenses de su momia en 2012 revelaron una herida de cuchillo en la garganta que le cortó la tráquea. El juicio es el proceso judicial mejor documentado del Antiguo Egipto.",
   opts:[
-    {t:"Tribunal especial de jueces nombrados directamente por el faraón, proceso público",fx:{estabilidad:6,riqueza:0,cultura:7,influencia:6},type:"cultural"},
+    {t:"Tribunal especial de jueces nombrados directamente por el faraón, proceso público",fx:{estabilidad:6,riqueza:-1,cultura:7,influencia:6},type:"cultural"},
     {t:"Juicio secreto: la conspiración no debe conocerse para preservar la imagen de la familia real",fx:{estabilidad:5,riqueza:0,cultura:-2,influencia:4},type:"politico"},
     {t:"Ejecutar a los conspiradores inmediatamente sin juicio: la conspiración ya es prueba suficiente",fx:{estabilidad:-4,riqueza:0,cultura:-6,influencia:5},type:"militar"},
     {t:"Ignorar el caso y exiliar silenciosamente a Tiye: el escándalo de un juicio es peor que el crimen",fx:{estabilidad:-7,riqueza:0,cultura:-7,influencia:-5},type:"cruel"}
@@ -275,8 +275,8 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
   desc:"Kashta y luego Piye llegaron del sur. Los reyes de Kush, que habían absorbido durante siglos la cultura egipcia mientras Egipto se fragmentaba, ahora vienen a 'restaurar' Maat. Son más egipcios que muchos egipcios: conocen los textos sagrados, hablan con acento del Nilo, construyen pirámides más pequeñas pero más perfectas que las del Imperio Nuevo. La ironía es perfecta: Egipto puede ser salvado por quienes alguna vez fueron sus esclavos. El pueblo tebano los recibe con flores. Los nobles del delta, con recelo.",
   ctx:"La Dinastía XXV kushita (747-656 aC) fue la última época de esplendor de Tebas. Los faraones nubios restauraron templos, codificaron textos religiosos y mantuvieron a los asirios a raya durante décadas. Sus pirámides en Meroe (actual Sudán) son hoy la mayor concentración de pirámides del mundo: 200 estructuras.",
   opts:[
-    {t:"Reconocer plenamente a los faraones nubios: la legitimidad viene de la cultura, no del origen",fx:{estabilidad:8,riqueza:6,cultura:8,influencia:4},type:"cultural"},
-    {t:"Alianza pragmática: los kushitas gobiernan el sur, el Delta mantiene autonomía",fx:{estabilidad:6,riqueza:4,cultura:6,influencia:4},type:"politico"},
+    {t:"Reconocer plenamente a los faraones nubios: la legitimidad viene de la cultura, no del origen",fx:{estabilidad:8,riqueza:3,cultura:8,influencia:3},type:"cultural"},
+    {t:"Alianza pragmática: los kushitas gobiernan el sur, el Delta mantiene autonomía",fx:{estabilidad:6,riqueza:4,cultura:6,influencia:3},type:"politico"},
     {t:"Resistencia pasiva: cooperar en lo mínimo indispensable mientras se buscan aliados asirios",fx:{estabilidad:-4,riqueza:0,cultura:-2,influencia:4},type:"politico"},
     {t:"Rebelión abierta del Delta contra los faraones kushitas",fx:{estabilidad:-8,riqueza:-6,cultura:-4,influencia:-6},type:"militar"}
   ],
@@ -287,7 +287,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
   ctx:"El canal de Neco II (circa 600 aC) fue terminado por los persas bajo Darío I. Funcionó hasta el siglo VIII dC cuando fue abandonado. El Canal de Suez moderno (1869) siguió casi exactamente la misma ruta que Neco II trazó 2.500 años antes. La visión geopolítica del faraón tardío fue perfecta.",
   opts:[
     {t:"Completar el canal sin importar el costo humano: el beneficio estratégico lo justifica",fx:{estabilidad:-4,riqueza:8,cultura:-2,influencia:8},type:"economico"},
-    {t:"Canal más corto solo entre el Nilo y los Lagos Amargos, reduciendo el costo y el tiempo",fx:{estabilidad:4,riqueza:5,cultura:2,influencia:4},type:"economico"},
+    {t:"Canal más corto solo entre el Nilo y los Lagos Amargos, reduciendo el costo y el tiempo",fx:{estabilidad:3,riqueza:5,cultura:2,influencia:4},type:"economico"},
     {t:"Abandonar el canal y construir en su lugar una flota en el Mar Rojo para comercio directo",fx:{estabilidad:4,riqueza:4,cultura:2,influencia:4},type:"economico"},
     {t:"Suspender el proyecto al conocer la profecía: el oráculo no se desafía",fx:{estabilidad:6,riqueza:-2,cultura:2,influencia:-2},type:"religioso"}
   ],
@@ -297,7 +297,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
   desc:"Ptolomeo I Sóter convoca a los mayores intelectuales del Mediterráneo: quiere construir el mayor repositorio de conocimiento humano jamás creado. Una biblioteca universal en Alejandría, con traducción sistemática de todos los textos conocidos: egipcios, babilónicos, persas, hebreos, griegos, persas. El filósofo Demetrio de Falero diseña el plan: agentes del Estado compran o copian libros en todos los puertos, todo barco que atraca en Alejandría debe prestar sus manuscritos para ser copiados. Es el primer proyecto de digitalización de la historia, en papiro.",
   ctx:"La Biblioteca de Alejandría (fundada circa 285 aC) reunió entre 200.000 y 700.000 rollos de papiro. Allí Euclides escribió los Elementos, Eratóstenes midió la circunferencia de la Tierra, Aristarco propuso que la Tierra gira alrededor del Sol. Fue el mayor centro intelectual de la antigüedad, destruido gradualmente entre los siglos I y VII dC.",
   opts:[
-    {t:"Financiamiento total del Estado: la Biblioteca como proyecto nacional de Egipto",fx:{estabilidad:4,riqueza:-8,cultura:8,influencia:8},type:"cultural"},
+    {t:"Financiamiento total del Estado: la Biblioteca como proyecto nacional de Egipto",fx:{estabilidad:4,riqueza:-9,cultura:8,influencia:8},type:"cultural"},
     {t:"Biblioteca más Mouseion: centro de investigación donde los científicos reciben salario del Estado",fx:{estabilidad:2,riqueza:-8,cultura:8,influencia:8},type:"cultural"},
     {t:"Biblioteca selectiva: solo los mejores textos de cada tradición, sin la obsesión por la cantidad",fx:{estabilidad:4,riqueza:-4,cultura:7,influencia:6},type:"cultural"},
     {t:"Rechazar el proyecto: el conocimiento concentrado en un lugar puede ser destruido en un día",fx:{estabilidad:2,riqueza:4,cultura:-8,influencia:-4},type:"politico"}
@@ -308,8 +308,8 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
   desc:"Los mercaderes griegos de Naucratis traen una novedad que está revolucionando el Mediterráneo: la moneda. Pequeños discos de electro, plata y bronce con un valor garantizado por el Estado emisor. Los fenicios la adoptaron. Los persas la adoptaron. En Egipto, toda la economía funciona desde hace 3.000 años por redistribución estatal: el faraón recibe grano, aceite y lino en impuestos, y los redistribuye como salarios. Nadie compra ni vende: intercambia, con el Estado como intermediario. La moneda cambiaría todo. ¿O lo destruiría todo?",
   ctx:"Egipto adoptó la moneda metálica más tarde que cualquier otra gran civilización mediterránea: recién bajo la dominación persa (siglo V aC). El sistema redistributivo sin moneda había funcionado sorprendentemente bien durante 2.500 años. Con la moneda llegaron también la inflación, la deuda privada y la acumulación individual de riqueza.",
   opts:[
-    {t:"Adoptar la moneda: crear una casa de la moneda real y acuñar el primer dracma egipcio",fx:{estabilidad:4,riqueza:8,cultura:6,influencia:6},type:"economico"},
-    {t:"Sistema mixto: moneda para el comercio exterior, redistribución estatal para el interior",fx:{estabilidad:6,riqueza:6,cultura:4,influencia:4},type:"economico"},
+    {t:"Adoptar la moneda: crear una casa de la moneda real y acuñar el primer dracma egipcio",fx:{estabilidad:3,riqueza:8,cultura:6,influencia:6},type:"economico"},
+    {t:"Sistema mixto: moneda para el comercio exterior, redistribución estatal para el interior",fx:{estabilidad:4,riqueza:6,cultura:4,influencia:4},type:"economico"},
     {t:"Rechazar la moneda y reforzar el sistema redistributivo: Egipto no necesita lo que inventaron los griegos",fx:{estabilidad:5,riqueza:-2,cultura:4,influencia:-4},type:"politico"},
     {t:"Adoptar la moneda griega directamente sin acuñar una propia: más rápido, menos costo",fx:{estabilidad:2,riqueza:6,cultura:-4,influencia:-4},type:"economico"}
   ],
@@ -330,8 +330,8 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
   desc:"Julio César llegó a Alejandría persiguiendo a Pompeyo, pero encontró algo inesperado: una guerra civil entre Cleopatra VII y su hermano Ptolomeo XIII por el trono de Egipto. Cleopatra se hizo introducir ante César enrollada en una alfombra —o en un saco de ropa, los relatos varían. Lo que no varía es el resultado: César apoyó a Cleopatra. El joven Ptolomeo XIII murió en el Nilo. Alejandría ardió. Y en el incendio, miles de rollos de la Biblioteca se perdieron. La historia más brillante de Egipto se decide en una alcoba.",
   ctx:"La alianza Cleopatra-César (48-44 aC) fue el último intento de Egipto de mantener su independencia usando la política romana. Cleopatra entendió que el único modo de sobrevivir era ser indispensable para Roma. Funcionó durante 18 años. La batalla de Actio en 31 aC fue su fin.",
   opts:[
-    {t:"Alianza plena con César: Egipto como socio privilegiado de Roma, no como provincia",fx:{estabilidad:6,riqueza:6,cultura:6,influencia:8},type:"diplomatico"},
-    {t:"Neutralidad estratégica: no tomar partido en la guerra civil romana",fx:{estabilidad:7,riqueza:4,cultura:4,influencia:2},type:"politico"},
+    {t:"Alianza plena con César: Egipto como socio privilegiado de Roma, no como provincia",fx:{estabilidad:6,riqueza:6,cultura:3,influencia:8},type:"diplomatico"},
+    {t:"Neutralidad estratégica: no tomar partido en la guerra civil romana",fx:{estabilidad:7,riqueza:1,cultura:4,influencia:2},type:"politico"},
     {t:"Apoyar a Pompeyo: el perdedor de Farsalia como carta de revancha futura",fx:{estabilidad:-6,riqueza:-4,cultura:0,influencia:-6},type:"militar"},
     {t:"Aprovechar el caos romano para declarar independencia total de influencias externas",fx:{estabilidad:-4,riqueza:2,cultura:4,influencia:-8},type:"politico"}
   ],
