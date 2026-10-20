@@ -39,3 +39,22 @@ describe('tarjetas de la línea de tiempo', () => {
     expect(sueltas).toEqual([])
   })
 })
+
+/* Con la tarjeta en el modal de después de elegir, la pantalla de decisión lleva el título, el relato,
+   el contexto y las opciones. Antes la mediana era de 222 palabras (máximo 270) con la tarjeta incluida,
+   y la tarjeta podía contar el desenlace antes de elegir. */
+const palabrasDe = (s: string) => s.trim().split(/\s+/).filter(Boolean).length
+
+describe('carga de texto de la pantalla de decisión', () => {
+  const carga = (e: GameEvent) => palabrasDe(e.desc) + palabrasDe(e.ctx) + e.opts.reduce((a, o) => a + palabrasDe(o.t), 0)
+
+  it('ningún evento pasa de 215 palabras entre relato, contexto y opciones', () => {
+    const largos = TODOS.filter(e => carga(e) > 215).map(e => `ev${e.id} «${e.title}»: ${carga(e)}`)
+    expect(largos).toEqual([])
+  })
+
+  it('la mediana queda por debajo de 180', () => {
+    const v = TODOS.map(carga).sort((a, b) => a - b)
+    expect(v[Math.floor(v.length / 2)]).toBeLessThan(180)
+  })
+})

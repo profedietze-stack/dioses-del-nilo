@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef, lazy, Suspense } from 'react'
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
-import type { God, Stats, StatKey, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData, SaveData } from './types'
+import type { God, Stats, StatKey, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData, SaveData, TimelineCard } from './types'
 import { GODS } from './data/gods'
 import { PERIODS } from './data/periods'
 import { STAT_ICONS, STAT_LABELS, STAT_COLORS, OPTION_TYPE_LABELS } from './data/periods'
@@ -99,7 +99,7 @@ export function App() {
   const [puzDone, setPuzDone] = useState<number[]>([])
   const [showModal, setShowModal] = useState(false)
   const [animKey, setAnimKey] = useState(0)
-  const [consejer, setConsejer] = useState<{ fx: Partial<Stats>; choice: string; power: { name: string; note: Partial<Stats> } | null } | null>(null)
+  const [consejer, setConsejer] = useState<{ fx: Partial<Stats>; choice: string; power: { name: string; note: Partial<Stats> } | null; card: TimelineCard } | null>(null)
   const [glossWord, setGlossWord] = useState<string | null>(null)
   const [musicOn, setMusicOn] = useState(true)
   const [gs, setGs] = useState<GameStats>(EMPTY_GS)
@@ -231,7 +231,7 @@ export function App() {
     const r = resolverDecision(estadoTurno(), opt)
     const ev = gameEvents[evIdx]
     aplicarTurno(r)
-    setConsejer({ fx: r.fx, choice: opt.t, power: r.poder })
+    setConsejer({ fx: r.fx, choice: opt.t, power: r.poder, card: ev.tl })
     // god modal trigger — every 3-5 events, not on last event
     if (r.evIdx >= nextGodModalAt.current && r.evIdx < gameEvents.length && god) {
       const vals = Object.values(r.stats); const avg = vals.reduce((a, b) => a + b, 0) / vals.length
@@ -407,16 +407,6 @@ export function App() {
                   </button>
                 ))}
               </div>
-              {ev.tl && (
-                <div className="tl-card">
-                  <span className="tl-card-ico">📅</span>
-                  <div>
-                    <strong>{ev.tl.date} · {ev.tl.ph}</strong>
-                    <p>{ev.tl.ev}</p>
-                    <em>{ev.tl.tip}</em>
-                  </div>
-                </div>
-              )}
             </motion.div>
           ) : (
             <div style={{ textAlign: 'center', padding: 40, color: 'var(--dim)' }}>Cargando...</div>
@@ -526,6 +516,7 @@ export function App() {
           choice={consejer.choice}
           fx={consejer.fx}
           power={consejer.power}
+          card={consejer.card}
           onContinue={() => {
             setConsejer(null)
             if (pendingGodModal.current) {
