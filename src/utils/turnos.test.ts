@@ -76,12 +76,12 @@ describe('cruceDePeriodo', () => {
   })
 
   it('el estilo de juego sale de las opciones elegidas en el perÃ­odo', () => {
-    const militares: HistoryEntry[] = []
-    for (let i = 0; i < 8; i++) {
-      if (events[i].isPharaoh) continue
-      const op = events[i].opts.find(o => o.type === 'militar') ?? events[i].opts[0]
-      militares.push({ eventId: events[i].id, choice: op.t, effects: {}, statsAfter: { ...INIT } })
-    }
+    // Solo eventos que tienen una opción militar: así todo el historial es militar, sin depender del sorteo.
+    const militares: HistoryEntry[] = events
+      .filter(e => e.opts.some(o => o.type === 'militar'))
+      .slice(0, 8)
+      .map(e => ({ eventId: e.id, choice: e.opts.find(o => o.type === 'militar')!.t, effects: {}, statsAfter: { ...INIT } }))
+    expect(militares).toHaveLength(8)
     const t = cruceDePeriodo(events, militares, 7, 8, { ...INIT })
     expect(t?.playStyle).toBe(PLAY_STYLES.militar)
   })
