@@ -527,32 +527,6 @@ export function App() {
         )}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {consejer && (
-          <ConsejerModal
-            key="cmod"
-            choice={consejer.choice}
-            fx={consejer.fx}
-            power={consejer.power}
-            onContinue={() => {
-              setConsejer(null)
-              if (pendingGodModal.current) {
-                const d = pendingGodModal.current
-                pendingGodModal.current = null
-                setGodModalData(d)
-              } else if (pendingEnd.current) {
-                pendingEnd.current = false
-                setScreen('end')
-              } else if (pendingPeriodTrans.current) {
-                const d = pendingPeriodTrans.current
-                pendingPeriodTrans.current = null
-                setPeriodTransData(d)
-                setScreen('periodTransition')
-              }
-            }}
-          />
-        )}
-      </AnimatePresence>
 
       <AnimatePresence>
         {statInfoKey && (
@@ -612,6 +586,35 @@ export function App() {
     <>
       <AnimatePresence>{showSplash && <SplashScreen key="splash" />}</AnimatePresence>
       <AnimatePresence>{renderScreen()}</AnimatePresence>
+      {/* Fuera de `gameJSX`, a propósito. Está en la raíz de <App>, como InfoModal, y sin AnimatePresence.
+          En ~1 de cada 10 partidas del e2e el primer modal de consejeros quedaba en pantalla con
+          `consejer === null`: el árbol de React lo seguía teniendo bajo la cadena
+          cmod < game < game, o sea dentro de una copia vieja del elemento `game` que conserva el
+          AnimatePresence de las pantallas. Acá su cierre depende sólo de su propio estado. */}
+      {consejer && (
+        <ConsejerModal
+          key="cmod"
+          choice={consejer.choice}
+          fx={consejer.fx}
+          power={consejer.power}
+          onContinue={() => {
+            setConsejer(null)
+            if (pendingGodModal.current) {
+              const d = pendingGodModal.current
+              pendingGodModal.current = null
+              setGodModalData(d)
+            } else if (pendingEnd.current) {
+              pendingEnd.current = false
+              setScreen('end')
+            } else if (pendingPeriodTrans.current) {
+              const d = pendingPeriodTrans.current
+              pendingPeriodTrans.current = null
+              setPeriodTransData(d)
+              setScreen('periodTransition')
+            }
+          }}
+        />
+      )}
       {showModal && <InfoModal onClose={() => setShowModal(false)} />}
       {import.meta.env.DEV && (
         <DebugPanel actions={{

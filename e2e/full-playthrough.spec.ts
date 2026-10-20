@@ -110,15 +110,39 @@ async function solvePharaohTimeline(page: Page) {
   // Siempre al primer hueco vacío: no depende de cuántos arrastres anteriores salieron bien.
   const firstEmpty = page.locator('.pht-slot.empty').first()
   let tries = 0
-  while ((await pool.count()) > 0 && tries < 20) {
-    await pool.first().dragTo(firstEmpty, { timeout: 5000 }).catch(() => undefined)
+  let ultimoError = ''
+  while ((await pool.count()) > 0 && tries < 6) {
+    await pool.first().dragTo(firstEmpty, { timeout: 5000 }).catch(e => { ultimoError = String(e).split(String.fromCharCode(10)).slice(0, 4).join(' / ') })
     await page.waitForTimeout(150)
     tries++
   }
+  if ((await pool.count()) > 0) {
+    const overlays = await page.evaluate(() => [...document.querySelectorAll('[class*=overlay]')].map(e => e.className).join(','))
+    throw new Error(`no se pudo arrastrar el faraón tras ${tries} intentos. overlays=[${overlays}] último error: ${ultimoError} | ERRORES: ${erroresDe(page)}`)
+  }
 }
 
+/** Errores de consola y de página por pestaña, para incluirlos en los diagnósticos de atasco. */
+const erroresDePagina = new WeakMap<Page, string[]>()
+const erroresDe = (page: Page) => (erroresDePagina.get(page) ?? []).slice(0, 6).join(' // ') || 'ninguno'
+
 async function startNewGame(page: Page, godName: string) {
+  const errs: string[] = []
+  erroresDePagina.set(page, errs)
+  page.on('pageerror', e => errs.push('PAGEERROR ' + String(e).slice(0, 200)))
+  page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errs.push(m.type() + ' ' + m.text().slice(0, 200)) })
+  page.on('requestfailed', r => errs.push('REQFAIL ' + r.url().split('/').pop() + ' ' + (r.failure()?.errorText ?? '')))
   // Diagnóstico del atasco intermitente: E2E_NO_FS=1 desactiva la pantalla completa en el test.
+  // Diagnóstico: E2E_NO_AUDIO=1 reemplaza AudioContext por un doble que no hace nada.
+  if (process.env.E2E_NO_AUDIO) {
+    await page.addInitScript(() => {
+      const stub = (): unknown => new Proxy(function () { /* nada */ }, {
+        get: (_t, k) => (k === 'currentTime' ? 0 : k === 'state' ? 'running' : k === 'sampleRate' ? 44100 : stub()),
+        apply: () => stub(), construct: () => stub() as object, set: () => true,
+      })
+      ;(window as unknown as Record<string, unknown>).AudioContext = function () { return stub() }
+    })
+  }
   if (process.env.E2E_NO_FS) await page.addInitScript(() => { Element.prototype.requestFullscreen = () => Promise.resolve() })
   await page.goto('/')
   await page.getByRole('button', { name: /Nueva Partida/ }).click()
@@ -126,8 +150,8 @@ async function startNewGame(page: Page, godName: string) {
   await page.getByPlaceholder('Escribe tu nombre...').fill('Test Player')
   await page.getByRole('button', { name: /Comenzar mi Reinado/ }).click()
 
-  const skipIntro = page.getByRole('button', { name: /Saltar intro/ })
-  if (await skipIntro.isVisible().catch(() => false)) await skipIntro.click()
+  // Espera el botón: entre pantallas hay un instante sin él, y un isVisible() inmediato lo daba por ausente.
+  await page.getByRole('button', { name: /Saltar intro/ }).click()
 
   await page.locator('.god-card').filter({ has: page.locator('.god-name', { hasText: new RegExp(`^${godName}$`) }) }).click()
   await expect(page.locator('.ev-num').first()).toBeVisible({ timeout: 10000 })
@@ -164,6 +188,42 @@ async function playOn(page: Page, stopAtEvent?: number) {
       const real = await page.getByRole('button', { name: /Continuar/ }).first().click({ timeout: 3000 }).then(() => 'clic real ok', e => 'clic real falló: ' + String(e).split(String.fromCharCode(10))[0])
       await page.waitForTimeout(800)
       const sigue = await page.evaluate(() => !!document.querySelector('.cmod-overlay, .gm-overlay, .pharaoh-overlay'))
+      // ¿El árbol ACTUAL de React todavía contiene ese nodo? (huérfano vs. actualización sin confirmar)
+      const arbol = await page.evaluate(() => {
+        const els = [...document.querySelectorAll('.cmod-overlay')]
+        const el = els[0] as HTMLElement | undefined
+        if (!el) return 'sin overlay'
+        const fk = Object.keys(el).find(x => x.startsWith('__reactFiber'))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let f: any = fk ? (el as any)[fk] : null
+        while (f && f.return) f = f.return
+        const root = f?.stateNode
+        if (!root?.current) return 'sin raíz de React'
+        let encontrado = false, appConsejer: unknown = 'no hallado', n = 0
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const hooks = (fib: any) => { let c = 0; for (let h = fib.memoizedState; h && c < 60; h = h.next) c++; return c }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const walk = (fib: any) => {
+          while (fib && n++ < 20000) {
+            if (fib.stateNode === el) encontrado = true
+            if (appConsejer === 'no hallado' && typeof fib.type === 'function' && hooks(fib) >= 18) {
+              let i = 0
+              for (let h = fib.memoizedState; h && i < 14; h = h.next, i++) if (i === 13) appConsejer = h.memoizedState === null ? 'null' : 'objeto'
+            }
+            if (fib.child) walk(fib.child)
+            fib = fib.sibling
+          }
+        }
+        walk(root.current)
+        // Cadena de claves (key) desde el overlay hasta la raíz: quién lo mantiene vivo.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let c: any = fk ? (el as any)[fk] : null
+        const cadena: string[] = []
+        while (c) { if (c.key != null) cadena.push(String(c.key)); c = c.return }
+        const games = document.querySelectorAll('.game').length
+        const evNums = document.querySelectorAll('.ev-num').length
+        return `cadena[${cadena.join(' < ')}] .game=${games} .ev-num=${evNums} overlays=${els.length} conectado=${el.isConnected} enArbolActual=${encontrado} consejer(arbol actual)=${appConsejer} nodos=${n}`
+      })
       const props = await page.evaluate(() => {
         const b = document.querySelector('.cmod-overlay button, .gm-overlay button') as HTMLElement | null
         if (!b) return 'sin botón'
@@ -192,7 +252,7 @@ async function playOn(page: Page, stopAtEvent?: number) {
         }
         return out.join(' ')
       })
-      throw new Error('el modal no se cierra tras varias ráfagas de «Continuar»: estado App=' + estado + ' || ' + JSON.stringify(est) + ' | ' + real + ' | sigue abierto tras clic real: ' + sigue + ' | props del botón: ' + props)
+      throw new Error('el modal no se cierra tras varias ráfagas de «Continuar»: estado App=' + estado + ' || ' + JSON.stringify(est) + ' | ' + real + ' | sigue abierto tras clic real: ' + sigue + ' | props del botón: ' + props + ' | ÁRBOL: ' + arbol + ' | ERRORES: ' + erroresDe(page))
     }
     fullLog.push(...chunk)
     const last = chunk[chunk.length - 1]
@@ -212,7 +272,7 @@ async function playOn(page: Page, stopAtEvent?: number) {
     }
 
     if (typeof last === 'string' && last.startsWith('puzzle:unhandled')) {
-      throw new Error('Unhandled puzzle type: ' + last)
+      throw new Error('Unhandled puzzle type: ' + last + ' | ERRORES: ' + erroresDe(page))
     }
   }
 
@@ -223,6 +283,9 @@ async function playThrough(page: Page, godName: string) {
   await startNewGame(page, godName)
   return playOn(page)
 }
+
+// Diagnóstico: E2E_NO_SW=1 bloquea el service worker (precachea 4,8 MB en la primera visita).
+if (process.env.E2E_NO_SW) test.use({ serviceWorkers: 'block' })
 
 test.describe('full playthrough', () => {
   // Los puzzles de arrastre se resuelven con el mouse de Playwright; el arrastre
