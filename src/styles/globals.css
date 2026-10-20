@@ -745,7 +745,13 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 @media (max-width: 480px) {
-  .stat-row { width: 100%; }
+  /* Las seis estadisticas ocupaban 414 px (casi media pantalla) apiladas de a una. En dos columnas
+     son tres filas: las opciones quedan unos 160 px mas arriba. Cada fila sigue midiendo 44 px. */
+  .stats-panel { gap: 4px 6px; padding: 8px 10px; }
+  .stat-row { width: calc(50% - 3px); }
+  .stat-hd { gap: 4px; margin-bottom: 3px; }
+  .stat-lbl { font-size: .66rem; letter-spacing: .03em; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stat-val { font-size: .85rem; }
   .game-title { font-size: clamp(2.2rem,10vw,4rem); }
   .god-grid { grid-template-columns: repeat(auto-fill,minmax(100px,1fr)); }
 }
