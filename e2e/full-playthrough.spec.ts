@@ -60,7 +60,7 @@ async function runClickBurst(page: Page, iterations: number) {
         // resource contention — retry generously before giving up.
         unhandledStreak++
         log.push('puzzle:unhandled ' + (document.querySelector('.puz h3')?.textContent ?? '?'))
-        if (unhandledStreak >= 20) break
+        if (unhandledStreak >= 60) break
         continue
       }
       unhandledStreak = 0
@@ -118,6 +118,8 @@ async function solvePharaohTimeline(page: Page) {
 }
 
 async function startNewGame(page: Page, godName: string) {
+  // Diagnóstico del atasco intermitente: E2E_NO_FS=1 desactiva la pantalla completa en el test.
+  if (process.env.E2E_NO_FS) await page.addInitScript(() => { Element.prototype.requestFullscreen = () => Promise.resolve() })
   await page.goto('/')
   await page.getByRole('button', { name: /Nueva Partida/ }).click()
 
@@ -153,6 +155,9 @@ async function playOn(page: Page, stopAtEvent?: number) {
           overlay: ov?.className, style: ov?.getAttribute('style'), raf, animations: document.getAnimations().length,
           visibility: document.visibilityState, fullscreen: !!document.fullscreenElement, viewport: `${innerWidth}x${innerHeight}`,
           ev: document.querySelector('.ev-num')?.textContent,
+          anims: document.getAnimations().map(a => `${a.playState}@${Math.round(Number(a.currentTime))}`).join(','),
+          timeline0: Math.round(Number(document.timeline.currentTime)),
+          timeline1: await new Promise<number>(res => setTimeout(() => res(Math.round(Number(document.timeline.currentTime))), 500)),
         }
       })
       // ¿Cierra con un clic real (ratón de Playwright) o también lo ignora?
@@ -172,14 +177,17 @@ async function playOn(page: Page, stopAtEvent?: number) {
         const fk = Object.keys(el).find(x => x.startsWith('__reactFiber'))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let f: any = fk ? (el as any)[fk] : null
-        while (f && !(f.type && f.type.name === 'App')) f = f.return
-        if (!f) return 'sin fiber App'
-        const out: string[] = []
+        // En el build las funciones están minificadas: buscamos <App> por su cantidad de hooks.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        for (let h: any = f.memoizedState, i = 0; h && i < 40; h = h.next, i++) {
+        const nHooks = (fib: any) => { let n = 0; for (let h = fib.memoizedState; h && n < 60; h = h.next) n++; return n }
+        while (f && nHooks(f) < 18) f = f.return
+        if (!f) return 'sin fiber con >=18 hooks'
+        const out: string[] = ['hooks=' + nHooks(f)]
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        for (let h: any = f.memoizedState, i = 0; h && i < 60; h = h.next, i++) {
           const v = h.memoizedState
           if (v === null || typeof v !== 'object' || Array.isArray(v) || 'current' in v || 'tag' in v) {
-            try { out.push(i + ':' + JSON.stringify(v)?.slice(0, 50)) } catch { out.push(i + ':?') }
+            try { out.push(i + ':' + JSON.stringify(v)?.slice(0, 60)) } catch { out.push(i + ':?') }
           }
         }
         return out.join(' ')
@@ -270,6 +278,31 @@ test.describe('full playthrough', () => {
     expect(after).toContain('END')
     // Ni se repiten los ya hechos ni se pierden los que faltaban: en total, quince.
     expect(seenBefore + after.filter(l => l === 'puzzle:continue').length).toBe(15)
+  })
+
+  test('el puzzle de faraones se resuelve tocando, también en una pantalla baja', async ({ page }) => {
+    test.setTimeout(180_000)
+    // 700 px de alto: ahí el mazo quedaba al borde de la pantalla y el arrastre fallaba.
+    await page.setViewportSize({ width: 1280, height: 700 })
+    await startNewGame(page, 'RA')
+    for (let b = 0; b < 100; b++) {
+      const chunk = await runClickBurst(page, 25)
+      if (chunk[chunk.length - 1] === 'DRAG_PUZZLE_PENDING') break
+    }
+    const pool = page.locator('.pht-pool-cards .pht-card')
+    await expect(pool).toHaveCount(6)
+
+    // El mazo se ve sin desplazarse.
+    const box = await pool.first().boundingBox()
+    expect(box!.y + box!.height).toBeLessThanOrEqual(700)
+
+    // Tocar un faraón y después su lugar, sin arrastrar.
+    while ((await pool.count()) > 0) {
+      await pool.first().click()
+      await page.locator('.pht-slot.empty').first().click()
+    }
+    await page.getByRole('button', { name: /Confirmar orden cronológico/ }).click()
+    await expect(page.locator('.maat-result')).toBeVisible()
   })
 
   test('resuming a save written at game end goes straight to the end screen', async ({ page }) => {

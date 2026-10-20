@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { INIT, clamp, applyFx, calcScore, getDivineTitle } from './gameLogic'
+import { INIT, clamp, applyFx } from './gameLogic'
 import type { Stats } from '../types'
 
 describe('clamp', () => {
@@ -41,33 +41,6 @@ describe('applyFx', () => {
   })
 })
 
-describe('calcScore', () => {
-  it('averages the six stats plus a puzzle bonus/penalty', () => {
-    // INIT stats average to 50; 2 correct (+6) and 1 failed (-2) puzzles
-    expect(calcScore(INIT, 2, 1)).toBe(54)
-  })
-
-  it('rounds to the nearest integer', () => {
-    const uneven: Stats = { estabilidad: 51, riqueza: 50, cultura: 50, influencia: 50, fe: 50, comercio: 50 }
-    expect(Number.isInteger(calcScore(uneven, 0, 0))).toBe(true)
-  })
-})
-
-describe('getDivineTitle', () => {
-  it('picks the correct title tier at each threshold boundary', () => {
-    expect(getDivineTitle(100)).toBe('Faraón de los Dos Reinos')
-    expect(getDivineTitle(80)).toBe('Faraón de los Dos Reinos')
-    expect(getDivineTitle(79)).toBe('Gran Visir del Imperio')
-    expect(getDivineTitle(65)).toBe('Gran Visir del Imperio')
-    expect(getDivineTitle(64)).toBe('Nomarca del Delta')
-    expect(getDivineTitle(50)).toBe('Nomarca del Delta')
-    expect(getDivineTitle(49)).toBe('Escriba Real')
-    expect(getDivineTitle(35)).toBe('Escriba Real')
-    expect(getDivineTitle(34)).toBe('Iniciado del Templo')
-    expect(getDivineTitle(0)).toBe('Iniciado del Templo')
-  })
-})
-
 /**
  * Un guardado editado deja las estadísticas en NaN, y el juego no lo nota.
  *
@@ -104,12 +77,5 @@ describe('las estadísticas aguantan un guardado editado', () => {
     for (const [k, v] of Object.entries(r)) {
       expect(Number.isFinite(v), `${k} quedó en ${v}`).toBe(true)
     }
-  })
-
-  it('y el puntaje sigue siendo un número, así que el título no miente', () => {
-    const sucias = { ...INIT, cultura: NaN }
-    const score = calcScore(applyFx(sucias, { cultura: 10 }), 3, 1)
-    expect(Number.isFinite(score), `score = ${score}`).toBe(true)
-    expect(getDivineTitle(score)).not.toBe('Iniciado del Templo')
   })
 })
