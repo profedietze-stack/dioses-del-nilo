@@ -730,9 +730,10 @@ button { font-family: inherit; cursor: pointer; }
   }
   .god-badge { width: 100%; margin-bottom: 2px; padding-bottom: 6px; }
   .stat-row { width: calc(50% - 3px); }
-  .stats-panel .btn-o,
-  .stats-panel .btn-menu,
-  .stats-panel .btn-music { display: none; }
+  /* Papiros, Menu y Musica estaban ocultos (display: none) en telefono: el alumno no podia
+     silenciar la musica ni volver al menu. Ahora van en una fila al pie del panel. */
+  .stats-panel .btn-o, .stats-panel .btn-menu { flex: 1 1 0; min-width: 0; padding-left: 6px; padding-right: 6px; }
+  .stats-panel .btn-music { flex: 0 0 56px; }
   .opts { grid-template-columns: 1fr; }
   .tl-inner { flex-wrap: wrap; gap: 4px; }
   .period { flex: 1 1 45%; }

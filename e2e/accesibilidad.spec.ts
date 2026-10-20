@@ -99,12 +99,14 @@ test.describe('táctil: puzzles, modales y final', () => {
 
   test('modales de la partida: estadística, menú y consejeros', async ({ page }) => {
     test.setTimeout(60_000)
-    // 820 px: en un telefono (<= 768) el juego oculta Papiros, Menu y Musica, asi que el modal
-    // de confirmar menu solo se alcanza en una tableta tactil.
-    await page.setViewportSize({ width: 820, height: 1180 })
+    await page.setViewportSize({ width: 390, height: 844 })  // telefono
     await entrarEn(page, 0, 'todos')
     await page.locator('.stat-row--clickable').first().waitFor()
     await asentar(page)
+    // En telefono Papiros, Menu y Musica estaban ocultos con display: none.
+    for (const nombre of [/Papiros/, /Menú/, /Silenciar|Activar música/]) {
+      await expect(page.getByRole('button', { name: nombre }).first(), String(nombre)).toBeVisible()
+    }
     await page.locator('.stat-row--clickable').first().click()
     await asentar(page)
     expect(await chicos(page), 'modal de estadística').toEqual([])
