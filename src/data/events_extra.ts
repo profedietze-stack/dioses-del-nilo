@@ -21,7 +21,7 @@ export const EVENTS_ANTIGUO_EXTRA: GameEvent[] = [
     {t:"Sustituir el granito por caliza pintada: más barato, más rápido, resultado aceptable",fx:{estabilidad:0,riqueza:4,cultura:-5,influencia:-2},type:"economico"},
     {t:"Duplicar la fuerza de trabajo con prisioneros libios: más cuerpos compensan la ineficiencia",fx:{estabilidad:-5,riqueza:3,cultura:-6,influencia:4},type:"cruel"}
   ],
-  tl:{date:"2600 aC",ph:"Sneferu (Nebmaat)",ev:"Primera pirámide verdadera — la Pirámide Roja de Dahshur",tip:"Sneferu construyó tres pirámides: la escalonada de Meidum, la acodada (que cambió de ángulo a mitad) y la Pirámide Roja. Aprendió de cada error. Su hijo Keops aplicó esas lecciones en Guiza."}},
+  tl:{date:"2560 aC aprox.",ph:"Keops (IV dinastía)",ev:"Granito de Asuán para la Gran Pirámide",tip:"Para la Cámara del Rey de la Gran Pirámide se trajeron desde Asuán, por el Nilo, bloques de granito de decenas de toneladas (las estimaciones van de 50 a 80). Asuán queda a unos 900 km de Guiza."}},
 
   {id:103,per:"antiguo",cat:"politica",title:"El Visir que Sabe Demasiado",
   desc:"Imhotep lleva veinte años siendo la mente más brillante del Imperio: arquitecto, médico, astrónomo, escriba jefe. Diseñó la primera pirámide. Conoce los archivos secretos del tesoro, los nombres de los espías en las cortes extranjeras, las debilidades de cada nomarca. Es leal. Pero es un hombre de baja cuna que tiene más poder real que cualquier noble. Los príncipes de sangre real llevan años presionando para que lo destituyas. Hoy, uno de ellos depositó sobre tu mesa un papiro con acusaciones de malversación.",
@@ -43,7 +43,7 @@ export const EVENTS_ANTIGUO_EXTRA: GameEvent[] = [
     {t:"Primacía osiriana: el faraón como hijo de Osiris tiene mayor arraigo popular",fx:{estabilidad:6,riqueza:0,cultura:6,influencia:6},type:"social"},
     {t:"Suprimir el culto de Osiris: solo los templos solares recibirán financiamiento estatal",fx:{estabilidad:-8,riqueza:4,cultura:-8,influencia:0},type:"cruel"}
   ],
-  tl:{date:"2500 aC",ph:"Kefrén (Jafra)",ev:"Gran Esfinge de Guiza — guardiana del horizonte solar",tip:"La Esfinge mira exactamente al este, hacia el sol naciente. En el equinoccio de primavera, el sol sale exactamente entre las dos pirámides mayores de Guiza. Los egipcios diseñaron el paisaje entero como un reloj solar monumental."}},
+  tl:{date:"2360 aC aprox.",ph:"Unas (V dinastía)",ev:"Los Textos de las Pirámides unen a Ra y a Osiris",tip:"En la pirámide de Unas el rey sube al cielo con Ra y también reina entre los muertos como Osiris. Los textos mezclan teologías de orígenes distintos, y no está claro cómo convivían en la práctica los sacerdotes de cada culto."}},
 
   {id:105,per:"nuevo",cat:"sociedad",title:"La Primera Huelga de la Historia",
   desc:"Los papiros de la aldea de Deir el-Medina son claros: los trabajadores no se mueven. Han abandonado las herramientas, se han sentado a la sombra de los muros y esperan. La razón: llevan tres semanas sin recibir sus raciones de cebada, aceite de linaza y cerveza. La causa es un Estado en crisis, que ya no logra reunir el grano a tiempo. Los obreros no piden más de lo que les corresponde: piden lo acordado. Detrás de ellos, sus familias. Delante, la obra del faraón paralizada.",
@@ -76,7 +76,7 @@ export const EVENTS_ANTIGUO_EXTRA: GameEvent[] = [
     {t:"Rechazar el canal y reforzar los sistemas de riego existentes en el Delta",fx:{estabilidad:6,riqueza:2,cultura:0,influencia:-2},type:"economico"},
     {t:"Forzar la construcción con trabajo esclavo para reducir costos a la mitad",fx:{estabilidad:-6,riqueza:-2,cultura:-5,influencia:4},type:"cruel"}
   ],
-  tl:{date:"2300 aC",ph:"Pepi I (Merira)",ev:"Primeras grandes obras de irrigación del Imperio Antiguo",tip:"El sistema de riego del Fayum, desarrollado durante el Imperio Medio, transformó una depresión del desierto en el granero más productivo de Egipto. Hoy sigue siendo zona agrícola, 4.000 años después."}},
+  tl:{date:"2650 aC aprox.",ph:"Antiguo Imperio (III–IV dinastía)",ev:"Sadd el-Kafara: la presa grande más antigua que se conoce",tip:"Se levantó en el Wadi Garawi, al sureste de El Cairo, con un núcleo de grava entre dos muros de piedra y sin vertedero. Nunca se terminó: una crecida repentina rompió el centro y la obra se abandonó. La fecha exacta se discute."}},
 
   {id:108,per:"antiguo",cat:"sociedad",title:"Los Médicos del Nilo",
   desc:"El sumo médico del palacio, Hesy-Ra, presenta al consejo un documento extraordinario: un tratado sistemático sobre 48 casos clínicos, con diagnóstico, pronóstico y tratamiento. Por primera vez en la historia, la medicina se separa de la magia: fractura de cráneo, heridas de guerra, enfermedades del vientre, tratadas con observación, no con conjuros. Pero los sacerdotes de Sekhmet, diosa de la curación, ven en esto una amenaza directa a su poder y sus ingresos. Proponen que los médicos laicos sean subordinados al templo.",
@@ -87,7 +87,7 @@ export const EVENTS_ANTIGUO_EXTRA: GameEvent[] = [
     {t:"Subvencionar los templos para que incorporen los nuevos métodos dentro del culto",fx:{estabilidad:5,riqueza:-4,cultura:4,influencia:4},type:"politico"},
     {t:"Prohibir la medicina sin rituales: el cuerpo es sagrado y no puede tratarse sin la bendición divina",fx:{estabilidad:-5,riqueza:0,cultura:-8,influencia:0},type:"cruel"}
   ],
-  tl:{date:"2600 aC",ph:"Djoser",ev:"Imhotep y los primeros tratados médicos racionales",tip:"El papiro de Edwin Smith fue comprado por el americano Edwin Smith en Luxor en 1862. Permaneció sin traducir durante 75 años. Cuando finalmente se descifró, los médicos quedaron atónitos: el diagnóstico de lesiones cerebrales era clínicamente correcto."}},
+  tl:{date:"2600 aC aprox.",ph:"Papiro Edwin Smith (copia de ~1600 aC)",ev:"Un tratado de 48 casos de heridas y su tratamiento",tip:"Edwin Smith lo compró en Luxor en 1862 y Breasted lo tradujo en 1930. Describe cada caso con examen, diagnóstico y tratamiento. Breasted pensó que copiaba un original mucho más antiguo; atribuirlo a Imhotep es solo una conjetura."}},
 ]
 
 export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
@@ -122,7 +122,7 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
     {t:"Cierre total del comercio marítimo mientras dure la epidemia",fx:{estabilidad:6,riqueza:-7,cultura:2,influencia:-2},type:"politico"},
     {t:"Quemar los barcos y las casas infectadas: el fuego es el único remedio",fx:{estabilidad:-6,riqueza:-4,cultura:-4,influencia:0},type:"cruel"}
   ],
-  tl:{date:"1800 aC aprox.",ph:"Imperio Medio tardío",ev:"Primeras cuarentenas documentadas en Egipto",tip:"Los papiros médicos egipcios describen con precisión síntomas de viruela, tuberculosis y enfermedades parasitarias del Nilo. El esquistosoma —parásito del agua dulce— fue identificado en momias de 3.200 años de antigüedad."}},
+  tl:{date:"1800 aC aprox.",ph:"Papiros médicos de Lahun (Kahun)",ev:"Uno de los textos médicos egipcios más antiguos",tip:"Los médicos egipcios anotaban síntomas y remedios, pero atribuían muchas enfermedades a demonios o a la ira de dioses como Sekhmet. Ante una enfermedad nueva contaban con recetas y rituales, no con una explicación de cómo se contagiaba."}},
 
   {id:204,per:"medio",cat:"cultura",title:"El Cuento de Sinuhé",
   desc:"El escriba Neferhotep te presenta un manuscrito extraordinario: la historia de Sinuhé, funcionario que huyó de Egipto al morir el faraón Amenemhat I, vivió décadas entre los beduinos del Levante, prosperó, se casó, tuvo hijos... y anheló toda su vida regresar al Nilo. Es una historia de identidad, de exilio voluntario, de lo que significa ser egipcio. El escriba propone que el texto se enseñe en las escuelas como modelo de escritura perfecta. Los conservadores protestan: ¿un funcionario que huyó merece ser ejemplo para los jóvenes?",
@@ -177,7 +177,7 @@ export const EVENTS_MEDIO_EXTRA: GameEvent[] = [
     {t:"Eliminar el trabajo por deuda: solo prisioneros de guerra y corvée voluntaria",fx:{estabilidad:4,riqueza:-4,cultura:5,influencia:0},type:"social"},
     {t:"Formalizar la esclavitud plena como en Mesopotamia: claridad legal aunque sea cruel",fx:{estabilidad:-7,riqueza:4,cultura:-8,influencia:-4},type:"cruel"}
   ],
-  tl:{date:"1850 aC",ph:"Imperio Medio",ev:"Primeras regulaciones laborales documentadas del Imperio",tip:"El Papiro Westcar describe trabajadores que reciben salarios en cerveza, pan y ropa. Los mejores artesanos del Imperio ganaban el equivalente a pequeños propietarios. La clase media artesana egipcia es una de las primeras de la historia."}},
+  tl:{date:"1750 aC aprox.",ph:"Papiro Brooklyn 35.1446 (dinastías XII–XIII)",ev:"Lista de servidores de una casa, muchos con nombres asiáticos",tip:"Los egipcios tenían varios nombres para quienes trabajaban para otros, y no todos equivalen a «esclavo»: había prisioneros, deudores y trabajadores de turno. Cómo clasificar este papiro es un tema todavía debatido."}},
 ]
 
 export const EVENTS_NUEVO_EXTRA: GameEvent[] = [
@@ -302,7 +302,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
     {t:"Biblioteca selectiva: solo los mejores textos de cada tradición, sin la obsesión por la cantidad",fx:{estabilidad:4,riqueza:-4,cultura:7,influencia:6},type:"cultural"},
     {t:"Rechazar el proyecto: el conocimiento concentrado en un lugar puede ser destruido en un día",fx:{estabilidad:2,riqueza:4,cultura:-8,influencia:-4},type:"politico"}
   ],
-  tl:{date:"285 aC",ph:"Ptolomeo I Sóter",ev:"Fundación de la Biblioteca de Alejandría",tip:"Eratóstenes calculó la circunferencia de la Tierra en Alejandría circa 240 aC usando la diferencia de ángulos del sol en Siena y Alejandría en el solsticio de verano. Su resultado fue de 39.375 km. El valor real es 40.075 km. Error: 1,7%."}},
+  tl:{date:"285 aC",ph:"Ptolomeo I Sóter",ev:"Fundación de la Biblioteca de Alejandría",tip:"Entre sus bibliotecarios estuvo Eratóstenes, que calculó la circunferencia de la Tierra comparando la sombra del sol en Siena y en Alejandría. Su cifra quedó cerca del valor real; cuánto exactamente depende de la medida del estadio que usara."}},
 
   {id:404,per:"tardio",cat:"sociedad",title:"El Dinero Llega al Nilo",
   desc:"Los mercaderes griegos de Naucratis traen una novedad que está revolucionando el Mediterráneo: la moneda. Pequeños discos de electro, plata y bronce con un valor garantizado por el Estado emisor. Los fenicios la adoptaron. Los persas la adoptaron. En Egipto, toda la economía funciona desde hace 3.000 años por redistribución estatal: el faraón recibe grano, aceite y lino en impuestos, y los redistribuye como salarios. Nadie compra ni vende: intercambia, con el Estado como intermediario. La moneda cambiaría todo. ¿O lo destruiría todo?",
@@ -313,7 +313,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
     {t:"Rechazar la moneda y reforzar el sistema redistributivo: Egipto no necesita lo que inventaron los griegos",fx:{estabilidad:5,riqueza:-2,cultura:4,influencia:-4},type:"politico"},
     {t:"Adoptar la moneda griega directamente sin acuñar una propia: más rápido, menos costo",fx:{estabilidad:2,riqueza:6,cultura:-4,influencia:-4},type:"economico"}
   ],
-  tl:{date:"500 aC",ph:"Período Tardío bajo influencia persa y griega",ev:"Introducción de la moneda metálica en Egipto",tip:"La primera moneda acuñada en Egipto con sello real egipcio apareció bajo los Ptolomeos (siglo III aC). Antes, los egipcios usaban 'pesos de plata' sin forma estándar. La estandarización monetaria tardó 2.500 años de historia faraónica."}},
+  tl:{date:"400 aC aprox.",ph:"Egipto bajo dominio persa",ev:"Circulan monedas de plata griegas e imitaciones",tip:"Antes, el Estado pagaba en raciones de grano y el valor se medía en peso de metal. Las monedas que primero circularon en Egipto fueron de plata ateniense y sus imitaciones; la acuñación local se afianzó en el siglo IV aC."}},
 
   {id:405,per:"tardio",cat:"religion",title:"Los Animales de los Dioses",
   desc:"En el Período Tardío, algo extraordinario ocurre en los templos: millones de animales embalsamados. Gatos para Bastet, ibis para Thoth, cocodrilos para Sobek, halcones para Horus, perros para Anubis. Los peregrinos los compran en los puestos del templo, los ofrendan al dios y los sacerdotes los entierran en catacumbas especiales. Arqueólogos del futuro encontrarán 8 millones de ibis momificados en Saqqara. Pero una investigación revela que muchos animales son sacrificados en el templo mismo para satisfacer la demanda. ¿Es esto piedad o negocio?",
@@ -346,7 +346,7 @@ export const EVENTS_TARDIO_EXTRA: GameEvent[] = [
     {t:"Decreto verbal sin piedra: las concesiones se hacen, pero sin documento que las fije",fx:{estabilidad:3,riqueza:0,cultura:2,influencia:2},type:"politico"},
     {t:"Rechazar la negociación: el faraón no mendiga legitimidad de sus propios sacerdotes",fx:{estabilidad:-8,riqueza:2,cultura:-5,influencia:-6},type:"politico"}
   ],
-  tl:{date:"196 aC",ph:"Ptolomeo V Epífanes",ev:"Emisión del Decreto de Menfis — la Piedra de Rosetta",tip:"Champollion tenía 32 años cuando descifró los jeroglíficos en 1822. Cayó desmayado de la emoción, literalmente. No pudo levantarse durante cinco días. Cuando volvió en sí, dijo solo: 'Je tiens l'affaire!' (¡Lo tengo!). Murió diez años después, a los 41."}},
+  tl:{date:"196 aC",ph:"Ptolomeo V Epífanes",ev:"Emisión del Decreto de Menfis — la Piedra de Rosetta",tip:"Champollion tenía 32 años cuando descifró los jeroglíficos, en 1822. Según se cuenta, al comprobarlo gritó «¡Lo tengo!» y se desmayó de la emoción. Murió diez años después, a los 41."}},
 
   {id:408,per:"tardio",cat:"sociedad",title:"Los Hijos de Grecia y el Nilo",
   desc:"Tres generaciones después de Alejandro Magno, Alejandría es la ciudad más grande del mundo mediterráneo. Griegos, macedonios, judíos, egipcios nativos, sirios, persas, nubios: dos millones de personas conviven en una ciudad diseñada en cuadrícula perfecta. Los egipcios de piel oscura, que hablan copto y honran a Isis y Osiris, conviven con griegos que philosophan en el Mouseion y judíos que leen la Torá en griego (la Septuaginta). La mezcla es brillante y conflictiva a la vez. Un disturbio en el barrio judío amenaza con extenderse.",

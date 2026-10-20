@@ -10,7 +10,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Requisar el grano de los nobles y sacerdotes para redistribuirlo entre el pueblo",fx:{estabilidad:3,riqueza:4,cultura:-4,influencia:6},type:"militar"},
     {t:"Declarar que el pueblo ha ofendido a los dioses y exigir sacrificios y penitencia pública",fx:{estabilidad:-6,riqueza:0,cultura:-5,influencia:-4},type:"cruel"}
   ],
-  tl:{date:"2900 aC",ph:"Narmer / Menes",ev:"Unificación del Alto y Bajo Egipto",tip:"Narmer unificó los Dos Reinos con la doble corona. Su paleta de esquisto narra la primera gran conquista de la historia."}},
+  tl:{date:"2400 aC aprox.",ph:"Piedra de Palermo (Anales reales)",ev:"Se anota la altura de la crecida año por año",tip:"Los Anales reales registran, junto a las fiestas y las guerras, hasta dónde subió el Nilo cada año: de la crecida dependía la cosecha, y de la cosecha, lo que el Estado podía cobrar. Más tarde se usaron nilómetros para medirla."}},
 
   {id:2,per:"antiguo",cat:"politica",title:"La Traición del Visir",
   desc:"Tus espías traen una noticia devastadora: Amenhotep, tu visir de veinte años de servicio, ha estado negociando en secreto con los jefes nómades del Sinaí, prometiéndoles acceso a las minas de cobre a cambio de sobornos de oro. La corte entera espera tu reacción. El visir era tu mano derecha, conoce todos los secretos del Estado. Si te muestras débil, los demás nobles tomarán nota. Si eres demasiado cruel, sembrarás el miedo entre tus funcionarios.",
@@ -21,7 +21,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Exiliarlo al desierto y confiscar todas sus propiedades para el tesoro real",fx:{estabilidad:3,riqueza:6,cultura:0,influencia:5},type:"economico"},
     {t:"Perdonarlo a cambio de información detallada sobre los contactos nómades",fx:{estabilidad:-4,riqueza:2,cultura:-4,influencia:-5},type:"diplomatico"}
   ],
-  tl:{date:"2650 aC",ph:"Djoser (Dyeser)",ev:"Pirámide Escalonada de Saqqara — primera en piedra",tip:"Imhotep, arquitecto y médico genial, diseñó para Djoser la primera estructura de piedra de la historia. Fue tan venerado que siglos después fue deificado."}},
+  tl:{date:"2570 aC aprox.",ph:"Hemiunu, visir de Keops (IV dinastía)",ev:"El visir, mano derecha del rey",tip:"En la IV dinastía el cargo de visir lo ocupaban príncipes de la familia real; más adelante pasó a funcionarios de otro origen. Con el tiempo dirigió la justicia, los graneros, el tesoro y las obras del rey."}},
 
   {id:3,per:"nuevo",cat:"religion",title:"El Oráculo de Amón Habla",
   desc:"En medio de la noche, el sumo sacerdote llega a tu cámara con los ojos encendidos: el oráculo de Amón en Karnak ha profetizado. Una plaga de langostas devastará los campos si no se erige un nuevo santuario en su honor antes de la próxima inundación. Los sacerdotes muestran los papiros: la señal es clara. Pero el tesoro real está comprometido con la construcción de la nueva necrópolis. Construir el santuario requeriría desviar miles de trabajadores y toneladas de piedra caliza.",
@@ -43,7 +43,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Enviar soldados para escoltar a los trabajadores de vuelta a la obra por la fuerza",fx:{estabilidad:-7,riqueza:0,cultura:-4,influencia:7},type:"militar"},
     {t:"Reemplazarlos con prisioneros nubios: los hombres libres ya no son confiables",fx:{estabilidad:-5,riqueza:3,cultura:-7,influencia:4},type:"cruel"}
   ],
-  tl:{date:"2490 aC",ph:"Micerino (Menkaura)",ev:"Tercera pirámide de Guiza con revestimiento de granito rosa",tip:"Micerino, más humano que sus predecesores, redujo el tamaño de su pirámide pero la revistió de costoso granito rosa de Asuán. Los textos tardíos lo recuerdan como el faraón más justo."}},
+  tl:{date:"2500 aC aprox.",ph:"Pirámides de Guiza",ev:"Una aldea de obreros junto a las obras",tip:"Al sur de las pirámides se hallaron panaderías, barracas y depósitos de comida para equipos de obreros que se turnaban. Eran trabajadores del Estado, alimentados con raciones de pan y cerveza, no esclavos encadenados."}},
 
   {id:5,per:"antiguo",cat:"economia",title:"La Expedición a la Tierra de Punt",
   desc:"El almirante Nehsi llega ante ti con mapas y propuestas: los mercaderes de Punt, la tierra misteriosa al sur del Mar Rojo, ofrecen mirra para los templos, ébano negro como la noche, incienso para las ceremonias y marfil de elefante. Pero el viaje exige diez barcos, doscientos marineros, meses de travesía por mares desconocidos y fondos considerables del tesoro. La última expedición fue hace cincuenta años. Algunos de los marineros no regresaron.",
@@ -87,7 +87,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Ayuda humanitaria exterior: provisiones en la frontera, pero ningún ingreso al territorio",fx:{estabilidad:2,riqueza:-2,cultura:0,influencia:4},type:"politico"},
     {t:"Despliegue militar en la frontera occidental: ningún extranjero cruza las tierras del faraón",fx:{estabilidad:-4,riqueza:0,cultura:-4,influencia:6},type:"militar"}
   ],
-  tl:{date:"2181 aC",ph:"Fin del Antiguo Imperio",ev:"Colapso — inicio del Primer Período Intermedio",tip:"125 años de fragmentación siguieron al colapso. Los 'Textos de las Lamentaciones' describen un mundo al revés: los pobres se volvieron ricos, los templos fueron saqueados, el Nilo olía a sangre."}},
+  tl:{date:"2181 aC",ph:"Fin del Antiguo Imperio",ev:"Colapso del Estado en una época de sequías",tip:"Se discute cuánto pesó la sequía frente a otras causas. Lo que siguió fueron unos 125 años de fragmentación: los textos de las Lamentaciones describen un mundo al revés, con los pobres ricos, los templos saqueados y el Nilo teñido de sangre."}},
 
   {id:9,per:"medio",cat:"politica",title:"Reunificación: ¿Cómo Gobernar Egipto?",
   desc:"Mentuhotep II ha reunificado los Dos Reinos después de 125 años de caos. El ejército tebano ha vencido. Pero ahora llega la pregunta más difícil: ¿cómo gobernar un Egipto quebrado, desconfiado y con heridas que aún sangran? Los nomarcas del norte miran con recelo al nuevo faraón del sur. Los templos necesitan reconstrucción. El pueblo quiere orden. Tú decides la arquitectura del nuevo poder.",
@@ -109,7 +109,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Ocupación militar: una guarnición permanente garantizará el acceso sin depender de los beduinos",fx:{estabilidad:-2,riqueza:8,cultura:-4,influencia:7},type:"militar"},
     {t:"Desplazar a las tribus hacia el interior del desierto por la fuerza",fx:{estabilidad:-8,riqueza:8,cultura:-8,influencia:-4},type:"cruel"}
   ],
-  tl:{date:"2000 aC",ph:"Senuseret I (Kheperkara)",ev:"Expansión hacia Nubia y las minas del Sinaí",tip:"En Serabit el-Jadim se construyó un templo a Hathor 'señora de la turquesa'. Los mineros semíticos que trabajaron allí adaptaron jeroglíficos para escribir su propio idioma — el primer alfabeto del mundo."}},
+  tl:{date:"2000 aC",ph:"Senuseret I (Kheperkara)",ev:"Expansión hacia Nubia y las minas del Sinaí",tip:"En Serabit el-Jadim se construyó un templo a Hathor, «señora de la turquesa». Los mineros semíticos que trabajaron allí dejaron inscripciones protosinaíticas, un sistema que se considera antecesor de nuestro alfabeto."}},
 
   {id:11,per:"medio",cat:"cultura",title:"El Nacimiento de la Literatura",
   desc:"Los escribas de la Casa de la Vida en Hermópolis proponen algo revolucionario: crear historias escritas no para los dioses ni para la eternidad, sino para el entretenimiento y la reflexión de los vivos. Novelas de viaje, cartas filosóficas, poemas de amor, debates entre el alma y el corazón. Un escriba de nombre Sinuhé ya ha comenzado. Los nobles más conservadores protestan: la escritura es sagrada, no un pasatiempo para cortesanos ociosos.",
@@ -120,7 +120,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Permitirlo como actividad privada sin financiamiento estatal",fx:{estabilidad:0,riqueza:0,cultura:3,influencia:0},type:"social"},
     {t:"Prohibir la escritura no-religiosa: solo los sacerdotes necesitan saber escribir",fx:{estabilidad:-7,riqueza:0,cultura:-8,influencia:2},type:"cruel"}
   ],
-  tl:{date:"1950 aC",ph:"Amenemhat I (Sehetepibre)",ev:"Composición de la Historia de Sinuhé",tip:"Sinuhé es un funcionario que huye de Egipto por miedo político y vive décadas entre los pueblos del Levante. La historia explora el exilio, la identidad y el anhelo de volver a casa. Es extraordinariamente moderna."}},
+  tl:{date:"1900 aC aprox.",ph:"Imperio Medio (dinastía XII)",ev:"Edad clásica de la literatura egipcia",tip:"Los egipcios del Imperio Medio escribieron cuentos, enseñanzas y poemas que se copiaron en las escuelas durante siglos. El Cuento del Náufrago y la Historia de Sinuhé son de los más conocidos."}},
 
   {id:12,per:"medio",cat:"sociedad",title:"¿Qué Hacer con los Prisioneros de Guerra?",
   desc:"El general Amenhotep regresa de Nubia con una victoria aplastante y un problema: siete mil prisioneros. Hombres, mujeres, niños. Guerreros nubios, campesinos, artesanos. Son personas, pero también son boca que alimentar, mano que podría rebelarse. Los generales quieren mano de obra barata para las canteras. Los sacerdotes piden que el faraón demuestre magnanimidad. La decisión que tomes sentará precedente durante generaciones.",
@@ -142,7 +142,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Comercio libre: los mercaderes privados egipcios negocian directamente",fx:{estabilidad:0,riqueza:5,cultura:2,influencia:0},type:"economico"},
     {t:"Bloquear el comercio: el oro de Egipto no debe salir del país",fx:{estabilidad:0,riqueza:-4,cultura:-4,influencia:-4},type:"economico"}
   ],
-  tl:{date:"1850 aC",ph:"Amenemhat III (Nimaatra)",ev:"Apogeo comercial del Imperio Medio",tip:"Amenemhat III abrió las minas del Fayum y desarrolló la primera economía redistributiva de escala. Su retrato en el Museo Egipcio de El Cairo muestra un rostro cansado, quizás el primer realismo psicológico del arte mundial."}},
+  tl:{date:"1890 aC aprox.",ph:"Jnumhotep II en Beni Hasan (Senusret II)",ev:"Llega a Egipto una caravana de asiáticos",tip:"En la tumba de Jnumhotep II, una inscripción cuenta 37 asiáticos que traen pigmento para los ojos; la pintura muestra quince, hombres, mujeres y niños. Es una de las imágenes egipcias más conocidas de gente de Canaán que llega a Egipto."}},
 
   {id:14,per:"medio",cat:"politica",title:"Los Hicsos Llaman a la Puerta",
   desc:"Desde el noreste, más allá del Sinaí, llegan noticias inquietantes: pueblos del Levante, a quienes los egipcios llaman Hicsos —'gobernantes de tierras extranjeras'— se establecen pacíficamente en el delta oriental. Traen algo que Egipto nunca ha visto: caballos, carros de guerra con ruedas, arcos compuestos de múltiples materiales, espadas de bronce de diseño nuevo. No vienen como conquistadores. Pero si crecen lo suficiente... podrían serlo.",
@@ -164,7 +164,7 @@ export const EVENTS: GameEvent[] =[
     {t:"No intervenir: que el mercado espiritual funcione libremente",fx:{estabilidad:4,riqueza:0,cultura:5,influencia:0},type:"social"},
     {t:"Prohibirlo: la vida eterna es prerrogativa del faraón y los grandes nobles",fx:{estabilidad:-8,riqueza:0,cultura:-8,influencia:-4},type:"cruel"}
   ],
-  tl:{date:"2055-1650 aC",ph:"Imperio Medio",ev:"Textos de los Ataúdes — democratización del Más Allá",tip:"El ataúd del noble Heqanakhte (1950 aC) incluye 222 conjuros. Los textos revelan una teología compleja: el difunto debía superar 42 confesiones negativas ante Osiris y Maat para alcanzar la vida eterna."}},
+  tl:{date:"2055-1650 aC",ph:"Imperio Medio",ev:"Textos de los Ataúdes — democratización del Más Allá",tip:"Los Textos de los Ataúdes reúnen más de mil conjuros escritos dentro de los ataúdes de funcionarios y nobles, no solo de reyes. Con ellos, el difunto podía buscar la vida eterna junto a Osiris: antes ese camino era cosa del rey."}},
 
   {id:16,per:"medio",cat:"sociedad",title:"La Reina que Quiere Gobernar",
   desc:"La reina Sobekneferu es hija de Amenemhat III y hermana del faraón recién fallecido sin herederos varones. Es brillante, política, conocedora de los textos sagrados. Lleva años administrando el estado en la sombra. Ahora reclama el doble trono en su propio nombre, con peluca de faraón, barba postiza y kilt masculino. Los generales están inquietos. Los sacerdotes buscan precedentes en los textos. Tú debes decidir.",
@@ -208,7 +208,7 @@ export const EVENTS: GameEvent[] =[
     {t:"Maximizar la extracción con más trabajadores para acumular reservas estratégicas",fx:{estabilidad:-2,riqueza:8,cultura:0,influencia:6},type:"economico"},
     {t:"Acumular en secreto: el tesoro es poder, nadie debe saber cuánto oro tiene el faraón",fx:{estabilidad:-4,riqueza:8,cultura:-4,influencia:-2},type:"economico"}
   ],
-  tl:{date:"1450 aC",ph:"Tutmosis III (Menkheperra)",ev:"El mayor Imperio Egipcio: del Éufrates a la 4ª catarata",tip:"Tutmosis III ganó 17 campañas militares en 20 años. Su victoria en Meguido (1457 aC) es la primera batalla de la historia documentada en detalle. Napoleón la estudió 3.000 años después como modelo estratégico."}},
+  tl:{date:"1350 aC aprox.",ph:"Cartas de Amarna (Amenhotep III y Akenatón)",ev:"Los reyes de Oriente piden oro a Egipto",tip:"Las cartas de Amarna son tablillas de arcilla escritas en acadio, la lengua diplomática de entonces. Los reyes de Babilonia, Mitani y los hititas llaman «hermano» al faraón y le piden oro."}},
 
   {id:20,per:"nuevo",cat:"religion",title:"Un Solo Dios: La Revolución de Akenatón",
   desc:"Amenhotep IV ha tomado una decisión que sacude los cimientos de Egipto: cierra los templos de todos los dioses. Despide a decenas de miles de sacerdotes. Ordena borrar el nombre de Amón de todos los monumentos —incluyendo el de su propio padre. Se renombra a sí mismo Akenatón. Y declara que solo existe un dios: Atón, el disco solar. Una ciudad nueva, Amarna, emerge en el desierto. Es la primera revolución religiosa monoteísta documentada de la historia humana.",
