@@ -143,6 +143,31 @@ test.describe('táctil: puzzles, modales y final', () => {
     await expect(page.locator('.cmod .btn-g'), 'Continuar visible').toBeInViewport()
   })
 
+  // H18. Las seis estadisticas apiladas de a una ocupaban 414 px: casi media pantalla antes de
+  // empezar a leer el evento. En dos columnas son tres filas.
+  for (const [ancho, alto] of [[390, 844], [360, 740]]) {
+    test(`panel de estadísticas compacto en ${ancho}x${alto}`, async ({ page }) => {
+      test.setTimeout(60_000)
+      await page.setViewportSize({ width: ancho, height: alto })
+      await entrarEn(page, 1, 'todos')
+      await page.locator('.opt').first().waitFor()
+      await asentar(page)
+      const m = await page.evaluate(() => {
+        const rows = [...document.querySelectorAll<HTMLElement>('.stat-row--clickable')].map(e => e.getBoundingClientRect())
+        const panel = document.querySelector('.stats-panel')!.getBoundingClientRect()
+        const cortadas = [...document.querySelectorAll<HTMLElement>('.stat-lbl')].filter(e => e.scrollWidth > e.clientWidth + 1).map(e => e.textContent)
+        const opt1 = document.querySelector('.opt')!.getBoundingClientRect().top
+        return { filas: rows.length, columnas: new Set(rows.map(r => Math.round(r.left))).size, panel: panel.height, cortadas, opt1, alto: innerHeight, desborde: document.documentElement.scrollWidth > innerWidth }
+      })
+      expect(m.filas).toBe(6)
+      expect(m.columnas, 'dos columnas').toBe(2)
+      expect(m.cortadas, 'nombres de estadística cortados').toEqual([])
+      expect(m.panel, 'alto del panel de estadísticas').toBeLessThanOrEqual(290)
+      expect(m.desborde, 'desborde horizontal').toBe(false)
+      expect(await chicos(page), 'targets de 44 px').toEqual([])
+    })
+  }
+
   test('menú, info didáctica y papiros', async ({ page }) => {
     test.setTimeout(60_000)
     await page.goto('/')
