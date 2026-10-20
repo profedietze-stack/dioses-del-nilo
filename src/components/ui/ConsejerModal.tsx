@@ -7,10 +7,12 @@ import { useModalA11y } from '../../hooks/useModalA11y'
 interface Props {
   choice: string
   fx: Partial<Stats>
+  /** Lo que sumó o restó la afinidad del dios en esta decisión, si actuó. */
+  power?: { name: string; note: Partial<Stats> } | null
   onContinue: () => void
 }
 
-export function ConsejerModal({ choice, fx, onContinue }: Props) {
+export function ConsejerModal({ choice, fx, power, onContinue }: Props) {
   const affected = (Object.entries(fx) as [StatKey, number][]).filter(([, v]) => v !== 0)
   const [a1, a2] = pickAdvisors(fx)
 
@@ -55,6 +57,15 @@ export function ConsejerModal({ choice, fx, onContinue }: Props) {
             </div>
           ))}
         </div>
+
+        {power && (
+          <div className="cmod-power">
+            ✦ {power.name}:{' '}
+            {(Object.entries(power.note) as [StatKey, number][]).map(([k, v]) => (
+              <span key={k} className={v > 0 ? 'pos' : 'neg'}>{v > 0 ? '+' : ''}{v} {STAT_LABELS[k]} </span>
+            ))}
+          </div>
+        )}
 
         <div className="cmod-advisors">
           {[{ adv: a1, val: a1stat, line: a1line }, { adv: a2, val: a2stat, line: a2line }].map(({ adv, line }) => (

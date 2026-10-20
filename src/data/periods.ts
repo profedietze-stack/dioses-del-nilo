@@ -1,4 +1,4 @@
-import type { Period } from '../types'
+import type { OptionType, Period } from '../types'
 
 export const PERIODS: Period[] = [
   { id: 'antiguo', name: 'Antiguo Imperio', dates: '3100-2180 aC', col: '#FFD700' },
@@ -82,12 +82,13 @@ export const STAT_TIPS: Record<string, string[]> = {
   ],
 }
 
-export const OPTION_TYPE_LABELS: Record<string, string> = {
+export const OPTION_TYPE_LABELS: Record<OptionType, string> = {
   cultural:    '📜 Decisión Cultural — favorece el conocimiento, el arte y los templos',
   social:      '🤝 Decisión Social — cuida al pueblo y la vida comunitaria',
   militar:     '⚔️ Decisión Militar — usa la fuerza o el ejército',
   economico:   '💰 Decisión Económica — afecta el comercio y el tesoro',
   diplomatico: '🕊️ Decisión Diplomática — busca acuerdos con otros pueblos',
   politico:    '👑 Decisión Política — reorganiza el poder interno del Imperio',
+  religioso:   '𓂀 Decisión Religiosa — honra a los dioses y sostiene los templos',
   cruel:       '💀 Decisión Cruel — puede ser efectiva, pero tiene un costo humano',
 }

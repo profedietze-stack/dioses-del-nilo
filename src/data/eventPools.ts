@@ -5,6 +5,7 @@ import {
   EVENTS_NUEVO_EXTRA,
   EVENTS_TARDIO_EXTRA,
 } from './events_extra'
+import { EVENTS_DIOSES } from './events_dioses'
 import { PHARAOH_PLACEHOLDER_EVENTS } from './pharaohs'
 import type { GameEvent } from '../types'
 
@@ -17,7 +18,7 @@ const NORMAL_EVENTS = [
 ]
 
 // Includes pharaoh placeholders so getEventsById can reconstruct saved games
-const ALL_EVENTS = [...NORMAL_EVENTS, ...PHARAOH_PLACEHOLDER_EVENTS]
+const ALL_EVENTS = [...NORMAL_EVENTS, ...EVENTS_DIOSES, ...PHARAOH_PLACEHOLDER_EVENTS]
 
 const POOL_ANTIGUO = NORMAL_EVENTS.filter(e => e.per === 'antiguo')
 const POOL_MEDIO   = NORMAL_EVENTS.filter(e => e.per === 'medio')
@@ -48,22 +49,27 @@ function insertAt(events: GameEvent[], pharaoh: GameEvent, pos: number): GameEve
 
 /**
  * Build a random game with perPeriod total slots per period.
+ * Con `godId`, el evento exclusivo de ese dios ocupa uno de los lugares comunes de su período.
  * One slot per period is a fixed pharaoh event at PHARAOH_INSERT_POS within each period block.
  * Remaining (perPeriod - 1) slots are random normal events.
  */
-export function buildGameEvents(perPeriod = 8): GameEvent[] {
+export function buildGameEvents(perPeriod = 8, godId?: string): GameEvent[] {
   const [ph0, ph1, ph2, ph3] = PHARAOH_PLACEHOLDER_EVENTS
+  const exclusive = godId ? EVENTS_DIOSES.find(e => e.godOnly === godId) : undefined
 
-  const antiguo = pick(POOL_ANTIGUO, perPeriod - 1)
-  const medio   = pick(POOL_MEDIO,   perPeriod - 1)
-  const nuevo   = pick(POOL_NUEVO,   perPeriod - 1)
-  const tardio  = pick(POOL_TARDIO,  perPeriod - 1)
+  // El evento exclusivo del dios ocupa el lugar de uno común de su período: la partida
+  // sigue teniendo perPeriod eventos por período, y aparece en una posición al azar.
+  const block = (pool: GameEvent[], per: string, pharaoh: GameEvent): GameEvent[] => {
+    const mine = exclusive && exclusive.per === per ? exclusive : undefined
+    const normal = pick(pool, perPeriod - 1 - (mine ? 1 : 0))
+    return insertAt(mine ? shuffle([...normal, mine]) : normal, pharaoh, PHARAOH_INSERT_POS)
+  }
 
   return [
-    ...insertAt(antiguo, ph0, PHARAOH_INSERT_POS),
-    ...insertAt(medio,   ph1, PHARAOH_INSERT_POS),
-    ...insertAt(nuevo,   ph2, PHARAOH_INSERT_POS),
-    ...insertAt(tardio,  ph3, PHARAOH_INSERT_POS),
+    ...block(POOL_ANTIGUO, 'antiguo', ph0),
+    ...block(POOL_MEDIO, 'medio', ph1),
+    ...block(POOL_NUEVO, 'nuevo', ph2),
+    ...block(POOL_TARDIO, 'tardio', ph3),
   ]
 }
 

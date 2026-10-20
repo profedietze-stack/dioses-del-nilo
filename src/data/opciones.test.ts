@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { EVENTS } from './events'
 import * as X from './events_extra'
+import { EVENTS_DIOSES } from './events_dioses'
 
-const TODOS = [...EVENTS, ...Object.values(X).flat()]
+const TODOS = [...EVENTS, ...Object.values(X).flat(), ...EVENTS_DIOSES]
 
 describe('las opciones de los eventos', () => {
   it('cada evento tiene cuatro opciones distintas', () => {

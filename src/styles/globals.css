@@ -182,7 +182,7 @@ button { font-family: inherit; cursor: pointer; }
 .god-screen { min-height: 100vh; padding: 24px; max-width: 1100px; margin: 0 auto; }
 .sec-title { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 600; color: var(--gold); text-align: center; letter-spacing: .15em; margin-bottom: 24px; }
 .god-layout { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
-.god-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(130px,1fr)); gap: 12px; }
+.god-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(130px,1fr)); gap: 12px; align-self: start; align-content: start; }
 .god-card {
   background: var(--stone-m); border: 1px solid var(--stone-l); border-radius: var(--r);
   padding: 16px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -1773,7 +1773,7 @@ button { font-family: inherit; cursor: pointer; }
 .pht-check.fail { color: #e07060; }
 .pht-pool { border-radius: 10px; padding: 10px; margin-top: 10px; background: rgba(255,255,255,.03); border: 0.5px solid rgba(212,160,23,.2); transition: outline .1s; }
 .pht-pool-lbl { font-size: .72rem; color: var(--dim); margin-bottom: 8px; }
-.pht-pool-cards { display: flex; flex-direction: column; gap: 6px; }
+.pht-pool-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
 .pht-review { margin: 12px 0; display: flex; flex-direction: column; gap: 7px; }
 .pht-review-row { display: flex; align-items: flex-start; gap: 8px; padding: 8px; border-radius: 8px; }
 .pht-review-row.ok   { background: rgba(29,158,117,.1);  border: 0.5px solid rgba(29,158,117,.3); }
@@ -1809,4 +1809,39 @@ button { font-family: inherit; cursor: pointer; }
 .lazy-fallback--inline {
   position: static; height: 200px; font-size: 2rem;
   background: transparent; color: var(--gold);
+}
+
+/* ── Habilidad del dios y eventos exclusivos ─────────────────────────────── */
+.cmod-power {
+  margin: 4px 0 10px;
+  padding: 6px 10px;
+  border: 1px solid var(--gold, #d4a017);
+  border-radius: .4rem;
+  font-size: .85rem;
+  color: var(--gold, #d4a017);
+  background: rgba(212, 160, 23, .08);
+}
+.cmod-power .pos { color: #7fd58a; }
+.cmod-power .neg { color: #e8776a; }
+.ev-tag.god { border: 1px solid; background: transparent; }
+.gd-power {
+  margin: 8px 0;
+  padding: 8px 10px;
+  border: 1px dashed var(--gold, #d4a017);
+  border-radius: .4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: .85rem;
+}
+.gd-power strong { color: var(--gold, #d4a017); }
+.gd-power small { opacity: .8; }
+
+/* Tocar para colocar: faraón elegido y lugares disponibles */
+.pht-card.selected { outline: 2px solid var(--gold, #d4a017); box-shadow: 0 0 10px rgba(212, 160, 23, .45); }
+.pht-card:focus-visible, .pht-slot:focus-visible { outline: 2px solid #9c7dff; outline-offset: 2px; }
+@media (max-height: 760px) {
+  .pht-slot { min-height: 44px; padding: 4px 8px; }
+  .pht-card { padding: 5px 8px; }
+  .pht-axis-label { padding: 0; }
 }

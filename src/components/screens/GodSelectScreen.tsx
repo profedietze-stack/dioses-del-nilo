@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { God } from '../../types'
 import { GODS } from '../../data/gods'
-import { STAT_ICONS, STAT_LABELS } from '../../data/periods'
+import { STAT_ICONS, STAT_LABELS, OPTION_TYPE_LABELS } from '../../data/periods'
+import { GOD_POWERS } from '../../data/godPowers'
 
 interface Props {
   onSelect: (god: God) => void
@@ -65,6 +66,16 @@ export function GodSelectScreen({ onSelect, onBack }: Props) {
               <p className="gd-title">{hov.title}</p>
               <p className="gd-desc">{hov.desc}</p>
               <p className="gd-lore"><em>"{hov.lore}"</em></p>
+              {GOD_POWERS[hov.id] && (
+                <div className="gd-power">
+                  <strong>✦ {GOD_POWERS[hov.id].name}</strong>
+                  <span>{GOD_POWERS[hov.id].desc}</span>
+                  <small>
+                    A favor: {GOD_POWERS[hov.id].favored.map(t => (OPTION_TYPE_LABELS[t] ?? t).split(' —')[0]).join(', ')}
+                    {' · '}En contra: {GOD_POWERS[hov.id].against.map(t => (OPTION_TYPE_LABELS[t] ?? t).split(' —')[0]).join(', ')}
+                  </small>
+                </div>
+              )}
               <div className="bonuses">
                 {Object.entries(hov.bon).filter(([, v]) => v !== 0).map(([k, v]) => (
                   <div key={k} className={`btag ${v > 0 ? 'pos' : 'neg'}`}>
