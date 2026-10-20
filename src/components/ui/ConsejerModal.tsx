@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import type { Stats, StatKey } from '../../types'
+import type { Stats, StatKey, TimelineCard } from '../../types'
 import { STAT_ICONS, STAT_LABELS } from '../../data/periods'
 import { pickAdvisors, getAdvisorLine } from '../../data/advisors'
 import { useModalA11y } from '../../hooks/useModalA11y'
@@ -9,10 +9,12 @@ interface Props {
   fx: Partial<Stats>
   /** Lo que sumó o restó la afinidad del dios en esta decisión, si actuó. */
   power?: { name: string; note: Partial<Stats> } | null
+  /** Lo que pasó de verdad. Se muestra acá, después de elegir: antes podía contar el desenlace. */
+  card?: TimelineCard
   onContinue: () => void
 }
 
-export function ConsejerModal({ choice, fx, power, onContinue }: Props) {
+export function ConsejerModal({ choice, fx, power, card, onContinue }: Props) {
   const affected = (Object.entries(fx) as [StatKey, number][]).filter(([, v]) => v !== 0)
   const [a1, a2] = pickAdvisors(fx)
 
@@ -81,6 +83,18 @@ export function ConsejerModal({ choice, fx, power, onContinue }: Props) {
             </div>
           ))}
         </div>
+
+        {card && (
+          <div className="tl-card">
+            <span className="tl-card-ico" aria-hidden="true">📅</span>
+            <div>
+              <span className="tl-card-lbl">Lo que pasó en realidad</span>
+              <strong>{card.date} · {card.ph}</strong>
+              <p>{card.ev}</p>
+              <em>{card.tip}</em>
+            </div>
+          </div>
+        )}
 
         <button className="btn-g" style={{ width: '100%', marginTop: 4 }} onClick={onContinue}>
           Continuar →

@@ -124,6 +124,23 @@ test.describe('táctil: puzzles, modales y final', () => {
     await page.locator('.cmod').waitFor()
     await asentar(page)
     expect(await chicos(page), 'modal de consejeros').toEqual([])
+
+    // La tarjeta de «lo que pasó en realidad» vive en este modal, no en la pantalla de decisión
+    // (donde sumaba ~47 palabras y a veces contaba el desenlace antes de elegir).
+    await expect(page.locator('.cmod .tl-card')).toBeVisible()
+    expect(await page.locator('.event-panel .tl-card').count()).toBe(0)
+    // Con la tarjeta el modal es más alto: tiene que entrar en el telefono y, si la pantalla es
+    // más baja (horizontal), desplazarse en vez de cortarse. (En este contexto no se puede
+    // redimensionar la ventana tras pedir pantalla completa, así que se mira el CSS.)
+    const r = await page.locator('.cmod').evaluate(el => {
+      const b = el.getBoundingClientRect(), c = getComputedStyle(el)
+      return { top: b.top, bottom: b.bottom, alto: innerHeight, overflowY: c.overflowY, tope: parseFloat(c.maxHeight) }
+    })
+    expect(r.top, 'modal arriba').toBeGreaterThanOrEqual(0)
+    expect(r.bottom, 'modal abajo').toBeLessThanOrEqual(r.alto)
+    expect(r.overflowY).toBe('auto')
+    expect(r.tope, 'tope de alto').toBeLessThanOrEqual(r.alto - 32)
+    await expect(page.locator('.cmod .btn-g'), 'Continuar visible').toBeInViewport()
   })
 
   test('menú, info didáctica y papiros', async ({ page }) => {
