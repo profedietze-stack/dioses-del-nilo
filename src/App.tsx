@@ -3,15 +3,15 @@ import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion'
 import type { God, Stats, StatKey, Screen, HistoryEntry, GameStats, EventOption, GameEvent, PeriodTransitionData, SaveData } from './types'
 import { GODS } from './data/gods'
 import { PERIODS } from './data/periods'
-import { PLAY_STYLES, PERIOD_LORE, getLegacyVerdict } from './data/periodLore'
 import { STAT_ICONS, STAT_LABELS, STAT_COLORS, OPTION_TYPE_LABELS } from './data/periods'
 import { buildGameEvents, getEventsById } from './data/eventPools'
 import { PUZZLES_DEF } from './data/puzzles'
-import { INIT, clamp, applyFx } from './utils/gameLogic'
+import { INIT, clamp } from './utils/gameLogic'
 import { loadSave, writeSave, clearSave } from './utils/save'
 import { pendingPuzzle } from './utils/puzzleSchedule'
 import { barajar } from './utils/barajar'
-import { applyGodPower } from './utils/godPowers'
+import { EMPTY_GS, resolverDecision, resolverCoronacion, aplicarPuzzle } from './utils/turnos'
+import type { EstadoTurno, ResultadoTurno } from './utils/turnos'
 import { evaluateAchievements } from './utils/achievements'
 import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngine'
 import { SplashScreen } from './components/screens/SplashScreen'
@@ -45,8 +45,6 @@ import { ConfirmModal } from './components/ui/ConfirmModal'
 import { PHARAOHS } from './data/pharaohs'
 import { buildGodModal } from './data/godLore'
 import { processGlossary } from './utils/processGlossary'
-
-const EMPTY_GS: GameStats = { mil: 0, peace: 0, revived: false, stabStr: 0, infMax: 0, cruel: 0 }
 
 const OPT_TYPE_ICONS: Record<string, string> = {
   militar:     '⚔️',
@@ -216,66 +214,32 @@ export function App() {
     setScreen(savedIdx >= events.length ? 'end' : 'game')
   }
 
-  const handleChoice = (opt: EventOption) => {
-    // La afinidad del dios se suma acá: el resto del juego (barras, historial, logros) ve el efecto final.
-    const powered = applyGodPower(god?.id, opt)
-    const fx = powered.fx
-    const ns = applyFx(stats, fx)
-    const ev = gameEvents[evIdx]
-    const ngs = { ...gs }
-    if (opt.type === 'militar') ngs.mil++
-    if (['social', 'diplomatico', 'cultural'].includes(opt.type)) ngs.peace++
-    if (opt.type === 'cruel') ngs.cruel++
-    const hadLow = Object.values(stats).some(v => v <= 5)
-    if (hadLow && Object.values(ns).every(v => v >= 50)) ngs.revived = true
-    const noLoss = Object.values(fx).every(v => (v ?? 0) >= 0)
-    ngs.stabStr = noLoss ? ngs.stabStr + 1 : 0
-    ngs.infMax = Math.max(ngs.infMax, ns.influencia)
+  /** El estado de la partida tal como lo necesita la lógica de turnos (utils/turnos). */
+  const estadoTurno = (): EstadoTurno => ({ godId: god?.id, stats, gs, history, evIdx, events: gameEvents })
 
-    const nh = [...history, { eventId: ev.id, choice: opt.t, effects: fx, statsAfter: ns }]
-    const nIdx = evIdx + 1
-
-    setStats(ns); setHistory(nh); setLastFx(fx); setGs(ngs)
+  /** Reparte el resultado de un turno: estado, logros, guardado y lo que queda pendiente para el cierre. */
+  const aplicarTurno = (r: ResultadoTurno) => {
+    setStats(r.stats); setHistory(r.history); setLastFx(r.fx); setGs(r.gs)
     setAnimKey(k => k + 1)
-    setEvIdx(nIdx)
+    setEvIdx(r.evIdx)
     playSound('event_result')
-    setConsejer({ fx, choice: opt.t, power: powered.powerName ? { name: powered.powerName, note: powered.note } : null })
-    const ach = updateAchievements(ns, nh, ngs, nIdx >= gameEvents.length)
-    persist({ stats: ns, evIdx: nIdx, history: nh, achievements: ach, gs: ngs })
-    // god modal trigger — every 3-5 events, not on last event
-    if (nIdx >= nextGodModalAt.current && nIdx < gameEvents.length && god) {
-      const vals = Object.values(ns); const avg = vals.reduce((a, b) => a + b, 0) / vals.length
-      pendingGodModal.current = buildGodModal(god.id, opt.type, avg, ev.cat)
-      nextGodModalAt.current = nIdx + 3 + Math.floor(Math.random() * 3)
-    }
+    const ach = updateAchievements(r.stats, r.history, r.gs, r.fin)
+    persist({ stats: r.stats, evIdx: r.evIdx, history: r.history, achievements: ach, gs: r.gs })
+  }
 
-    if (nIdx >= gameEvents.length) {
-      pendingEnd.current = true
-    } else {
-      // detect period boundary crossing
-      const total = gameEvents.length
-      const perP = total / 4
-      const fromPIdx = Math.floor(evIdx / perP)
-      const toPIdx   = Math.floor(nIdx  / perP)
-      if (toPIdx > fromPIdx && fromPIdx < 3) {
-        const fromPeriod = PERIODS[fromPIdx]
-        const toPeriod   = PERIODS[Math.min(3, toPIdx)]
-        const pStart     = Math.round(fromPIdx * perP)
-        const periodHistory = nh.slice(pStart)
-        // detect play style from period history
-        const typeCounts: Record<string, number> = {}
-        for (const entry of periodHistory) {
-          const gev = gameEvents.find(e => e.id === entry.eventId)
-          const matched = gev?.opts.find(o => o.t === entry.choice)
-          if (matched) typeCounts[matched.type] = (typeCounts[matched.type] ?? 0) + 1
-        }
-        const dominant = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'default'
-        const playStyle = PLAY_STYLES[dominant] ?? PLAY_STYLES.default
-        const lore = PERIOD_LORE[fromPeriod.id]
-        const verdict = getLegacyVerdict(ns)
-        pendingPeriodTrans.current = { fromPeriod, toPeriod, statsAtEnd: ns, playStyle, lore, verdict }
-      }
+  const handleChoice = (opt: EventOption) => {
+    const r = resolverDecision(estadoTurno(), opt)
+    const ev = gameEvents[evIdx]
+    aplicarTurno(r)
+    setConsejer({ fx: r.fx, choice: opt.t, power: r.poder })
+    // god modal trigger — every 3-5 events, not on last event
+    if (r.evIdx >= nextGodModalAt.current && r.evIdx < gameEvents.length && god) {
+      const vals = Object.values(r.stats); const avg = vals.reduce((a, b) => a + b, 0) / vals.length
+      pendingGodModal.current = buildGodModal(god.id, opt.type, avg, ev.cat)
+      nextGodModalAt.current = r.evIdx + 3 + Math.floor(Math.random() * 3)
     }
+    if (r.fin) pendingEnd.current = true
+    else if (r.transicion) pendingPeriodTrans.current = r.transicion
   }
 
   const handlePuzDone = (ok: boolean, statDelta: number) => {
@@ -285,51 +249,16 @@ export function App() {
     const nFail = puzFail + (ok ? 0 : 1)
     setPuzDone(nDone); setPuzOk(nOk); setPuzFail(nFail)
     playSound(ok ? 'success' : 'error')
-    let ns = stats
-    if (statDelta !== 0) {
-      const keys = curPuzDef.statKeys ?? (Object.keys(INIT) as (keyof Stats)[])
-      const perStat = curPuzDef.statKeys ? statDelta : Math.round(statDelta / 2)
-      ns = { ...stats }
-      for (const k of keys) ns[k] = clamp(ns[k] + perStat)
-      setStats(ns)
-    }
+    const ns = aplicarPuzzle(stats, curPuzDef, statDelta)
+    if (ns !== stats) setStats(ns)
     // Lo que el alumno hizo en el puzzle se guarda ya, no recién en la próxima decisión.
     persist({ stats: ns, puzDone: nDone, puzOk: nOk, puzFail: nFail })
   }
 
   const handlePharaohDone = (bFx: Partial<Stats>, mFx: Partial<Stats>) => {
-    const combined: Partial<Stats> = {}
-    const keys: (keyof Stats)[] = ['estabilidad', 'riqueza', 'cultura', 'influencia', 'fe', 'comercio']
-    for (const k of keys) {
-      const v = (bFx[k] ?? 0) + (mFx[k] ?? 0)
-      if (v !== 0) combined[k] = v
-    }
-    const ns = applyFx(stats, combined)
-    const ev = gameEvents[evIdx]
-    const nh = [...history, { eventId: ev.id, choice: 'pharaoh_event', effects: combined, statsAfter: ns }]
-    const nIdx = evIdx + 1
-
-    // keep game-stat trackers in sync (mirrors handleChoice)
-    const ngs = { ...gs }
-    const hadLow = Object.values(stats).some(v => v <= 5)
-    if (hadLow && Object.values(ns).every(v => v >= 50)) ngs.revived = true
-    const noLoss = Object.values(combined).every(v => v >= 0)
-    ngs.stabStr = noLoss ? ngs.stabStr + 1 : 0
-    ngs.infMax = Math.max(ngs.infMax, ns.influencia)
-
-    setStats(ns)
-    setHistory(nh)
-    setLastFx(combined)
-    setGs(ngs)
-    setAnimKey(k => k + 1)
-    setEvIdx(nIdx)
-    playSound('event_result')
-    const ach = updateAchievements(ns, nh, ngs, nIdx >= gameEvents.length)
-    persist({ stats: ns, evIdx: nIdx, history: nh, achievements: ach, gs: ngs })
-
-    if (nIdx >= gameEvents.length) {
-      setScreen('end')
-    }
+    const r = resolverCoronacion(estadoTurno(), bFx, mFx)
+    aplicarTurno(r)
+    if (r.fin) setScreen('end')
   }
 
   const totalEvents = gameEvents.length || 32
