@@ -411,7 +411,7 @@ export function App() {
           ))}
           <button className="btn-o sm" onClick={() => { setPapirosPrev('game'); setScreen('papiros') }}>📜 Papiros</button>
           <button className="btn-menu" onClick={() => setConfirmMenu(true)}>🏠 Menú</button>
-          <button className="btn-music" onClick={() => { const on = toggleMusic(); setMusicOn(on) }} title={musicOn ? 'Silenciar música' : 'Activar música'}>
+          <button className="btn-music" onClick={() => { const on = toggleMusic(); setMusicOn(on) }} title={musicOn ? 'Silenciar música' : 'Activar música'} aria-label={musicOn ? 'Silenciar música' : 'Activar música'}>
             {musicOn ? '🔊' : '🔇'}
           </button>
         </aside>
