@@ -58,7 +58,7 @@ export const EVENTS: GameEvent[] =[
 
   {id:6,per:"antiguo",cat:"politica",title:"Los Nomos Reclaman Autonomía",
   desc:"Los nomarcas del Alto Egipto han enviado un documento conjunto: reclaman el derecho a recaudar sus propios impuestos, a nombrar a sus propios jueces y a mantener milicias privadas. Su argumento es seductor: las provincias distantes conocen mejor sus necesidades. Pero tú sabes lo que esto significa en realidad. Cuando el poder del faraón se fragmenta, Egipto se rompe. Ya ocurrió antes. Puede volver a ocurrir.",
-  ctx:"La pérdida de poder del rey frente a los nomarcas fue una de las causas del Primer Período Intermedio (2181-2055 aC), unos 125 años de fragmentación y conflictos. No hubo una sola causa: también pesaron el larguísimo reinado de Pepi II y las crecidas bajas. Textos posteriores, como las Admoniciones de Ipuwer, describen un mundo en desorden; su fecha de composición se discute.",
+  ctx:"La pérdida de poder del rey frente a los nomarcas fue una de las causas del Primer Período Intermedio (2181-2055 aC), unos 125 años de fragmentación. No hubo una sola causa: también pesaron el larguísimo reinado de Pepi II y las crecidas bajas. Textos posteriores, como las Admoniciones de Ipuwer, describen un mundo en desorden.",
   opts:[
     {t:"Reformar la burocracia: crear inspectores reales que supervisen a los nomarcas in situ",fx:{estabilidad:8,riqueza:-6,cultura:4,influencia:8},type:"social"},
     {t:"Negociar: autonomía fiscal limitada a cambio de tributo fijo anual y lealtad militar",fx:{estabilidad:3,riqueza:-5,cultura:0,influencia:-4},type:"politico"},
@@ -69,7 +69,7 @@ export const EVENTS: GameEvent[] =[
 
   {id:7,per:"antiguo",cat:"religion",title:"Los Primeros Textos Sagrados",
   desc:"El sumo sacerdote de Heliópolis llega con una propuesta sin precedentes: grabar en las paredes de la cámara funeraria los hechizos, conjuros e himnos que guiarán al faraón por el Más Allá. Miles de signos jeroglíficos esculpidos en piedra caliza blanca. Nunca antes se había hecho. Los textos transformarían la muerte misma en un viaje con mapa. Pero requieren décadas de trabajo de los mejores escribas y artesanos del reino.",
-  ctx:"Los Textos de las Pirámides son uno de los corpus religiosos escritos más antiguos que se conocen. La versión más antigua está en la pirámide de Unas. En total se conocen unos 760 conjuros: ninguna pirámide los tiene todos (Unas tiene 228; la más completa, la de Pepi II, 675). Sentaron las bases de los Textos de los Ataúdes y del Libro de los Muertos.",
+  ctx:"Los Textos de las Pirámides son de los textos religiosos más antiguos que se conocen. La versión más antigua está en la pirámide de Unas (228 conjuros); en total se conocen unos 760, y la más completa es la de Pepi II. Fueron la base de los Textos de los Ataúdes y del Libro de los Muertos.",
   opts:[
     {t:"Financiar plenamente el proyecto: un cuerpo de 50 escribas trabajará en exclusiva",fx:{estabilidad:4,riqueza:-6,cultura:8,influencia:2},type:"cultural"},
     {t:"Aprobar el proyecto con recursos limitados: los textos más esenciales solamente",fx:{estabilidad:2,riqueza:-2,cultura:5,influencia:0},type:"cultural"},
@@ -91,28 +91,28 @@ export const EVENTS: GameEvent[] =[
 
   {id:9,per:"medio",cat:"politica",title:"Reunificación: ¿Cómo Gobernar Egipto?",
   desc:"Mentuhotep II ha reunificado los Dos Reinos después de 125 años de caos. El ejército tebano ha vencido. Pero ahora llega la pregunta más difícil: ¿cómo gobernar un Egipto quebrado, desconfiado y con heridas que aún sangran? Los nomarcas del norte miran con recelo al nuevo faraón del sur. Los templos necesitan reconstrucción. El pueblo quiere orden. Tú decides la arquitectura del nuevo poder.",
-  ctx:"Mentuhotep II (2055-2004 aC) es considerado el segundo gran unificador de Egipto. Su estrategia fue pragmática: mantuvo a algunos nomarcas locales pero instaló funcionarios reales como supervisores. Inauguró el Imperio Medio y un siglo de prosperidad.",
+  ctx:"Mentuhotep II (hacia 2055-2004 aC) reunificó Egipto tras el Primer Período Intermedio e inauguró el Imperio Medio, un período de prosperidad. Con los reyes de la XII dinastía, el poder de los nomarcas fue disminuyendo y la administración se centralizó cada vez más.",
   opts:[
     {t:"Sistema bicéfalo: centralismo político con autonomía económica para los nomos leales",fx:{estabilidad:8,riqueza:5,cultura:6,influencia:7},type:"politico"},
     {t:"Centralismo total: todos los nomarcas son reemplazados por burócratas designados desde Tebas",fx:{estabilidad:7,riqueza:4,cultura:0,influencia:8},type:"politico"},
     {t:"Confederación pragmática: los nomarcas conservan su poder a cambio de tributo y soldados",fx:{estabilidad:4,riqueza:6,cultura:4,influencia:4},type:"social"},
     {t:"Dejar que los nomos se gobiernen solos mientras Tebas consolida el sur",fx:{estabilidad:-7,riqueza:-4,cultura:-2,influencia:-6},type:"politico"}
   ],
-  tl:{date:"2055 aC",ph:"Mentuhotep II (Nebhepetre)",ev:"Reunificación — inicio del Imperio Medio",tip:"Mentuhotep II reinó 51 años. Su templo funerario en Deir el-Bahari, con terrazas escalonadas y jardines de mirra, inspiró siglos después a Hatshepsut para construir su propio templo justo al lado."}},
+  tl:{date:"2055 aC",ph:"Mentuhotep II (Nebhepetre)",ev:"Reunificación — inicio del Imperio Medio",tip:"Mentuhotep II reinó 51 años. Su templo funerario en Deir el-Bahari, con terrazas escalonadas, inspiró siglos después a Hatshepsut para construir su propio templo justo al lado."}},
 
   {id:10,per:"medio",cat:"economia",title:"Las Riquezas del Sinaí",
-  desc:"El explorador Harkhuf regresa de una expedición al Sinaí con muestras de turquesa verde-azul del color del cielo al amanecer, y pepitas de cobre brillante. Las vetas son ricas, posiblemente las más ricas del mundo conocido. Pero la región está habitada por tribus beduinas que llevan generaciones extrayendo esos mismos minerales. Ellos conocen los pozos de agua, los caminos seguros, los peligros del desierto. Sin su cooperación, cualquier expedición podría terminar en desastre.",
-  ctx:"Las minas de Serabit el-Jadim en el Sinaí fueron explotadas intermitentemente desde el Antiguo Imperio. Allí se encontraron los primeros textos proto-sinaíticos (1850 aC), el eslabón entre los jeroglíficos egipcios y el alfabeto fenicio-semítico, padre de todos los alfabetos actuales.",
+  desc:"El jefe de la expedición regresa del Sinaí con muestras de turquesa verde-azul del color del cielo al amanecer, y pepitas de cobre brillante. Las vetas son ricas, posiblemente las más ricas del mundo conocido. Pero la región está habitada por pueblos del desierto que llevan generaciones extrayendo esos mismos minerales. Ellos conocen los pozos de agua, los caminos seguros, los peligros del desierto. Sin su cooperación, cualquier expedición podría terminar en desastre.",
+  ctx:"Las minas de turquesa del Sinaí se explotaban desde muy antiguo: en el Antiguo Imperio sobre todo Uadi Magara, y en el Medio también Serabit el-Jadim, con su templo de Hathor. Allí aparecieron inscripciones protosinaíticas (entre 1850 y 1500 aC, según los autores): signos egipcios adaptados a una lengua semita, antecedente del alfabeto.",
   opts:[
-    {t:"Contrato justo: contratar a los beduinos como guías, mineros y protectores a cambio de pago",fx:{estabilidad:7,riqueza:6,cultura:4,influencia:4},type:"social"},
-    {t:"Negociar el acceso: pagar tributo anual a los líderes beduinos por el derecho de explotación",fx:{estabilidad:4,riqueza:7,cultura:2,influencia:0},type:"economico"},
-    {t:"Ocupación militar: una guarnición permanente garantizará el acceso sin depender de los beduinos",fx:{estabilidad:-2,riqueza:8,cultura:-4,influencia:7},type:"militar"},
+    {t:"Contrato justo: contratar a los pueblos del desierto como guías, mineros y protectores a cambio de pago",fx:{estabilidad:7,riqueza:6,cultura:4,influencia:4},type:"social"},
+    {t:"Negociar el acceso: pagar tributo anual a los jefes locales por el derecho de explotación",fx:{estabilidad:4,riqueza:7,cultura:2,influencia:0},type:"economico"},
+    {t:"Ocupación militar: una guarnición permanente garantizará el acceso sin depender de los pueblos del desierto",fx:{estabilidad:-2,riqueza:8,cultura:-4,influencia:7},type:"militar"},
     {t:"Desplazar a las tribus hacia el interior del desierto por la fuerza",fx:{estabilidad:-8,riqueza:8,cultura:-8,influencia:-4},type:"cruel"}
   ],
-  tl:{date:"2000 aC",ph:"Senuseret I (Kheperkara)",ev:"Expansión hacia Nubia y las minas del Sinaí",tip:"En Serabit el-Jadim se construyó un templo a Hathor, «señora de la turquesa». Los mineros semíticos que trabajaron allí dejaron inscripciones protosinaíticas, un sistema que se considera antecesor de nuestro alfabeto."}},
+  tl:{date:"1900 aC aprox.",ph:"Imperio Medio (dinastía XII)",ev:"Expediciones a las minas de turquesa del Sinaí",tip:"En Serabit el-Jadim se construyó un templo a Hathor, «señora de la turquesa», con fases que se remontan a Senuseret I. Allí se encontraron inscripciones protosinaíticas, un sistema que se considera antecesor de nuestro alfabeto."}},
 
   {id:11,per:"medio",cat:"cultura",title:"El Nacimiento de la Literatura",
-  desc:"Los escribas de la Casa de la Vida en Hermópolis proponen algo revolucionario: crear historias escritas no para los dioses ni para la eternidad, sino para el entretenimiento y la reflexión de los vivos. Novelas de viaje, cartas filosóficas, poemas de amor, debates entre el alma y el corazón. Un escriba de nombre Sinuhé ya ha comenzado. Los nobles más conservadores protestan: la escritura es sagrada, no un pasatiempo para cortesanos ociosos.",
+  desc:"Los escribas de la corte proponen algo revolucionario: crear historias escritas no para los dioses ni para la eternidad, sino para el entretenimiento y la reflexión de los vivos. Novelas de viaje, cartas filosóficas, poemas de amor, debates entre el alma y el corazón. La historia de un funcionario llamado Sinuhé ya circula. Los nobles más conservadores protestan: la escritura es sagrada, no un pasatiempo para cortesanos ociosos.",
   ctx:"La literatura del Imperio Medio (1900-1650 aC) se considera el 'clásico' egipcio. La Historia de Sinuhé, El náufrago, Los diálogos del desesperado son obras de una sofisticación asombrosa. Se copiaron durante siglos como modelos de escritura perfecta.",
   opts:[
     {t:"Crear la primera biblioteca real y asignar escribas dedicados exclusivamente a la literatura",fx:{estabilidad:4,riqueza:-6,cultura:8,influencia:2},type:"cultural"},
@@ -123,15 +123,15 @@ export const EVENTS: GameEvent[] =[
   tl:{date:"1900 aC aprox.",ph:"Imperio Medio (dinastía XII)",ev:"Edad clásica de la literatura egipcia",tip:"Los egipcios del Imperio Medio escribieron cuentos, enseñanzas y poemas que se copiaron en las escuelas durante siglos. El Cuento del Náufrago y la Historia de Sinuhé son de los más conocidos."}},
 
   {id:12,per:"medio",cat:"sociedad",title:"¿Qué Hacer con los Prisioneros de Guerra?",
-  desc:"El general Amenhotep regresa de Nubia con una victoria aplastante y un problema: siete mil prisioneros. Hombres, mujeres, niños. Guerreros nubios, campesinos, artesanos. Son personas, pero también son boca que alimentar, mano que podría rebelarse. Los generales quieren mano de obra barata para las canteras. Los sacerdotes piden que el faraón demuestre magnanimidad. La decisión que tomes sentará precedente durante generaciones.",
-  ctx:"El Imperio Medio fue el período en que el trabajo forzado se sistematizó en Egipto. Los 'sirvientes del rey' (heriu-sha) incluían prisioneros de guerra, deudores y personas sin tierras. Las condiciones variaban enormemente según el trabajo asignado.",
+  desc:"El general regresa de Nubia con una victoria aplastante y un problema: miles de prisioneros. Hombres, mujeres, niños. Guerreros nubios, campesinos, artesanos. Son personas, pero también son boca que alimentar, mano que podría rebelarse. Los generales quieren mano de obra barata para las canteras. Los sacerdotes piden que el faraón demuestre magnanimidad. La decisión que tomes sentará precedente durante generaciones.",
+  ctx:"En el Imperio Medio hay registros de trabajo obligatorio para el Estado: prisioneros de guerra, gente llevada de Asia (como en el Papiro Brooklyn) y campesinos que servían por turnos, la corvée. Las condiciones variaban mucho según el trabajo asignado.",
   opts:[
     {t:"Integración progresiva: trabajo obligatorio por diez años con posibilidad de libertad y tierras",fx:{estabilidad:7,riqueza:6,cultura:4,influencia:2},type:"social"},
     {t:"Servicio militar: los nubios son guerreros excepcionales, ofrecerles integración en el ejército",fx:{estabilidad:5,riqueza:-2,cultura:2,influencia:8},type:"militar"},
     {t:"Esclavitud permanente asignada a las minas de oro de Nubia",fx:{estabilidad:-5,riqueza:8,cultura:-7,influencia:4},type:"economico"},
     {t:"Sacrificios rituales en los templos como demostración del poder divino del faraón",fx:{estabilidad:-8,riqueza:0,cultura:-8,influencia:-6},type:"cruel"}
   ],
-  tl:{date:"1900 aC",ph:"Senuseret III (Khakaura)",ev:"Conquista de Nubia hasta la 3ª catarata del Nilo",tip:"Senuseret III construyó una cadena de ocho fortalezas en Nubia con sistemas de señalización por fuego. Fue tan venerado en Nubia que siglos después lo adoraron como dios local."}},
+  tl:{date:"1870 aC aprox.",ph:"Senuseret III (Khakaura)",ev:"Frontera sur en Semna, en la segunda catarata",tip:"Según la estela de Semna, Senuseret III prohibió que los nubios pasaran hacia el norte con sus barcos y rebaños, salvo los que iban a comerciar. Fue tan venerado en Nubia que siglos después lo adoraron como dios local."}},
 
   {id:13,per:"medio",cat:"economia",title:"Los Mercaderes de Canaán",
   desc:"Una caravana llegó de Canaán con muestras: aceite de oliva en ánforas de barro rojo, vino tinto perfumado con resina de pino, y tablas de cedro del Líbano cuyo aroma llena el salón del trono. A cambio piden papiro, lino fino y, siempre, oro. La ruta comercial existe desde hace siglos, pero nunca fue tan lucrativa. Sin embargo, las caravanas cruzan tierras de tribus inciertas. El acuerdo requiere protección o el riesgo de perder los cargamentos.",
@@ -146,18 +146,18 @@ export const EVENTS: GameEvent[] =[
 
   {id:14,per:"medio",cat:"politica",title:"Los Hicsos Llaman a la Puerta",
   desc:"Desde el noreste, más allá del Sinaí, llegan noticias inquietantes: pueblos del Levante, a quienes los egipcios llaman Hicsos —'gobernantes de tierras extranjeras'— se establecen pacíficamente en el delta oriental. Traen algo que Egipto nunca ha visto: caballos, carros de guerra con ruedas, arcos compuestos de múltiples materiales, espadas de bronce de diseño nuevo. No vienen como conquistadores. Pero si crecen lo suficiente... podrían serlo.",
-  ctx:"Los Hicsos (1650-1550 aC) gobernaron el norte de Egipto por un siglo como Dinastías XV y XVI. Fueron el trauma fundador del Imperio Nuevo: la humillación de perder el norte impulsó a los faraones posteriores a construir el mayor ejército del mundo antiguo.",
+  ctx:"Los Hicsos (1650-1550 aC) gobernaron el norte de Egipto como Dinastías XV y XVI. Según la tradición egipcia posterior, haber perdido el norte impulsó a los faraones del Imperio Nuevo a formar un ejército permanente.",
   opts:[
     {t:"Integración estratégica: absorber su tecnología militar y sus conocimientos a cambio de tierras",fx:{estabilidad:4,riqueza:4,cultura:6,influencia:8},type:"militar"},
     {t:"Asentamiento controlado: zona especial en el delta oriental, sin acceso al interior",fx:{estabilidad:7,riqueza:6,cultura:4,influencia:2},type:"social"},
     {t:"Cobrar tributo a cambio de autorización formal: que paguen por quedarse",fx:{estabilidad:2,riqueza:8,cultura:-2,influencia:4},type:"economico"},
     {t:"Campaña militar preventiva: expulsarlos antes de que arraiguen",fx:{estabilidad:-7,riqueza:-4,cultura:-4,influencia:-2},type:"militar"}
   ],
-  tl:{date:"1650 aC",ph:"Salitis (primer rey Hicso)",ev:"Hicsos establecen su capital en Avaris",tip:"Avaris (actual Tell el-Dab'a) era una ciudad cosmopolita con cerámica cananea, micénica y chipriota. Las excavaciones revelaron frescos al estilo minoico: el mundo mediterráneo estaba más conectado de lo que creíamos."}},
+  tl:{date:"1650 aC",ph:"Salitis (primer rey Hicso)",ev:"Los Hicsos establecen su capital en Avaris",tip:"Avaris (actual Tell el-Dab'a) era una ciudad cosmopolita, con cerámica cananea y chipriota. Allí aparecieron además frescos de estilo minoico, de época algo posterior (siglo XV aC): el Mediterráneo estaba más conectado de lo que se creía."}},
 
   {id:15,per:"medio",cat:"religion",title:"El Más Allá para Todos",
-  desc:"Algo extraordinario está ocurriendo en las ciudades del Alto Egipto. Artesanos, comerciantes, incluso algunos campesinos acomodados encargan a los pintores textos sagrados en el interior de sus ataúdes de madera. Los mismos hechizos que antes solo protegían al faraón en el Más Allá, ahora están al alcance de quien pueda pagar. El sumo sacerdote de Osiris lo llama 'la gran democratización'. Los nobles lo llaman 'una usurpación'.",
-  ctx:"Los Textos de los Ataúdes (2100-1650 aC) extendieron a las clases medias el derecho a la vida eterna. Este fenómeno, llamado 'democratización del Más Allá', fue una revolución social silenciosa: la muerte igualaba a quien pudiera pagar los ritos. El Libro de los Muertos sería su continuación.",
+  desc:"Algo extraordinario está ocurriendo en las ciudades del Alto Egipto. Funcionarios de provincias y otras personas acomodadas encargan a los pintores textos sagrados en el interior de sus ataúdes de madera. Los mismos hechizos que antes solo protegían al faraón en el Más Allá, ahora están al alcance de quien pueda pagar. El sumo sacerdote de Osiris lo llama 'la gran democratización'. Los nobles lo llaman 'una usurpación'.",
+  ctx:"Los Textos de los Ataúdes (2100-1650 aC) extendieron más allá del rey el acceso a los textos funerarios. Durante mucho tiempo se llamó a esto «democratización del Más Allá»; hoy muchos egiptólogos matizan que los usaban sobre todo funcionarios y gente acomodada. El Libro de los Muertos sería su continuación.",
   opts:[
     {t:"Apoyar el movimiento: financiar la escritura de textos sagrados para los templos de provincias",fx:{estabilidad:8,riqueza:-7,cultura:8,influencia:0},type:"cultural"},
     {t:"Regularlo: crear un sistema de licencias para los sacerdotes que venden los textos",fx:{estabilidad:4,riqueza:4,cultura:5,influencia:6,fe:-2},type:"politico"},
@@ -168,14 +168,14 @@ export const EVENTS: GameEvent[] =[
 
   {id:16,per:"medio",cat:"sociedad",title:"La Reina que Quiere Gobernar",
   desc:"La reina Sobekneferu es hija de Amenemhat III y hermana del faraón recién fallecido sin herederos varones. Es brillante, política, conocedora de los textos sagrados. Lleva años administrando el estado en la sombra. Ahora reclama el doble trono en su propio nombre, con peluca de faraón, barba postiza y kilt masculino. Los generales están inquietos. Los sacerdotes buscan precedentes en los textos. Tú debes decidir.",
-  ctx:"Sobekneferu (Neferusobek, circa 1806-1802 aC) fue la primera faraona documentada que gobernó sola. Adoptó la titulatura masculina completa pero combinó los títulos femeninos con los masculinos: una solución sin precedentes al problema de una mujer en el trono.",
+  ctx:"Sobekneferu (hacia 1806-1802 aC) fue la primera mujer rey de Egipto de la que hay constancia histórica. Usó la titulatura de un rey, pero con su nombre femenino: una solución sin precedentes al problema de una mujer en el trono. Con ella terminó la XII dinastía.",
   opts:[
     {t:"Reconocerla plenamente: Sobekneferu gobierna con todos los poderes del faraón",fx:{estabilidad:7,riqueza:-1,cultura:8,influencia:3},type:"cultural"},
     {t:"Co-regencia simbólica: gobierna en nombre del futuro heredero mientras se busca uno",fx:{estabilidad:5,riqueza:0,cultura:4,influencia:3},type:"social"},
     {t:"Consejo de regencia masculino con Sobekneferu como figura ceremonial",fx:{estabilidad:-2,riqueza:0,cultura:-7,influencia:4},type:"politico"},
     {t:"Confinamiento: la sucesión debe recaer en un noble varón de la sangre real",fx:{estabilidad:-7,riqueza:0,cultura:-8,influencia:-4},type:"cruel"}
   ],
-  tl:{date:"1806 aC",ph:"Sobekneferu (Neferusobek)",ev:"Primera faraona que gobierna Egipto en solitario",tip:"El nombre Sobekneferu significa 'las perfecciones de Sobek', el cocodrilo. Gobernó 4 años y sus monumentos se han encontrado en Hawara, Heracleópolis y el Delta. Fue el último faraón del Imperio Medio."}},
+  tl:{date:"1806 aC",ph:"Sobekneferu (Neferusobek)",ev:"Primera mujer rey de Egipto de la que hay constancia",tip:"El nombre Sobekneferu significa «la belleza de Sobek», el dios cocodrilo. Gobernó menos de 4 años y se han encontrado monumentos suyos en Hawara, Heracleópolis y el Delta. Fue la última gobernante de la XII dinastía."}},
 
   {id:17,per:"nuevo",cat:"militar",title:"La Expulsión de los Hicsos",
   desc:"El momento que tres generaciones de tebanos soñaron ha llegado. El faraón Seqenenra Tao murió en batalla —su momia muestra cinco golpes de hacha en el cráneo, una carnicería—. Su hijo Kamose comenzó la reconquista. Ahora tú, Ahmose, tienes los barcos fluviales, los carros de guerra y los soldados que los propios Hicsos nos enseñaron a usar. Avaris está a cuatro días de navegación. Pero una campaña total exige vaciar el tesoro y sangrar al ejército.",
