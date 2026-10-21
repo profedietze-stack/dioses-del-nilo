@@ -110,6 +110,19 @@ export function App() {
   const [papirosPrev, setPapirosPrev] = useState<Screen>('menu')
   const [confirmMenu, setConfirmMenu] = useState(false)
   const [showSplash, setShowSplash] = useState(true)
+  // En telefono arranca plegado (ahorra pantalla); en escritorio, abierto. Se recuerda la eleccion.
+  const [statsOpen, setStatsOpen] = useState<boolean>(() => {
+    try {
+      const g = localStorage.getItem('diosesNilo_statsOpen')
+      if (g === '1' || g === '0') return g === '1'
+    } catch { /* sin almacenamiento: se usa el valor por defecto */ }
+    return !window.matchMedia('(max-width: 768px)').matches
+  })
+  const toggleStats = () => {
+    const n = !statsOpen
+    setStatsOpen(n)
+    try { localStorage.setItem('diosesNilo_statsOpen', n ? '1' : '0') } catch { /* ignorar */ }
+  }
   const startTime = useRef(Date.now())
   const pendingEnd = useRef(false)
   const pendingPeriodTrans = useRef<PeriodTransitionData | null>(null)
@@ -282,6 +295,24 @@ export function App() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
+      {/* Encabezado: nombre del juego y los tres botones de siempre a mano (Papiros, Menú, Música) */}
+      <header className="game-hd">
+        <div className="game-hd-in">
+          <h1 className="game-hd-title">𓆣 Dioses del Nilo</h1>
+          <div className="game-hd-actions">
+            <button className="hd-btn" aria-label="Papiros" title="Papiros" onClick={() => { setPapirosPrev('game'); setScreen('papiros') }}>
+              <span aria-hidden="true">📜</span><span className="hd-txt">Papiros</span>
+            </button>
+            <button className="hd-btn hd-btn--menu" aria-label="Menú" title="Menú" onClick={() => setConfirmMenu(true)}>
+              <span aria-hidden="true">🏠</span><span className="hd-txt">Menú</span>
+            </button>
+            <button className="hd-btn hd-btn--music" onClick={() => { const on = toggleMusic(); setMusicOn(on) }} title={musicOn ? 'Silenciar música' : 'Activar música'} aria-label={musicOn ? 'Silenciar música' : 'Activar música'}>
+              <span aria-hidden="true">{musicOn ? '🔊' : '🔇'}</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
       {/* Timeline */}
       <div className="tl-bar">
         <div className="tl-inner">
@@ -293,9 +324,13 @@ export function App() {
                 key={p.id}
                 className={`period${curPeriod?.id === p.id ? ' active' : ''}`}
                 style={{ '--pcol': p.col, '--pct': `${pct}%` } as React.CSSProperties}
+                aria-label={`${p.name}, ${p.dates}`}
               >
                 <div className="period-fill" />
-                <span className="period-name">{p.name}</span>
+                <span className="period-name">
+                  <span className="pn-full">{p.name}</span>
+                  <span className="pn-short" aria-hidden="true">{p.name.replace(/^Imperio |^Período | Imperio$/, '')}</span>
+                </span>
                 <span className="period-dates">{p.dates}</span>
               </div>
             )
@@ -307,42 +342,74 @@ export function App() {
       {/* Layout */}
       <div className="game-layout">
         {/* Stats panel */}
-        <aside className="stats-panel">
-          <div className="god-badge">
-            <span className="god-badge-icon">{god?.icon}</span>
-            <span className="god-badge-name">{god?.name}</span>
-          </div>
-          {(Object.keys(INIT) as (keyof Stats)[]).map(k => (
-            <div
-              key={k}
-              className="stat-row stat-row--clickable"
-              onClick={() => setStatInfoKey(k)}
-              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStatInfoKey(k) } }}
-              role="button"
-              tabIndex={0}
-              aria-label={`${STAT_LABELS[k]}: ${stats[k]}. Más información`}
-              title="Toca para más info"
-            >
-              <div className="stat-hd">
-                <span className="stat-ico" aria-hidden="true">{STAT_ICONS[k]}</span>
-                <span className="stat-lbl">{STAT_LABELS[k]}</span>
-                <span className="stat-val">{stats[k]}</span>
-              </div>
-              <div className="stat-bg">
-                <AnimatedStatBar value={stats[k]} color={STAT_COLORS[k]} />
-              </div>
-              {lastFx && lastFx[k] !== undefined && lastFx[k] !== 0 && (
-                <span key={`${animKey}${k}`} className={`stat-delta ${(lastFx[k] ?? 0) > 0 ? 'pos' : 'neg'}`}>
-                  {(lastFx[k] ?? 0) > 0 ? '+' : ''}{lastFx[k]}
-                </span>
-              )}
+        <aside className={`stats-panel${statsOpen ? '' : ' stats-panel--plegado'}`}>
+          <div className="sp-top">
+            <div className="god-badge">
+              <span className="god-badge-icon">{god?.icon}</span>
+              <span className="god-badge-name">{god?.name}</span>
             </div>
-          ))}
-          <button className="btn-o sm" onClick={() => { setPapirosPrev('game'); setScreen('papiros') }}>📜 Papiros</button>
-          <button className="btn-menu" onClick={() => setConfirmMenu(true)}>🏠 Menú</button>
-          <button className="btn-music" onClick={() => { const on = toggleMusic(); setMusicOn(on) }} title={musicOn ? 'Silenciar música' : 'Activar música'} aria-label={musicOn ? 'Silenciar música' : 'Activar música'}>
-            {musicOn ? '🔊' : '🔇'}
-          </button>
+            <button
+              className="sp-toggle"
+              aria-expanded={statsOpen}
+              aria-controls="stats-body"
+              aria-label="Estadísticas del reino"
+              onClick={toggleStats}
+            >
+              <span className="sp-toggle-txt">Estadísticas</span>
+              <span aria-hidden="true" className="sp-chev">{statsOpen ? '▴' : '▾'}</span>
+            </button>
+          </div>
+          <div id="stats-body" className={statsOpen ? 'sp-body' : 'sp-body sp-chips'}>
+            {statsOpen ? (
+              <>
+            {(Object.keys(INIT) as (keyof Stats)[]).map(k => (
+              <div
+                key={k}
+                className="stat-row stat-row--clickable"
+                onClick={() => setStatInfoKey(k)}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStatInfoKey(k) } }}
+                role="button"
+                tabIndex={0}
+                aria-label={`${STAT_LABELS[k]}: ${stats[k]}. Más información`}
+                title="Toca para más info"
+              >
+                <div className="stat-hd">
+                  <span className="stat-ico" aria-hidden="true">{STAT_ICONS[k]}</span>
+                  <span className="stat-lbl">{STAT_LABELS[k]}</span>
+                  <span className="stat-val">{stats[k]}</span>
+                </div>
+                <div className="stat-bg">
+                  <AnimatedStatBar value={stats[k]} color={STAT_COLORS[k]} />
+                </div>
+                {lastFx && lastFx[k] !== undefined && lastFx[k] !== 0 && (
+                  <span key={`${animKey}${k}`} className={`stat-delta ${(lastFx[k] ?? 0) > 0 ? 'pos' : 'neg'}`}>
+                    {(lastFx[k] ?? 0) > 0 ? '+' : ''}{lastFx[k]}
+                  </span>
+                )}
+              </div>
+            ))}
+              </>
+            ) : (
+              (Object.keys(INIT) as (keyof Stats)[]).map(k => (
+                <button
+                  key={k}
+                  className="stat-chip"
+                  onClick={() => setStatInfoKey(k)}
+                  aria-label={`${STAT_LABELS[k]}: ${stats[k]}. Más información`}
+                  title={STAT_LABELS[k]}
+                >
+                  <span className="stat-chip-ico" aria-hidden="true">{STAT_ICONS[k]}</span>
+                  <span className="stat-chip-val">{stats[k]}</span>
+                  <span className="stat-chip-bar" aria-hidden="true"><span style={{ width: `${stats[k]}%`, background: STAT_COLORS[k] }} /></span>
+                  {lastFx && lastFx[k] !== undefined && lastFx[k] !== 0 && (
+                    <span key={`${animKey}${k}`} className={`stat-delta ${(lastFx[k] ?? 0) > 0 ? 'pos' : 'neg'}`}>
+                      {(lastFx[k] ?? 0) > 0 ? '+' : ''}{lastFx[k]}
+                    </span>
+                  )}
+                </button>
+              ))
+            )}
+          </div>
         </aside>
 
         {/* Event / Puzzle */}
