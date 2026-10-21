@@ -57,7 +57,7 @@ test.describe('táctil: targets de 44 px', () => {
     expect(await chicos(page), 'elegir dios').toEqual([])
     await page.waitForTimeout(1200)
     await page.evaluate(() => [...document.querySelectorAll('button')].find(b => /Encarnar/.test(b.textContent ?? ''))!.click())
-    await page.locator('.stat-row--clickable').first().waitFor()
+    await page.locator('.stat-chip, .stat-row--clickable').first().waitFor()
     await page.waitForTimeout(1200)
     expect(await chicos(page), 'pantalla de juego').toEqual([])
   })
@@ -101,13 +101,13 @@ test.describe('táctil: puzzles, modales y final', () => {
     test.setTimeout(60_000)
     await page.setViewportSize({ width: 390, height: 844 })  // telefono
     await entrarEn(page, 0, 'todos')
-    await page.locator('.stat-row--clickable').first().waitFor()
+    await page.locator('.stat-chip, .stat-row--clickable').first().waitFor()
     await asentar(page)
     // En telefono Papiros, Menu y Musica estaban ocultos con display: none.
     for (const nombre of [/Papiros/, /Menú/, /Silenciar|Activar música/]) {
       await expect(page.getByRole('button', { name: nombre }).first(), String(nombre)).toBeVisible()
     }
-    await page.locator('.stat-row--clickable').first().click()
+    await page.locator('.stat-chip, .stat-row--clickable').first().click()
     await asentar(page)
     expect(await chicos(page), 'modal de estadística').toEqual([])
     await page.locator('.si-btn').click()
@@ -143,28 +143,68 @@ test.describe('táctil: puzzles, modales y final', () => {
     await expect(page.locator('.cmod .btn-g'), 'Continuar visible').toBeInViewport()
   })
 
-  // H18. Las seis estadisticas apiladas de a una ocupaban 414 px: casi media pantalla antes de
-  // empezar a leer el evento. En dos columnas son tres filas.
+  // H19. En telefono la barra de periodos (2x2) y el panel de estadisticas ocupaban casi 400 px antes
+  // del evento. Ahora: encabezado con Papiros/Menu/Musica, periodos en una fila, estadisticas plegables.
   for (const [ancho, alto] of [[390, 844], [360, 740]]) {
-    test(`panel de estadísticas compacto en ${ancho}x${alto}`, async ({ page }) => {
+    test(`pantalla de partida compacta en ${ancho}x${alto}`, async ({ page }) => {
       test.setTimeout(60_000)
       await page.setViewportSize({ width: ancho, height: alto })
       await entrarEn(page, 1, 'todos')
       await page.locator('.opt').first().waitFor()
       await asentar(page)
+
+      // Encabezado: nombre del juego y los tres botones, sin salirse de la pantalla.
+      await expect(page.locator('.game-hd-title')).toHaveText(/Dioses del Nilo/)
+      for (const nombre of [/Papiros/, /Menú/, /Silenciar|Activar música/]) {
+        await expect(page.locator('.game-hd').getByRole('button', { name: nombre }), String(nombre)).toBeVisible()
+      }
       const m = await page.evaluate(() => {
-        const rows = [...document.querySelectorAll<HTMLElement>('.stat-row--clickable')].map(e => e.getBoundingClientRect())
-        const panel = document.querySelector('.stats-panel')!.getBoundingClientRect()
-        const cortadas = [...document.querySelectorAll<HTMLElement>('.stat-lbl')].filter(e => e.scrollWidth > e.clientWidth + 1).map(e => e.textContent)
-        const opt1 = document.querySelector('.opt')!.getBoundingClientRect().top
-        return { filas: rows.length, columnas: new Set(rows.map(r => Math.round(r.left))).size, panel: panel.height, cortadas, opt1, alto: innerHeight, desborde: document.documentElement.scrollWidth > innerWidth }
+        const r = (s: string) => document.querySelector(s)!.getBoundingClientRect()
+        const per = [...document.querySelectorAll<HTMLElement>('.tl-bar .period')].map(e => e.getBoundingClientRect())
+        const chips = [...document.querySelectorAll<HTMLElement>('.stat-chip')].map(e => e.getBoundingClientRect())
+        return {
+          hd: r('.game-hd').height, tl: r('.tl-bar').height,
+          perFilas: Math.max(...per.map(x => x.top)) - Math.min(...per.map(x => x.top)), perFuera: per.some(x => x.right > innerWidth + 1),
+          chips: chips.length, chipsFilas: Math.max(...chips.map(x => x.top)) - Math.min(...chips.map(x => x.top)), chipsFuera: chips.some(x => x.right > innerWidth + 1),
+          panel: r('.stats-panel').height, evento: r('.event-panel').top,
+          desborde: document.documentElement.scrollWidth > innerWidth,
+        }
       })
-      expect(m.filas).toBe(6)
-      expect(m.columnas, 'dos columnas').toBe(2)
-      expect(m.cortadas, 'nombres de estadística cortados').toEqual([])
-      expect(m.panel, 'alto del panel de estadísticas').toBeLessThanOrEqual(290)
+      expect(m.perFilas, 'períodos en una sola fila (misma altura)').toBeLessThanOrEqual(2)
+      expect(m.perFuera, 'períodos dentro de la pantalla').toBe(false)
+      expect(m.tl, 'alto de la barra de períodos').toBeLessThanOrEqual(56)
+      expect(m.chips, 'estadísticas plegadas: seis, con icono y número').toBe(6)
+      expect(m.chipsFilas, 'estadísticas plegadas en una fila (misma altura)').toBeLessThanOrEqual(2)
+      expect(m.chipsFuera).toBe(false)
+      expect(m.panel, 'alto del panel plegado').toBeLessThanOrEqual(130)
+      expect(m.evento, 'el evento empieza arriba').toBeLessThanOrEqual(260)
       expect(m.desborde, 'desborde horizontal').toBe(false)
-      expect(await chicos(page), 'targets de 44 px').toEqual([])
+      await expect(page.locator('.stat-chip').first()).toContainText(/\d+/)
+      expect(await chicos(page), 'targets de 44 px (plegado)').toEqual([])
+
+      // Desplegado: las seis con barra, en dos columnas, sin cortar los nombres.
+      await page.getByRole('button', { name: 'Estadísticas del reino' }).click()
+      await expect(page.getByRole('button', { name: 'Estadísticas del reino' })).toHaveAttribute('aria-expanded', 'true')
+      await asentar(page)
+      const d = await page.evaluate(() => {
+        const rows = [...document.querySelectorAll<HTMLElement>('.stat-row--clickable')].map(e => e.getBoundingClientRect())
+        return {
+          filas: rows.length, columnas: new Set(rows.map(x => Math.round(x.left))).size,
+          panel: document.querySelector('.stats-panel')!.getBoundingClientRect().height,
+          cortadas: [...document.querySelectorAll<HTMLElement>('.stat-lbl')].filter(e => e.scrollWidth > e.clientWidth + 1).map(e => e.textContent),
+        }
+      })
+      expect(d.filas).toBe(6)
+      expect(d.columnas, 'dos columnas').toBe(2)
+      expect(d.cortadas, 'nombres de estadística cortados').toEqual([])
+      expect(d.panel, 'alto del panel desplegado').toBeLessThanOrEqual(300)
+      expect(await chicos(page), 'targets de 44 px (desplegado)').toEqual([])
+
+      // La elección se recuerda al recargar.
+      await page.reload()
+      await page.getByRole('button', { name: /Continuar Partida/ }).click()
+      await page.locator('.opt').first().waitFor()
+      await expect(page.getByRole('button', { name: 'Estadísticas del reino' })).toHaveAttribute('aria-expanded', 'true')
     })
   }
 
@@ -203,7 +243,7 @@ test.describe('teclado: el foco se ve', () => {
     await page.getByRole('button', { name: /Encarnar/ }).waitFor()
     await page.waitForTimeout(1200)
     await page.evaluate(() => [...document.querySelectorAll('button')].find(b => /Encarnar/.test(b.textContent ?? ''))!.click())
-    await page.locator('.stat-row--clickable').first().waitFor()
+    await page.locator('.stat-chip, .stat-row--clickable').first().waitFor()
     await page.waitForTimeout(1200)
 
     const sinAnillo: string[] = []
@@ -222,5 +262,44 @@ test.describe('teclado: el foco se ve', () => {
       if (r && !r.visible) sinAnillo.push(r.nombre)
     }
     expect(sinAnillo).toEqual([])
+  })
+})
+
+test.describe('escritorio: encabezado y estadísticas plegables', () => {
+  test.skip(({ isMobile }) => isMobile, 'solo escritorio')
+
+  test('encabezado con el nombre y los tres botones; el panel se pliega y queda con icono y número', async ({ page }) => {
+    test.setTimeout(60_000)
+    await entrarEn(page, 1, 'todos')
+    await page.locator('.opt').first().waitFor()
+    await asentar(page)
+    await expect(page.locator('.game-hd-title')).toHaveText(/Dioses del Nilo/)
+    for (const nombre of [/Papiros/, /Menú/, /Silenciar|Activar música/]) {
+      await expect(page.locator('.game-hd').getByRole('button', { name: nombre }), String(nombre)).toBeVisible()
+    }
+    // En escritorio las etiquetas se ven; ya no hay botones sueltos dentro del panel de estadísticas.
+    await expect(page.locator('.game-hd .hd-txt').first()).toBeVisible()
+    expect(await page.locator('.stats-panel .btn-menu, .stats-panel .btn-music, .stats-panel .btn-o').count()).toBe(0)
+
+    const toggle = page.getByRole('button', { name: 'Estadísticas del reino' })
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    expect(await page.locator('.stat-row--clickable').count()).toBe(6)
+    const alto1 = (await page.locator('.stats-panel').boundingBox())!.height
+
+    await toggle.click()
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    expect(await page.locator('.stat-chip').count()).toBe(6)
+    for (const chip of await page.locator('.stat-chip').all()) await expect(chip).toContainText(/\d+/)
+    expect((await page.locator('.stats-panel').boundingBox())!.height).toBeLessThan(alto1)
+
+    // Un chip abre el detalle de la estadística, igual que la fila.
+    await page.locator('.stat-chip').first().click()
+    await page.locator('.si-btn').click()
+    await page.locator('.si-overlay').waitFor({ state: 'detached' })
+
+    // Con el teclado: Enter sobre el botón vuelve a desplegar.
+    await toggle.focus()
+    await page.keyboard.press('Enter')
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true')
   })
 })
