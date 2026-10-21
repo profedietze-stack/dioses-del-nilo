@@ -255,8 +255,8 @@ export const EVENTS: GameEvent[] =[
   tl:{date:"1177 aC",ph:"Ramsés III (Usermaatre Meryamun)",ev:"Victoria en el Delta contra los Pueblos del Mar",tip:"Los relieves de Medinet Habu muestran la batalla naval con mucho detalle: es una de las primeras batallas navales representadas así."}},
 
   {id:24,per:"tardio",cat:"politica",title:"Los Sacerdotes que Gobiernan en las Sombras",
-  desc:"El Imperio ha terminado, aunque nadie lo proclama oficialmente. Los sumos sacerdotes de Amón en Tebas controlan el 30% de las tierras de Egipto, tienen su propio ejército, recaudan sus propios impuestos y consultan su propio oráculo antes de tomar decisiones de Estado. El faraón en Memphis es un símbolo dorado vacío de poder. El sumo sacerdote Herhor ha dado el paso final: ha adoptado la titulatura real completa. Egipto tiene dos faraones.",
-  ctx:"El Tercer Período Intermedio (1070-664 aC) fue resultado directo de la teopolítica del Imperio Nuevo: al dar demasiadas tierras y poder a los templos como pago por bendiciones divinas, los faraones crearon una aristocracia sacerdotal que eventualmente los devoró.",
+  desc:"El Imperio ha terminado, aunque nadie lo proclama oficialmente. Los sumos sacerdotes de Amón en Tebas controlan buena parte de las tierras de Egipto, tienen su propio ejército, recaudan sus propios impuestos y consultan su propio oráculo antes de tomar decisiones de Estado. El faraón del norte, en Tanis, tiene poco poder real. El sumo sacerdote Herhor ha dado el paso final: ha adoptado la titulatura real completa. Egipto tiene dos faraones.",
+  ctx:"El Tercer Período Intermedio (1070-664 aC) empezó con el país dividido entre los reyes del norte, en Tanis, y los sumos sacerdotes de Amón en Tebas. Los templos habían acumulado tierras y poder durante el Imperio Nuevo, y los sumos sacerdotes terminaron gobernando el sur.",
   opts:[
     {t:"Alianza matrimonial: el faraón se casa con la hija del sumo sacerdote, uniendo las dos líneas",fx:{estabilidad:7,riqueza:4,cultura:4,influencia:4},type:"diplomatico"},
     {t:"Reforma constitucional: decreto que separa el poder civil del religioso con límites claros",fx:{estabilidad:-6,riqueza:7,cultura:-4,influencia:7},type:"politico"},
@@ -266,15 +266,15 @@ export const EVENTS: GameEvent[] =[
   tl:{date:"1070 aC",ph:"Herhor (Sumo Sacerdote de Amón)",ev:"Inicio del Tercer Período Intermedio — Egipto dividido",tip:"El Relato de Unamón (1070 aC) documenta la humillación de un enviado egipcio en Biblos: el príncipe fenicio ya no le teme al faraón y lo hace esperar semanas. Es el retrato literario de un Imperio que agoniza."}},
 
   {id:25,per:"tardio",cat:"militar",title:"La Sombra de Asiria",
-  desc:"Asurbanipal, rey de Asiria, ha cruzado el Sinaí. Menfis ha caído en dos semanas. Ahora sus ejércitos marchan hacia Tebas, la ciudad sagrada de Amón, con sus millones de habitantes y sus templos centenarios de oro. Los asirios son conocidos por su brutalidad: ciudades enteras reducidas a cenizas, poblaciones deportadas a Mesopotamia. El faraón nubio Taharqa huyó al sur. El ejército egipcio está desmoralizado. Tebas, sin murallas, espera.",
-  ctx:"El saqueo de Tebas (663 aC) impactó tanto al mundo antiguo que el profeta bíblico Nahúm lo citó décadas después como el ejemplo definitivo de destrucción de una gran ciudad. La potencia que había dominado el mundo durante mil años era ahora provincia de un imperio extranjero.",
+  desc:"Asurbanipal, rey de Asiria, ha cruzado el Sinaí. Menfis ha caído. Ahora sus ejércitos marchan hacia Tebas, la ciudad sagrada de Amón, con sus templos centenarios de oro. Los asirios son conocidos por su brutalidad: ciudades enteras reducidas a cenizas, poblaciones deportadas a Mesopotamia. El faraón nubio Tanutamón huyó al sur. El ejército egipcio está desmoralizado. Tebas, sin murallas, espera.",
+  ctx:"El saqueo de Tebas (663 aC) impactó tanto al mundo antiguo que el profeta bíblico Nahúm lo citó décadas después como el ejemplo definitivo de destrucción de una gran ciudad. La potencia que había dominado el mundo durante siglos quedaba ahora bajo la sombra de Asiria.",
   opts:[
     {t:"Resistencia guerrillera: usar el Nilo, el desierto y el conocimiento local como armas",fx:{estabilidad:-8,riqueza:-6,cultura:4,influencia:8},type:"militar"},
     {t:"Capitulación estratégica: aceptar el vasallaje a cambio de preservar los templos y la cultura",fx:{estabilidad:4,riqueza:-4,cultura:7,influencia:-7},type:"diplomatico"},
     {t:"Alianza helénica: negociar apoyo militar griego a cambio de concesiones comerciales",fx:{estabilidad:2,riqueza:-2,cultura:7,influencia:7},type:"diplomatico"},
     {t:"Sacrificar Tebas: retirar todas las fuerzas al Delta y dejar que el sur caiga",fx:{estabilidad:-8,riqueza:0,cultura:-8,influencia:-8},type:"militar"}
   ],
-  tl:{date:"663 aC",ph:"Taharqa (faraón nubio de la Dinastía XXV)",ev:"Saqueo asirio de Tebas — el mayor trauma del Período Tardío",tip:"Asurbanipal llevó a Nínive estatuas, textos y tesoros de 3.000 años de historia egipcia. Paradójicamente, su biblioteca en Nínive preservó miles de textos mesopotámicos que de otro modo se habrían perdido."}},
+  tl:{date:"663 aC",ph:"Tanutamón (faraón nubio de la Dinastía XXV)",ev:"Saqueo asirio de Tebas — el mayor trauma del Período Tardío",tip:"Asurbanipal se llevó de Tebas estatuas, obeliscos y tesoros. Su biblioteca de Nínive, en cambio, preservó miles de tablillas de la literatura mesopotámica."}},
 
   {id:26,per:"tardio",cat:"economia",title:"Los Griegos de Naucratis",
   desc:"Miletos, Corinto, Samos, Rodas: los mercaderes griegos que comercian en el Delta proponen algo inédito. Quieren una ciudad propia en suelo egipcio: Naucratis, en el Delta occidental. Una ciudad con sus propias leyes, sus propios templos, su propio puerto. Traerían plata, cerámica de Corinto, vino del Egeo y mercenarios jonios y carios. Y también: filosofía, ciencia, nuevas formas de pensar. Pero también sus dioses, sus costumbres extrañas, su diferente concepción del mundo.",
@@ -289,47 +289,47 @@ export const EVENTS: GameEvent[] =[
 
   {id:27,per:"tardio",cat:"religion",title:"El Renacimiento del Pasado",
   desc:"Los faraones de Sais, en el Delta, han tomado una decisión política y espiritual al mismo tiempo: volver a las fuentes. Los artistas reciben instrucciones de copiar exactamente el estilo del Antiguo Imperio, como si hubieran transcurrido 1.500 años de historia en lugar de vivirlos. Los escribas transcriben papiros con ortografía arcaica. Los arquitectos estudian las proporciones de las pirámides. Es una apuesta por la identidad en tiempos de incertidumbre.",
-  ctx:"La Dinastía Saíta (664-525 aC) fue la última gran dinastía nativa de Egipto. Su 'arcaísmo' fue una respuesta política a la dominación extranjera: reivindicar el esplendor del pasado como afirmación de identidad. El arte saíta es extraordinariamente refinado y difícil de distinguir del Antiguo Imperio.",
+  ctx:"La Dinastía Saíta (664-525 aC) fue una de las últimas grandes dinastías nativas de Egipto. Su 'arcaísmo' fue una respuesta política a la dominación extranjera: reivindicar el esplendor del pasado como afirmación de identidad. El arte saíta imita deliberadamente modelos del Antiguo Imperio.",
   opts:[
     {t:"Gran proyecto nacional de restauración: copiar los textos sagrados, restaurar los templos",fx:{estabilidad:7,riqueza:-6,cultura:8,influencia:2},type:"cultural"},
     {t:"Síntesis creativa: recuperar lo mejor del pasado pero incorporar innovaciones del presente",fx:{estabilidad:3,riqueza:0,cultura:7,influencia:4},type:"social"},
     {t:"Restauración selectiva: restaurar solo los monumentos más visibles y simbólicos",fx:{estabilidad:4,riqueza:-4,cultura:4,influencia:2},type:"economico"},
     {t:"Prohibir las copias: el pasado glorioso solo sirve para recordar lo mucho que hemos perdido",fx:{estabilidad:-4,riqueza:0,cultura:-8,influencia:0},type:"cruel"}
   ],
-  tl:{date:"664 aC",ph:"Psamético I (Wahibra)",ev:"Fundación de la Dinastía Saíta — último renacimiento nativo",tip:"Psamético I unificó Egipto con apoyo de mercenarios griegos (los carios) y expulsó a los gobernadores asirios. Su reinado de 54 años fue una última era dorada antes de la conquista persa."}},
+  tl:{date:"664 aC",ph:"Psamético I (Wahibra)",ev:"Fundación de la Dinastía Saíta y renacimiento del pasado",tip:"Psamético I unificó Egipto con apoyo de mercenarios griegos y carios y expulsó a los gobernadores asirios. Su reinado de 54 años fue una época de prosperidad antes de la conquista persa."}},
 
   {id:28,per:"tardio",cat:"militar",title:"El Imperio Persa Llama a la Puerta",
-  desc:"Cambises II, rey de reyes de Persia, ha marchado desde Babilonia con el ejército más grande que el mundo ha visto: 200.000 soldados, elefantes de guerra, ingenieros que construyen puentes de barcas sobre el Nilo. Sus espías ya están en la corte. El traidor Polícrates de Samos le ha entregado los planos de las defensas egipcias. En la batalla de Peluso, el ejército egipcio, a pesar de su coraje, está a punto de romperse. El faraón Psamético III tiene pocas horas para decidir.",
-  ctx:"La conquista persa (525 aC) marcó el fin de 2.500 años de soberanía faraónica nativa. Paradójicamente, los persas respetaron la religión egipcia y Cambises adoptó el título de faraón. Egipto no volvería a tener un gobernante nativo hasta la Revolución de 1952, 2.477 años después.",
+  desc:"Cambises II, rey de reyes de Persia, avanza hacia Egipto con un ejército enorme. Fanes de Halicarnaso, jefe de los mercenarios griegos del faraón, se ha pasado al bando persa y le ha revelado las defensas egipcias. En la batalla de Pelusio, el ejército egipcio, a pesar de su coraje, está a punto de romperse. El faraón Psamético III tiene pocas horas para decidir.",
+  ctx:"La conquista persa (525 aC) abrió la primera dominación persa de Egipto: Cambises adoptó el título de faraón y, en general, los persas respetaron la religión egipcia. Egipto recuperó la independencia entre el 404 y el 343 aC, con las dinastías XXVIII a XXX; tras la caída de Nectanebo II, el último faraón nativo, no volvió a tener un gobernante egipcio hasta 1952-1953.",
   opts:[
     {t:"Resistencia total aliada con griegos: usar la red de Naucratis para obtener apoyo del Egeo",fx:{estabilidad:-7,riqueza:-8,cultura:7,influencia:4},type:"militar"},
     {t:"Rendición negociada: aceptar la soberanía persa preservando los templos y la religión",fx:{estabilidad:4,riqueza:-2,cultura:7,influencia:-7},type:"diplomatico"},
     {t:"Retirada estratégica al sur: ceder el norte y defender Tebas y Nubia",fx:{estabilidad:-2,riqueza:-4,cultura:4,influencia:0},type:"politico"},
     {t:"Colaboración: entregarse personalmente a Cambises a cambio de título de gobernador",fx:{estabilidad:2,riqueza:4,cultura:-8,influencia:-8},type:"diplomatico"}
   ],
-  tl:{date:"525 aC",ph:"Psamético III (Ankhkaenra)",ev:"Conquista persa — fin de la soberanía faraónica nativa",tip:"Herodoto escribe que Cambises profanó el templo de Ptah y mató al buey sagrado Apis. Los egipcios nunca lo perdonaron. Los arqueólogos modernos no han encontrado evidencia de esa profanación, sugiriendo que pudo ser propaganda."}},
+  tl:{date:"525 aC",ph:"Psamético III (Ankhkaenra)",ev:"Conquista persa de Egipto: Cambises se hace faraón",tip:"Heródoto escribe que Cambises profanó el templo de Ptah y mató al buey sagrado Apis. Los egipcios nunca lo perdonaron. Los arqueólogos modernos no han encontrado evidencia de esa profanación, lo que sugiere que pudo ser propaganda."}},
 
   {id:29,per:"tardio",cat:"sociedad",title:"El Macedonio en el Oráculo de Amón",
-  desc:"Alejandro III de Macedonia ha llegado a Egipto no como conquistador sino como liberador: los persas, odiados durante 200 años, han sido derrotados. Los egipcios le abren las puertas. En Menfis, es coronado faraón con todos los ritos. Luego emprende la travesía de 500 kilómetros al oráculo de Amón en el oasis de Siwa, en pleno desierto occidental. El oráculo, voz del mayor dios egipcio, lo proclama 'hijo de Zeus-Amón'. La noticia transforma todo.",
-  ctx:"Alejandro (332-323 aC) fundó Alejandría en siete días de planificación. Murió doce años después, a los 32 años, sin volver a pisar Egipto. Pero Alejandría se convirtió en el mayor centro intelectual del mundo antiguo: su Biblioteca reunió hasta 700.000 rollos de papiro.",
+  desc:"Alejandro III de Macedonia ha llegado a Egipto no como conquistador sino como liberador: los persas, odiados durante 200 años, han sido derrotados. Los egipcios le abren las puertas. En Menfis ofrece sacrificios al buey Apis y es recibido como faraón. Luego emprende la travesía de 500 kilómetros al oráculo de Amón en el oasis de Siwa, en pleno desierto occidental. El oráculo, voz del mayor dios egipcio, lo proclama 'hijo de Zeus-Amón'. La noticia transforma todo.",
+  ctx:"Alejandro (332-323 aC) fundó Alejandría hacia el 331 aC. Murió nueve años después, a los 32 años, sin volver a Egipto. Alejandría llegó a ser uno de los mayores centros intelectuales del mundo antiguo; su Biblioteca reunió cientos de miles de rollos, según cifras antiguas poco fiables.",
   opts:[
     {t:"Coronación plena con todos los ritos faraónicos: legitimidad divina a cambio de respeto cultural",fx:{estabilidad:8,riqueza:7,cultura:6,influencia:4},type:"diplomatico"},
     {t:"Alianza militar estratégica: usar el poder macedonio para reafirmar el dominio egipcio en el Mediterráneo",fx:{estabilidad:4,riqueza:4,cultura:4,influencia:8},type:"militar"},
     {t:"Colaboración mínima: cumplir los rituales formalmente pero preservar la autonomía interna",fx:{estabilidad:2,riqueza:0,cultura:7,influencia:-2},type:"cultural"},
     {t:"Resistencia: organizar una rebelión nativa aprovechando que el ejército macedonio avanza hacia Persia",fx:{estabilidad:-8,riqueza:-8,cultura:-8,influencia:-8},type:"militar"}
   ],
-  tl:{date:"332 aC",ph:"Alejandro III el Grande (faraón macedonio)",ev:"Fundación de Alejandría — nuevo centro del mundo",tip:"Cuando Alejandro trazó los planos de Alejandría, no tenía cal. Usó harina de cebada. Pájaros bajaron a comerse la harina: los augures lo interpretaron como señal de que la ciudad alimentaría al mundo. No se equivocaron."}},
+  tl:{date:"331 aC",ph:"Alejandro III el Grande (faraón macedonio)",ev:"Fundación de Alejandría — nuevo centro del mundo",tip:"Según Plutarco, cuando Alejandro trazó los planos de Alejandría no tenía cal y usó harina de cebada. Pájaros bajaron a comerse la harina: los augures lo interpretaron como señal de que la ciudad alimentaría al mundo."}},
 
   {id:30,per:"tardio",cat:"politica",title:"El Último Amanecer de Cleopatra",
-  desc:"El Mediterráneo ha decidido. Marco Antonio y Cleopatra VII fueron derrotados en Actio por Octavio, el futuro Augusto. Cleopatra, última faraona de la dinastía ptolemaica, última gobernante de Egipto antes de que se convierta en provincia romana, tiene pocas horas para decidir. Ha gobernado durante 22 años con una inteligencia política sin igual: dominaba nueve idiomas, era matemática, filósofa, estratega. Ahora, en el Mausoleo de Alejandría, toma su decisión final.",
-  ctx:"Cleopatra VII (69-30 aC) fue la primera ptolemaica en aprender egipcio. Era matemática, farmacóloga, hablaba nueve lenguas. Su muerte en agosto del 30 aC terminó 3.000 años de civilización faraónica ininterrumpida. Egipto no volvería a ser independiente hasta 1952, bajo Naguib y Nasser.",
+  desc:"El Mediterráneo ha decidido. Marco Antonio y Cleopatra VII fueron derrotados en Actio por Octavio, el futuro Augusto. Cleopatra, última faraona de la dinastía ptolemaica, última gobernante de Egipto antes de que se convierta en provincia romana, tiene pocas horas para decidir. Ha gobernado unos 21 años con gran habilidad política: según Plutarco, hablaba muchas lenguas y fue la primera ptolemaica que aprendió egipcio. Ahora, en el Mausoleo de Alejandría, toma su decisión final.",
+  ctx:"Cleopatra VII (69-30 aC) fue la primera ptolemaica que aprendió egipcio, y Plutarco dice que hablaba muchas lenguas. Su muerte en agosto del 30 aC terminó el último reino independiente de la época faraónica. Egipto no volvería a tener un gobernante egipcio hasta 1952-1953, con Naguib y Nasser.",
   opts:[
     {t:"Negociar con Octavio: preservar la cultura, los templos y parte de la administración bajo Roma",fx:{estabilidad:7,riqueza:4,cultura:8,influencia:-7},type:"diplomatico"},
     {t:"Resistencia simbólica final: destruir el tesoro y la flota para que Roma no los use",fx:{estabilidad:-8,riqueza:-8,cultura:4,influencia:7},type:"militar"},
     {t:"Exilio en Etiopía con el tesoro real: preservar la línea ptolemaica para un futuro retorno",fx:{estabilidad:2,riqueza:-6,cultura:6,influencia:-6},type:"social"},
     {t:"Elegir la muerte con dignidad: morir faraona, no cautiva en el desfile triunfal de Roma",fx:{estabilidad:-4,riqueza:0,cultura:8,influencia:4},type:"cultural"}
   ],
-  tl:{date:"30 aC",ph:"Cleopatra VII Filopátor",ev:"Fin del Egipto Faraónico — 3.000 años de historia",tip:"Plutarco escribe que Cleopatra murió por la picadura de un áspid escondido en un cesto de higos. Los toxicólogos modernos sugieren que más probablemente usó una mezcla de opio y cicuta. Su tumba, como la de Alejandro, nunca ha sido encontrada."}}
+  tl:{date:"30 aC",ph:"Cleopatra VII Filopátor",ev:"Fin del último reino independiente del Egipto faraónico",tip:"Plutarco escribe que Cleopatra murió por la picadura de un áspid escondido en un cesto de higos. Algunos investigadores sugieren que más probablemente usó una mezcla de opio y cicuta. Su tumba, como la de Alejandro, nunca ha sido encontrada."}}
 ];
 
 
