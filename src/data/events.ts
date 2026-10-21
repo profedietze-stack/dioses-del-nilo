@@ -2,8 +2,8 @@ import type { GameEvent } from '../types'
 
 export const EVENTS: GameEvent[] =[
   {id:1,per:"antiguo",cat:"economia",title:"La Crecida del Nilo Falla",
-  desc:"El mes de Akhet ha llegado, pero el Nilo no responde. Los nilómetros de Elefantina marcan niveles alarmantemente bajos: las aguas no subirán lo suficiente. En las orillas, los campesinos contemplan mudos la tierra reseca. Sin la inundación, no habrá limo negro, no habrá cosecha, no habrá vida. Los sacerdotes de Hapi invocan al dios del río, pero el pueblo te mira a ti. La hambruna se siente como una sombra que se acerca.",
-  ctx:"La inundación anual (akhet, junio-septiembre) depositaba el limo negro que hacía de Egipto el 'don del Nilo', según Heródoto. Los nilómetros medían el nivel: menos de 16 codos significaba hambruna; más de 18, inundaciones destructoras. Un fallo era interpretado como castigo divino.",
+  desc:"El mes de Akhet ha llegado, pero el Nilo no responde. En Elefantina, donde primero se nota la crecida, las marcas de nivel están alarmantemente bajas: las aguas no subirán lo suficiente. En las orillas, los campesinos contemplan mudos la tierra reseca. Sin la inundación, no habrá limo negro, no habrá cosecha, no habrá vida. Los sacerdotes de Hapi invocan al dios del río, pero el pueblo te mira a ti. La hambruna se siente como una sombra que se acerca.",
+  ctx:"La inundación anual (akhet, de mediados del verano al otoño) depositaba el limo negro que hacía de Egipto el 'don del Nilo', según Heródoto. De la altura de la crecida dependía la cosecha: una crecida baja traía hambre y una excesiva destruía campos y aldeas. Un fallo se interpretaba como castigo divino.",
   opts:[
     {t:"Organizar rituales masivos en honor a Hapi: música, ofrendas y procesiones al río",fx:{estabilidad:5,riqueza:-5,cultura:5,influencia:-2},type:"cultural"},
     {t:"Abrir los silos estatales: distribuir reservas de grano a precio reducido en todos los nomos",fx:{estabilidad:8,riqueza:-7,cultura:0,influencia:3},type:"social"},
@@ -13,10 +13,10 @@ export const EVENTS: GameEvent[] =[
   tl:{date:"2400 aC aprox.",ph:"Piedra de Palermo (Anales reales)",ev:"Se anota la altura de la crecida año por año",tip:"Los Anales reales registran, junto a las fiestas y las guerras, hasta dónde subió el Nilo cada año: de la crecida dependía la cosecha, y de la cosecha, lo que el Estado podía cobrar. Más tarde se usaron nilómetros para medirla."}},
 
   {id:2,per:"antiguo",cat:"politica",title:"La Traición del Visir",
-  desc:"Tus espías traen una noticia devastadora: Amenhotep, tu visir de veinte años de servicio, ha estado negociando en secreto con los jefes nómades del Sinaí, prometiéndoles acceso a las minas de cobre a cambio de sobornos de oro. La corte entera espera tu reacción. El visir era tu mano derecha, conoce todos los secretos del Estado. Si te muestras débil, los demás nobles tomarán nota. Si eres demasiado cruel, sembrarás el miedo entre tus funcionarios.",
-  ctx:"El visir (tjaty) administraba la justicia, coordinaba la burocracia y era la voz del faraón. Su traición rompía Maat, el orden cósmico que el faraón debía mantener. Los textos de Rekhmira describen que el visir debía ser 'el pilar de toda la tierra'.",
+  desc:"Tus espías traen una noticia devastadora: tu visir de veinte años de servicio, ha estado negociando en secreto con los jefes nómades del Sinaí, prometiéndoles acceso a las minas de cobre a cambio de sobornos de oro. La corte entera espera tu reacción. El visir era tu mano derecha, conoce todos los secretos del Estado. Si te muestras débil, los demás nobles tomarán nota. Si eres demasiado cruel, sembrarás el miedo entre tus funcionarios.",
+  ctx:"El visir (tjaty) era la máxima autoridad después del rey: administraba justicia, graneros, tesoro y obras. Su traición rompía Maat, el orden cósmico que el faraón debía mantener. Un texto del Imperio Nuevo, la Instalación del visir (tumba de Rekhmira), enumera sus tareas: justicia, censo de ganado, reservas de agua y de comida, diques.",
   opts:[
-    {t:"Juzgarlo públicamente ante el tribunal de los 30 nobles: justicia visible para todos",fx:{estabilidad:7,riqueza:0,cultura:7,influencia:5},type:"cultural"},
+    {t:"Juzgarlo públicamente ante un tribunal de nobles y jueces: justicia visible para todos",fx:{estabilidad:7,riqueza:0,cultura:7,influencia:5},type:"cultural"},
     {t:"Ejecutarlo en la plaza central como advertencia a cualquier traidor potencial",fx:{estabilidad:4,riqueza:0,cultura:-5,influencia:8},type:"militar"},
     {t:"Exiliarlo al desierto y confiscar todas sus propiedades para el tesoro real",fx:{estabilidad:3,riqueza:6,cultura:0,influencia:5},type:"economico"},
     {t:"Perdonarlo a cambio de información detallada sobre los contactos nómades",fx:{estabilidad:-4,riqueza:2,cultura:-4,influencia:-5},type:"diplomatico"}
@@ -36,7 +36,7 @@ export const EVENTS: GameEvent[] =[
 
   {id:4,per:"antiguo",cat:"sociedad",title:"Los Trabajadores del Gran Templo se Niegan",
   desc:"El capataz llega con malas noticias: los obreros de la cantera de Tura han abandonado las herramientas. Llevan tres días sin moverse. El calor es insoportable, la comida escasea, y dos hombres murieron aplastados por bloques mal asegurados. Son hombres libres, campesinos que sirven su turno de trabajo obligatorio al Estado, la corvée. Sus familias esperan en las aldeas del delta. Sin ellos, la construcción se detiene.",
-  ctx:"Los constructores de monumentos egipcios NO eran esclavos. Eran trabajadores del Estado que servían turnos rotativos, recibían cerveza, pan, pescado salado, atención médica y un entierro honorable. Los papiros de Deir el-Medina documentan incluso huelgas por falta de raciones.",
+  ctx:"Los constructores de monumentos egipcios no eran esclavos: eran trabajadores del Estado que servían por turnos y recibían raciones de pan y cerveza. Mucho después, en el Imperio Nuevo, los papiros de Deir el-Medina documentan huelgas por falta de raciones.",
   opts:[
     {t:"Mejorar las raciones, añadir médicos y establecer normas de seguridad en la cantera",fx:{estabilidad:8,riqueza:-6,cultura:4,influencia:0},type:"social"},
     {t:"Negociar: reducir el turno de trabajo a cambio de dos años adicionales de servicio",fx:{estabilidad:5,riqueza:-2,cultura:2,influencia:2},type:"economico"},
@@ -46,44 +46,44 @@ export const EVENTS: GameEvent[] =[
   tl:{date:"2500 aC aprox.",ph:"Pirámides de Guiza",ev:"Una aldea de obreros junto a las obras",tip:"Al sur de las pirámides se hallaron panaderías, barracas y depósitos de comida para equipos de obreros que se turnaban. Eran trabajadores del Estado, alimentados con raciones de pan y cerveza, no esclavos encadenados."}},
 
   {id:5,per:"antiguo",cat:"economia",title:"La Expedición a la Tierra de Punt",
-  desc:"El almirante Nehsi llega ante ti con mapas y propuestas: los mercaderes de Punt, la tierra misteriosa al sur del Mar Rojo, ofrecen mirra para los templos, ébano negro como la noche, incienso para las ceremonias y marfil de elefante. Pero el viaje exige diez barcos, doscientos marineros, meses de travesía por mares desconocidos y fondos considerables del tesoro. La última expedición fue hace cincuenta años. Algunos de los marineros no regresaron.",
-  ctx:"Punt era probablemente la actual Somalia, Eritrea o Yemen. El ébano y la mirra eran imprescindibles en la vida religiosa egipcia. La reina Hatshepsut envió la expedición más famosa circa 1495 aC, documentada en bajorrelieves del templo de Deir el-Bahari.",
+  desc:"El jefe de los barcos reales llega ante ti con una propuesta: los mercaderes de Punt, la tierra misteriosa al sur del Mar Rojo, ofrecen mirra para los templos, ébano negro como la noche, incienso para las ceremonias y marfil de elefante. Pero el viaje exige diez barcos, doscientos marineros, meses de travesía por mares desconocidos y fondos considerables del tesoro. La última expedición fue hace cincuenta años. Algunos de los marineros no regresaron.",
+  ctx:"Punt era probablemente la actual Somalia, Eritrea o Yemen. El ébano y la mirra eran imprescindibles en la vida religiosa egipcia. La primera expedición registrada es la de Sahura (V dinastía); la más famosa, la de Hatshepsut hacia el 1470 aC, está en los relieves de Deir el-Bahari.",
   opts:[
     {t:"Financiar la expedición completa: el prestigio y las riquezas de Punt bien valen el riesgo",fx:{estabilidad:-2,riqueza:8,cultura:5,influencia:5},type:"economico"},
-    {t:"Expedición mixta: asociarse con mercaderes fenicios para compartir costos y riesgos",fx:{estabilidad:0,riqueza:5,cultura:2,influencia:2},type:"economico"},
+    {t:"Expedición mixta: asociarse con mercaderes de Biblos para compartir costos y riesgos",fx:{estabilidad:0,riqueza:5,cultura:2,influencia:2},type:"economico"},
     {t:"Declinar: los riesgos superan los beneficios, reforzar el comercio terrestre con Nubia",fx:{estabilidad:3,riqueza:-2,cultura:-2,influencia:-2},type:"social"},
     {t:"Ordenar la expedición como corvée militar: los marineros irán quieran o no",fx:{estabilidad:-4,riqueza:7,cultura:-4,influencia:-5},type:"cruel"}
   ],
-  tl:{date:"2450 aC",ph:"Sahura (Dinastía V)",ev:"Primera expedición naval documentada a Punt",tip:"Sahura envió la primera flota registrada en textos: 5 barcos y 200 hombres. Los relieves de su templo funerario muestran los barcos cargados de árboles de mirra con las raíces envueltas en arpillera."}},
+  tl:{date:"2450 aC",ph:"Sahura (Dinastía V)",ev:"Primera expedición naval documentada a Punt",tip:"La Piedra de Palermo anota lo que trajo la flota de Sahura: 80.000 unidades de mirra y 6.000 de electro, además de maderas; no se sabe qué medida era cada unidad. Los árboles de mirra con las raíces en canastas son de la expedición de Hatshepsut, mucho después."}},
 
   {id:6,per:"antiguo",cat:"politica",title:"Los Nomos Reclaman Autonomía",
   desc:"Los nomarcas del Alto Egipto han enviado un documento conjunto: reclaman el derecho a recaudar sus propios impuestos, a nombrar a sus propios jueces y a mantener milicias privadas. Su argumento es seductor: las provincias distantes conocen mejor sus necesidades. Pero tú sabes lo que esto significa en realidad. Cuando el poder del faraón se fragmenta, Egipto se rompe. Ya ocurrió antes. Puede volver a ocurrir.",
-  ctx:"La fragmentación del poder en los nomos fue la causa directa del Primer Período Intermedio (2181-2055 aC), cuando Egipto se dividió en reinos menores durante 125 años de guerras civiles, hambrunas y caos. Los textos de Heracleópolis describen el horror de ese período.",
+  ctx:"La pérdida de poder del rey frente a los nomarcas fue una de las causas del Primer Período Intermedio (2181-2055 aC), unos 125 años de fragmentación y conflictos. No hubo una sola causa: también pesaron el larguísimo reinado de Pepi II y las crecidas bajas. Textos posteriores, como las Admoniciones de Ipuwer, describen un mundo en desorden; su fecha de composición se discute.",
   opts:[
     {t:"Reformar la burocracia: crear inspectores reales que supervisen a los nomarcas in situ",fx:{estabilidad:8,riqueza:-6,cultura:4,influencia:8},type:"social"},
     {t:"Negociar: autonomía fiscal limitada a cambio de tributo fijo anual y lealtad militar",fx:{estabilidad:3,riqueza:-5,cultura:0,influencia:-4},type:"politico"},
     {t:"Destituir a los nomarcas más rebeldes y reemplazarlos con funcionarios leales de Memphis",fx:{estabilidad:-5,riqueza:0,cultura:-2,influencia:8},type:"militar"},
     {t:"Ignorar el problema: los conflictos entre provincias se resolverán solos",fx:{estabilidad:-8,riqueza:-4,cultura:-4,influencia:-7},type:"politico"}
   ],
-  tl:{date:"2200 aC",ph:"Pepi II (Neferkara)",ev:"El reinado más largo de la historia: 94 años",tip:"Pepi II ascendió al trono a los 6 años y reinó casi un siglo. En su vejez, el poder central se evaporó. Su reinado interminable es paradójicamente el inicio del fin del Antiguo Imperio."}},
+  tl:{date:"2200 aC",ph:"Pepi II (Neferkara)",ev:"Un reinado larguísimo, y el poder central que se debilita",tip:"Pepi II subió al trono de niño, a los 6 años según la tradición. Manetón le da 94 años y el Canon de Turín más de 90, pero la última fecha de su tiempo corresponde a su año 62 aproximadamente: se discute cuánto reinó. Hacia el final, el poder central se debilitó."}},
 
   {id:7,per:"antiguo",cat:"religion",title:"Los Primeros Textos Sagrados",
   desc:"El sumo sacerdote de Heliópolis llega con una propuesta sin precedentes: grabar en las paredes de la cámara funeraria los hechizos, conjuros e himnos que guiarán al faraón por el Más Allá. Miles de signos jeroglíficos esculpidos en piedra caliza blanca. Nunca antes se había hecho. Los textos transformarían la muerte misma en un viaje con mapa. Pero requieren décadas de trabajo de los mejores escribas y artesanos del reino.",
-  ctx:"Los Textos de las Pirámides (2375-2055 aC) son el corpus religioso escrito más antiguo del mundo. Encontrados en las pirámides de Unas y sus sucesores, contienen 800 conjuros para proteger al faraón en el Más Allá. Sentaron las bases del Libro de los Muertos.",
+  ctx:"Los Textos de las Pirámides son uno de los corpus religiosos escritos más antiguos que se conocen. La versión más antigua está en la pirámide de Unas. En total se conocen unos 760 conjuros: ninguna pirámide los tiene todos (Unas tiene 228; la más completa, la de Pepi II, 675). Sentaron las bases de los Textos de los Ataúdes y del Libro de los Muertos.",
   opts:[
     {t:"Financiar plenamente el proyecto: un cuerpo de 50 escribas trabajará en exclusiva",fx:{estabilidad:4,riqueza:-6,cultura:8,influencia:2},type:"cultural"},
     {t:"Aprobar el proyecto con recursos limitados: los textos más esenciales solamente",fx:{estabilidad:2,riqueza:-2,cultura:5,influencia:0},type:"cultural"},
     {t:"Condicionar los textos: solo se grabarán las glorias del faraón, no los misterios divinos",fx:{estabilidad:-2,riqueza:0,cultura:3,influencia:6},type:"politico"},
     {t:"Prohibirlo: el conocimiento sagrado del Más Allá no debe quedar escrito en piedra",fx:{estabilidad:-4,riqueza:0,cultura:-8,influencia:0},type:"cruel"}
   ],
-  tl:{date:"2375 aC",ph:"Unas (Wenis) — Dinastía V",ev:"Primeros Textos de las Pirámides en la historia",tip:"La pirámide de Unas en Saqqara parece modesta por fuera, pero su cámara funeraria está cubierta de jeroglíficos turquesa. Contiene 283 conjuros, el catálogo más antiguo de creencias sobre el Más Allá."}},
+  tl:{date:"2375 aC",ph:"Unas (Wenis) — Dinastía V",ev:"Los Textos de las Pirámides más antiguos que se conservan",tip:"La pirámide de Unas en Saqqara parece modesta por fuera, pero su cámara funeraria está cubierta de jeroglíficos. Contiene 228 conjuros, la versión más antigua que se conserva de las creencias reales sobre el Más Allá."}},
 
   {id:8,per:"antiguo",cat:"sociedad",title:"La Gran Sequía del Sahara",
   desc:"Desde el oeste llegan caravanas desesperadas. La gran sequía que comenzó hace décadas avanza: los pastizales del Sahara se han vuelto desierto, las tribus que antes vivían de sus rebaños ahora huyen. Traen consigo ovejas, cabras, conocimientos sobre pozos y pastoreo... pero también enfermedades que el cuerpo egipcio no conoce. El delta ya recibe a cientos de familias. Pronto serán miles.",
   ctx:"El Sahara fue una sabana verde hasta que, hace entre 6.000 y 5.000 años, terminó el «Período Húmedo Africano»: las lluvias se retiraron de forma gradual y los pastores se acercaron al Nilo. Hacia el 2200 aC hubo además una sequía fuerte (el «evento de 4,2 mil años») que coincide con el final del Antiguo Imperio; muchos investigadores la vinculan con crecidas bajas del Nilo, aunque se discute cuánto pesó frente a otras causas.",
   opts:[
     {t:"Política de puertas abiertas: integrar a los refugiados como trabajadores agrícolas y artesanos",fx:{estabilidad:5,riqueza:4,cultura:6,influencia:-2},type:"social"},
-    {t:"Admisión controlada: campamentos de cuarentena, registro y asignación de roles productivos",fx:{estabilidad:7,riqueza:2,cultura:4,influencia:0},type:"social"},
+    {t:"Admisión controlada: campamentos de control, registro y asignación de roles productivos",fx:{estabilidad:7,riqueza:2,cultura:4,influencia:0},type:"social"},
     {t:"Ayuda humanitaria exterior: provisiones en la frontera, pero ningún ingreso al territorio",fx:{estabilidad:2,riqueza:-2,cultura:0,influencia:4},type:"politico"},
     {t:"Despliegue militar en la frontera occidental: ningún extranjero cruza las tierras del faraón",fx:{estabilidad:-4,riqueza:0,cultura:-4,influencia:6},type:"militar"}
   ],
