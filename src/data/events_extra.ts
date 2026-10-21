@@ -67,16 +67,16 @@ export const EVENTS_ANTIGUO_EXTRA: GameEvent[] = [
   ],
   tl:{date:"2400 aC",ph:"Imperio Antiguo",ev:"Desarrollo del hierático — la escritura cotidiana del Imperio",tip:"Los jeroglíficos se reservaban para los monumentos; el hierático, más cursivo, era el de los papiros y la administración. Del hierático salió después el demótico."}},
 
-  {id:107,per:"antiguo",cat:"economia",title:"El Canal del Desierto",
-  desc:"Un ingeniero hidráulico presenta un proyecto audaz ante el consejo: un canal de 150 kilómetros que conectaría un brazo del Nilo con el oasis de Kharga, en el desierto occidental. Llevaría agua a tierras yermas, permitiría cultivar trigo adicional para 200.000 personas, y abriría una ruta comercial protegida hacia el interior. El costo es astronómico: quince años de trabajo, desviar recursos de otros proyectos. Pero si funciona, Egipto tendría una segunda zona agrícola independiente del Nilo.",
-  ctx:"Los egipcios del Imperio Antiguo excavaron sistemas de canales sofisticados en el Fayum y otras regiones. El canal 'de los faraones' que Neco II y luego los persas intentaron construir entre el Nilo y el Mar Rojo es el proyecto de infraestructura hidráulica más ambicioso de la antigüedad, precursor del Canal de Suez.",
+  {id:107,per:"antiguo",cat:"economia",title:"El Camino de los Oasis",
+  desc:"Una caravana llega del desierto occidental con noticias de los oasis de Kharga y Dakhla: hay agua en pozos y manantiales y tierra que se puede cultivar. Los comerciantes piden que el Estado abra un camino con campamentos y pozos. Los jefes de la frontera temen perder hombres y grano en tierras tan lejanas. Algunos consejeros proponen enviar antes una expedición de reconocimiento; otros, dejar los oasis a los caravaneros.",
+  ctx:"Sobre la Girga Road, el camino entre el valle del Nilo y Kharga, hay campamentos faraónicos desde el Antiguo Imperio avanzado. Hacia el 2300 a.C. los gobernadores de Dakhla se hacían enterrar en Balat, en mastabas parecidas a las de Saqqara; para algunos investigadores el oasis era más un puesto en territorio ajeno que una provincia.",
   opts:[
-    {t:"Aprobar el proyecto a largo plazo: la visión estratégica supera el costo inmediato",fx:{estabilidad:2,riqueza:-8,cultura:4,influencia:6},type:"economico"},
-    {t:"Proyecto piloto: un segmento de 30 km para verificar la viabilidad antes de comprometer recursos",fx:{estabilidad:4,riqueza:-3,cultura:3,influencia:2},type:"social"},
-    {t:"Rechazar el canal y reforzar los sistemas de riego existentes en el Delta",fx:{estabilidad:6,riqueza:2,cultura:0,influencia:-2},type:"economico"},
-    {t:"Forzar la construcción con trabajo esclavo para reducir costos a la mitad",fx:{estabilidad:-6,riqueza:-2,cultura:-5,influencia:4},type:"cruel"}
+    {t:"Abrir el camino con campamentos y pozos, y destinar un gobernador a los oasis",fx:{estabilidad:-1,riqueza:-6,influencia:6,comercio:4},type:"politico"},
+    {t:"Enviar primero una expedición de reconocimiento y decidir con lo que traiga",fx:{estabilidad:3,riqueza:-3,cultura:2,influencia:2,comercio:1},type:"social"},
+    {t:"Dejar los oasis a los caravaneros y cobrarles un tributo en la frontera",fx:{estabilidad:4,riqueza:3,influencia:-2,comercio:1},type:"economico"},
+    {t:"Reclutar a la fuerza a los aldeanos de la frontera para abrir el camino más rápido",fx:{estabilidad:-6,riqueza:-2,cultura:-5,influencia:4},type:"cruel"}
   ],
-  tl:{date:"2650 aC aprox.",ph:"Antiguo Imperio (III–IV dinastía)",ev:"Sadd el-Kafara: la presa grande más antigua que se conoce",tip:"Se levantó en el Wadi Garawi, al sureste de El Cairo, con un núcleo de grava entre dos muros de piedra y sin vertedero. Nunca se terminó: una crecida repentina rompió el centro y la obra se abandonó. La fecha exacta se discute."}},
+  tl:{date:"2400 aC aprox.",ph:"Girga Road y Balat (Dakhla)",ev:"Campamentos faraónicos en el camino a los oasis",tip:"Sobre la Girga Road, entre el valle del Nilo y Kharga, se encontraron campamentos del Antiguo Imperio. En Dakhla, los gobernadores se enterraron en Balat hacia el 2300 a.C."}},
 
   {id:108,per:"antiguo",cat:"sociedad",title:"Los Médicos del Nilo",
   desc:"El sumo médico del palacio, Hesy-Ra, presenta al consejo un documento extraordinario: un tratado sistemático sobre 48 casos clínicos, con diagnóstico, pronóstico y tratamiento. Por primera vez en la historia, la medicina se separa de la magia: fractura de cráneo, heridas de guerra, enfermedades del vientre, tratadas con observación, no con conjuros. Pero los sacerdotes de Sekhmet, diosa de la curación, ven en esto una amenaza directa a su poder y sus ingresos. Proponen que los médicos laicos sean subordinados al templo.",
