@@ -25,7 +25,7 @@ export const EVENTS: GameEvent[] =[
 
   {id:3,per:"nuevo",cat:"religion",title:"El Oráculo de Amón Habla",
   desc:"En medio de la noche, el sumo sacerdote llega a tu cámara con los ojos encendidos: el oráculo de Amón en Karnak ha profetizado. Una plaga de langostas devastará los campos si no se erige un nuevo santuario en su honor antes de la próxima inundación. Los sacerdotes muestran los papiros: la señal es clara. Pero el tesoro real está comprometido con la construcción de la nueva necrópolis. Construir el santuario requeriría desviar miles de trabajadores y toneladas de piedra caliza.",
-  ctx:"Los oráculos eran la voz política de los dioses: el clero de Amón usaba la estatua procesional para 'responder' preguntas inclinándose hacia adelante (sí) o atrás (no). Este sistema concentró tanto poder en los sacerdotes que en el Período Tardío gobernaron el sur de Egipto.",
+  ctx:"Los oráculos eran la voz política de los dioses: el clero de Amón usaba la estatua procesional para 'responder' preguntas inclinándose hacia adelante (sí) o atrás (no). Este sistema dio tanto poder a los sacerdotes que, al final del Imperio Nuevo, con Herihor, los sumos sacerdotes de Amón llegaron a gobernar el sur de Egipto.",
   opts:[
     {t:"Financiar el santuario completo: el pueblo verá la devoción del faraón",fx:{estabilidad:7,riqueza:-8,cultura:8,influencia:-2},type:"cultural"},
     {t:"Construir un santuario más modesto con láminas de oro en las columnas",fx:{estabilidad:4,riqueza:-4,cultura:5,influencia:2},type:"economico"},
@@ -178,7 +178,7 @@ export const EVENTS: GameEvent[] =[
   tl:{date:"1806 aC",ph:"Sobekneferu (Neferusobek)",ev:"Primera mujer rey de Egipto de la que hay constancia",tip:"El nombre Sobekneferu significa «la belleza de Sobek», el dios cocodrilo. Gobernó menos de 4 años y se han encontrado monumentos suyos en Hawara, Heracleópolis y el Delta. Fue la última gobernante de la XII dinastía."}},
 
   {id:17,per:"nuevo",cat:"militar",title:"La Expulsión de los Hicsos",
-  desc:"El momento que tres generaciones de tebanos soñaron ha llegado. El faraón Seqenenra Tao murió en batalla —su momia muestra cinco golpes de hacha en el cráneo, una carnicería—. Su hijo Kamose comenzó la reconquista. Ahora tú, Ahmose, tienes los barcos fluviales, los carros de guerra y los soldados que los propios Hicsos nos enseñaron a usar. Avaris está a cuatro días de navegación. Pero una campaña total exige vaciar el tesoro y sangrar al ejército.",
+  desc:"El momento que tres generaciones de tebanos soñaron ha llegado. El faraón Seqenenra Tao murió en batalla —su momia muestra varias heridas en el cráneo, una carnicería—. Su hijo Kamose comenzó la reconquista. Ahora tú, Ahmose, tienes los barcos fluviales, los carros de guerra y los soldados que los propios Hicsos nos enseñaron a usar. Pero una campaña total exige vaciar el tesoro y sangrar al ejército.",
   ctx:"Ahmose I (1550-1525 aC) expulsó a los Hicsos y fundó la Dinastía XVIII, la más gloriosa de Egipto. La ironía histórica perfecta: usó exactamente las tecnologías militares que los Hicsos introdujeron —carros, arcos compuestos, espadas de bronce— para expulsarlos.",
   opts:[
     {t:"Campaña total con negociación de rendición: expulsarlos pero ofrecerles salida honorable",fx:{estabilidad:4,riqueza:-4,cultura:4,influencia:8},type:"politico"},
@@ -186,18 +186,18 @@ export const EVENTS: GameEvent[] =[
     {t:"Reconquistar el Delta y negociar: Avaris paga tributo pero sigue en pie",fx:{estabilidad:7,riqueza:-2,cultura:2,influencia:6},type:"diplomatico"},
     {t:"Consolidar el sur antes de atacar: que los Hicsos se debiliten solos",fx:{estabilidad:5,riqueza:4,cultura:0,influencia:-6},type:"economico"}
   ],
-  tl:{date:"1550 aC",ph:"Ahmose I (Nebpehtyra)",ev:"Fundación del Imperio Nuevo — la era más gloriosa",tip:"La momia de Seqenenra Tao, padre de Ahmose, fue descubierta en 1881 con las heridas de batalla intactas. El análisis de 2021 confirmó que murió en combate, posiblemente capturado y ejecutado por oficiales Hicsos."}},
+  tl:{date:"1550 aC",ph:"Ahmose I (Nebpehtyra)",ev:"Fundación del Imperio Nuevo — la era más gloriosa",tip:"La momia de Seqenenra Tao, padre de Ahmose, apareció en 1881 con heridas de batalla en el cráneo. Un estudio por tomografía de 2021 sugiere que fue capturado y ejecutado: no tiene heridas de defensa en los antebrazos."}},
 
   {id:18,per:"nuevo",cat:"politica",title:"La Faraona que Desafió el Tiempo",
-  desc:"Hatshepsut lleva cinco años como regente del joven Tutmosis III cuando da el paso que nadie esperaba: se corona faraona con plena titulatura real, barba postiza de oro, corona del Alto y Bajo Egipto. Sus monumentos empiezan a mostrarla como hombre. Su arquitecto y favorito, Senenmut, diseña para ella el templo más bello del mundo en las laderas de Deir el-Bahari. Tutmosis III, que ya tiene dieciséis años y mira desde las sombras, espera.",
-  ctx:"Hatshepsut (1479-1458 aC) reinó 20 años en paz y prosperidad. Expandió el comercio, construyó más que cualquier faraón anterior, y organizó la expedición a Punt. Tutmosis III, después de su muerte, borró sistemáticamente su nombre de los monumentos — pero no pudo borrar su historia.",
+  desc:"Hatshepsut lleva años como regente del niño Tutmosis III cuando da el paso que nadie esperaba: se corona faraona con plena titulatura real, barba postiza de oro, corona del Alto y Bajo Egipto. Sus monumentos empiezan a mostrarla como hombre. Su arquitecto y favorito, Senenmut, diseña para ella el templo más bello del mundo en las laderas de Deir el-Bahari. Tutmosis III, todavía un niño, crece a su sombra.",
+  ctx:"Hatshepsut (1479-1458 aC) gobernó unos 20 años, primero como regente y luego como rey, en una época de prosperidad. Expandió el comercio, construyó mucho y organizó la expedición a Punt. Hacia el final del reinado de Tutmosis III, décadas después, se borraron su nombre y sus imágenes de muchos monumentos.",
   opts:[
     {t:"Apoyar plenamente a Hatshepsut: su reinado garantiza estabilidad y riqueza",fx:{estabilidad:8,riqueza:8,cultura:8,influencia:3},type:"politico"},
     {t:"Co-regencia equitativa: Hatshepsut y Tutmosis III gobiernan juntos con poder compartido",fx:{estabilidad:7,riqueza:5,cultura:6,influencia:7,fe:-1},type:"social"},
-    {t:"Presionar por la abdicación: Tutmosis III ya es mayor y debe tomar el trono solo",fx:{estabilidad:-4,riqueza:0,cultura:-8,influencia:4},type:"politico"},
+    {t:"Presionar por la abdicación: Tutmosis III es el rey legítimo y debe gobernar solo",fx:{estabilidad:-4,riqueza:0,cultura:-8,influencia:4},type:"politico"},
     {t:"Conspirar con los generales para deponer a Hatshepsut y entronizar a Tutmosis",fx:{estabilidad:-8,riqueza:-2,cultura:-8,influencia:-4},type:"politico"}
   ],
-  tl:{date:"1479 aC",ph:"Hatshepsut (Maatkara)",ev:"Coronación — la faraona más exitosa de la historia",tip:"En 1903, Howard Carter descubrió la tumba de Hatshepsut pero no encontró su momia. En 2007, Zahi Hawass identificó sus restos mediante un diente encontrado en una caja con su nombre: había estado oculta entre momias anónimas durante 3.500 años."}},
+  tl:{date:"1473 aC aprox.",ph:"Hatshepsut (Maatkara)",ev:"Hatshepsut se hace coronar rey",tip:"Howard Carter excavó en 1903 la tumba de Hatshepsut (KV20), pero no encontró su momia. En 2007 se identificó probablemente su momia por un diente hallado en una caja con su nombre: estaba entre momias anónimas."}},
 
   {id:19,per:"nuevo",cat:"economia",title:"El Oro que Mueve el Mundo",
   desc:"Las minas de Nubia producen más oro del que Egipto jamás ha visto. Los reyes del Medio Oriente escriben cartas aduladoras: 'El oro en el país de mi hermano es tan abundante como el polvo.' Babilonia, Mitani, los Hititas, todos quieren el oro de Egipto. Puedes usarlo para financiar ejércitos, templos monumentales, o como instrumento de diplomacia: el oro compra alianzas que los ejércitos no pueden garantizar.",
@@ -211,18 +211,18 @@ export const EVENTS: GameEvent[] =[
   tl:{date:"1350 aC aprox.",ph:"Cartas de Amarna (Amenhotep III y Akenatón)",ev:"Los reyes de Oriente piden oro a Egipto",tip:"Las cartas de Amarna son tablillas de arcilla escritas en acadio, la lengua diplomática de entonces. Los reyes de Babilonia, Mitani y los hititas llaman «hermano» al faraón y le piden oro."}},
 
   {id:20,per:"nuevo",cat:"religion",title:"Un Solo Dios: La Revolución de Akenatón",
-  desc:"Amenhotep IV ha tomado una decisión que sacude los cimientos de Egipto: cierra los templos de todos los dioses. Despide a decenas de miles de sacerdotes. Ordena borrar el nombre de Amón de todos los monumentos —incluyendo el de su propio padre. Se renombra a sí mismo Akenatón. Y declara que solo existe un dios: Atón, el disco solar. Una ciudad nueva, Amarna, emerge en el desierto. Es la primera revolución religiosa monoteísta documentada de la historia humana.",
-  ctx:"Akenatón (1353-1336 aC) instauró el primer monoteísmo conocido, 700 años antes del monoteísmo hebreo consolidado. Algunos historiadores sugieren que Moisés, si existió, pudo haber sido influenciado por la teología de Amarna. El debate continúa siendo uno de los más apasionantes de la historia.",
+  desc:"Amenhotep IV ha tomado una decisión que sacude los cimientos de Egipto: cierra los templos de Amón y de otros dioses y deja sin cargo a muchos sacerdotes. Ordena borrar el nombre de Amón de todos los monumentos —incluyendo el de su propio padre. Se renombra a sí mismo Akenatón. Y declara que solo existe un dios: Atón, el disco solar. Una ciudad nueva, Amarna, emerge en el desierto. Muchos la consideran el primer intento de monoteísmo de la historia, aunque se discute si lo fue.",
+  ctx:"Akenatón (1353-1336 aC) impulsó un culto casi exclusivo al disco solar Atón, que muchos consideran el primer monoteísmo conocido; otros hablan de un culto centrado en el propio rey. Algunos autores, como Freud, sugirieron que influyó en Moisés; la mayoría de los historiadores lo duda.",
   opts:[
     {t:"Apoyar la reforma: un dios único centraliza el poder espiritual en el faraón divino",fx:{estabilidad:-7,riqueza:4,cultura:-4,influencia:8},type:"politico"},
     {t:"Resistencia discreta: proteger los cultos tradicionales en secreto mientras Akenatón gobierna",fx:{estabilidad:4,riqueza:0,cultura:7,influencia:-4},type:"cultural"},
     {t:"Mediación teológica: proponer que Atón sea el dios principal pero no el único",fx:{estabilidad:7,riqueza:0,cultura:4,influencia:0},type:"social"},
     {t:"Coalición sacerdotal: organizar resistencia abierta de los templos de Amón y Ra",fx:{estabilidad:-4,riqueza:-4,cultura:4,influencia:-7},type:"religioso"}
   ],
-  tl:{date:"1346 aC",ph:"Akenatón (Amenhotep IV)",ev:"Primera revolución monoteísta de la historia",tip:"El busto de Nefertiti (Berlín, 1345 aC) es quizás el retrato más famoso del mundo antiguo. Akenatón y Nefertiti desarrollaron un arte completamente nuevo: figuras alargadas, escenas íntimas de familia real, representaciones del sol derramando vida."}},
+  tl:{date:"1346 aC",ph:"Akenatón (Amenhotep IV)",ev:"Reforma religiosa: el culto al disco solar Atón",tip:"El busto de Nefertiti (Berlín, hacia 1345 aC) es quizás el retrato más famoso del mundo antiguo. Akenatón y Nefertiti impulsaron un arte nuevo: figuras alargadas, escenas íntimas de familia real, representaciones del sol derramando vida."}},
 
   {id:21,per:"nuevo",cat:"politica",title:"El Tratado que Cambió el Mundo",
-  desc:"Dieciséis años de guerra contra los Hititas han dejado miles de muertos y ningún vencedor claro. La batalla de Qadesh (1274 aC) fue el mayor choque de carros de la historia: 5.000 vehículos de guerra, 40.000 soldados. Ramsés II casi muere allí. Ahora el rey hitita Hattusili III propone algo sin precedentes: un tratado de paz permanente, hermandad entre los dos imperios, intercambio de princesas como garantía. Es una oportunidad histórica.",
+  desc:"Dieciséis años de guerra contra los Hititas han dejado miles de muertos y ningún vencedor claro. La batalla de Qadesh (1274 aC) fue el mayor choque de carros de la historia: miles de carros y decenas de miles de soldados. Ramsés II casi muere allí. Ahora el rey hitita Hattusili III propone algo sin precedentes: un tratado de paz permanente, hermandad entre los dos imperios, y, años después, una princesa hitita como esposa del faraón. Es una oportunidad histórica.",
   ctx:"El Tratado de Qadesh (1259 aC) es el acuerdo internacional más antiguo conservado. Una copia en cuneiforme hitita está en el Museo de Estambul; otra en jeroglíficos, en el templo de Karnak. Una reproducción fue entregada a la ONU en 1970 como símbolo del primer tratado de paz de la humanidad.",
   opts:[
     {t:"Firmar el tratado completo con alianza matrimonial: paz duradera sobre gloria efímera",fx:{estabilidad:8,riqueza:7,cultura:7,influencia:3},type:"diplomatico"},
@@ -230,29 +230,29 @@ export const EVENTS: GameEvent[] =[
     {t:"Exigir concesiones territoriales adicionales antes de firmar",fx:{estabilidad:-2,riqueza:7,cultura:0,influencia:7},type:"politico"},
     {t:"Rechazar el tratado y relanzar la guerra: Egipto no negocia con iguales",fx:{estabilidad:-8,riqueza:-8,cultura:-4,influencia:-4},type:"militar"}
   ],
-  tl:{date:"1259 aC",ph:"Ramsés II (Usermaatra Setepenra)",ev:"Tratado de Qadesh — el primero de la historia",tip:"Ramsés II reinó 66 años y tuvo más de 100 hijos. Encargó que se grabara su 'victoria' en Qadesh en cinco templos, aunque estratégicamente fue un empate. La propaganda política tiene raíces muy antiguas."}},
+  tl:{date:"1259 aC",ph:"Ramsés II (Usermaatra Setepenra)",ev:"Tratado de Qadesh — el más antiguo conservado",tip:"Ramsés II reinó 66 años y tuvo más de 100 hijos. Encargó que se grabara su 'victoria' en Qadesh en cinco templos, aunque estratégicamente fue un empate. La propaganda política tiene raíces muy antiguas."}},
 
   {id:22,per:"nuevo",cat:"cultura",title:"El Libro de los Muertos para Todos",
-  desc:"El escriba Ani termina de redactar su encargo más ambicioso: un papiro de 24 metros que contiene 190 conjuros ilustrados con escenas del Más Allá en rojo y negro. Es el Libro de los Muertos más completo jamás creado. Los sacerdotes de Osiris proponen un sistema: copias estándar para las familias que puedan pagarlas, versiones de lujo personalizadas para los nobles. La vida eterna, democratizada y tarifada. El debate es si debe ser accesible o exclusivo.",
-  ctx:"El Libro de los Muertos (1550-50 aC) era el 'GPS' del Más Allá. Contenía instrucciones para navegar el Duat, conjuros para superar 42 guardianes y la guía para el juicio del corazón ante Osiris. El papiro de Ani, descubierto en Tebas en 1888, está ahora en el Museo Británico.",
+  desc:"Un taller de escribas termina un encargo ambicioso: un papiro de unos 24 metros con conjuros del Libro de los Muertos, ilustrados con escenas del Más Allá en rojo y negro. Será uno de los mejor conservados. Los sacerdotes de Osiris proponen un sistema: copias estándar para las familias que puedan pagarlas, versiones de lujo personalizadas para los nobles. La vida eterna, democratizada y tarifada. El debate es si debe ser accesible o exclusivo.",
+  ctx:"El Libro de los Muertos (1550-50 aC) era el 'GPS' del Más Allá. Contenía instrucciones para navegar el Duat, conjuros para atravesar puertas custodiadas y la guía para el juicio del corazón ante Osiris. El papiro de Ani, descubierto en Tebas en 1888, está ahora en el Museo Británico.",
   opts:[
     {t:"Democratización: producción estatal de copias accesibles para todas las familias",fx:{estabilidad:8,riqueza:-8,cultura:8,influencia:2},type:"cultural"},
     {t:"Sistema escalonado: versión básica económica + versión de lujo personalizada",fx:{estabilidad:4,riqueza:4,cultura:7,influencia:2},type:"social"},
     {t:"Exclusividad noble: solo las familias de alto rango merecen acceso a los textos sagrados",fx:{estabilidad:-4,riqueza:6,cultura:4,influencia:4},type:"economico"},
     {t:"Monopolio sacerdotal: solo los sacerdotes poseen los textos, el pueblo debe depender de ellos",fx:{estabilidad:-6,riqueza:0,cultura:-7,influencia:-2},type:"cruel"}
   ],
-  tl:{date:"1550 aC aprox.",ph:"Inicio del Imperio Nuevo",ev:"Compilación del Libro de los Muertos",tip:"El papiro de Ani mide 24 metros de largo. La escena del pesaje del corazón muestra a Ani ante 42 jueces confesando que no mató, no robó, no mintió. Es el primer código ético escrito de la historia."}},
+  tl:{date:"1550 aC aprox.",ph:"Inicio del Imperio Nuevo",ev:"Compilación del Libro de los Muertos",tip:"El papiro de Ani, del Imperio Nuevo, mide unos 24 metros. En el pesaje del corazón, Ani declara ante 42 jueces que no mató, no robó, no mintió: es de los primeros códigos éticos escritos que se conocen."}},
 
   {id:23,per:"nuevo",cat:"militar",title:"Los Pueblos del Mar",
-  desc:"El caos llega desde el mar. En doce años, los Pueblos del Mar —coalición misteriosa de migrantes guerreros del Egeo y Anatolia— han destruido el Imperio Hitita, saqueado Ugarit y arrasado Chipre. Ahora sus flotas y ejércitos convergen sobre el Delta. Traen hierro, cuando Egipto aún vive en la Edad del Bronce. Sus barcos son más rápidos. Sus espadas, más afiladas. Ramsés III los espera en las orillas del Delta con lo que queda del ejército más poderoso del mundo.",
-  ctx:"El colapso de la Edad de Bronce (1200-1150 aC) fue la primera gran catástrofe civilizatoria de la historia: colapsaron simultáneamente los Hititas, Micenas, Troya, Ugarit y el Imperio Chipriota. Solo Egipto sobrevivió, gravemente herido. Las causas siguen siendo debatidas: sequía, invasiones, terremotos, colapso del comercio.",
+  desc:"El caos llega desde el mar. En doce años, los Pueblos del Mar —coalición misteriosa de migrantes guerreros del Egeo y Anatolia— según las inscripciones de Ramsés III, han arrasado a los hititas y a Chipre. Ahora sus flotas y ejércitos convergen sobre el Delta. Son miles, con mujeres y niños en carretas: no vienen solo a saquear, vienen a quedarse. Ramsés III los espera en las orillas del Delta con lo que queda del ejército más poderoso del mundo.",
+  ctx:"El colapso de la Edad del Bronce (hacia 1200-1150 aC) fue una crisis simultánea de los hititas, Ugarit y muchas ciudades de Chipre y del Egeo. Egipto sobrevivió, muy debilitado. Las causas se debaten: sequía, terremotos, colapso del comercio. Hoy muchos ven a los Pueblos del Mar más como migrantes que huían de una crisis ya en marcha que como su causa.",
   opts:[
     {t:"Defensa integral: todo el ejército y la flota en el Delta, más mercenarios libios y nubios",fx:{estabilidad:-4,riqueza:-8,cultura:0,influencia:8},type:"militar"},
     {t:"Táctica diplomática: absorber a parte de los Pueblos del Mar como mercenarios del faraón",fx:{estabilidad:2,riqueza:-5,cultura:2,influencia:7},type:"diplomatico"},
     {t:"Defensa del núcleo: sacrificar el Delta oriental para concentrar fuerzas en el interior",fx:{estabilidad:-7,riqueza:-4,cultura:-4,influencia:4},type:"politico"},
     {t:"Rendición negociada: ceder tierras del Delta a cambio de que cesen las hostilidades",fx:{estabilidad:-8,riqueza:-4,cultura:-8,influencia:-8},type:"diplomatico"}
   ],
-  tl:{date:"1177 aC",ph:"Ramsés III (Usermaatre Meryamun)",ev:"Victoria en el Delta — última gran victoria egipcia",tip:"Los bajorrelieves de Medinet Habu documentan la batalla naval: los egipcios usaron ganchos para capturar los barcos enemigos. Fue la primera batalla naval documentada en detalle en la historia."}},
+  tl:{date:"1177 aC",ph:"Ramsés III (Usermaatre Meryamun)",ev:"Victoria en el Delta contra los Pueblos del Mar",tip:"Los relieves de Medinet Habu muestran la batalla naval con mucho detalle: es una de las primeras batallas navales representadas así."}},
 
   {id:24,per:"tardio",cat:"politica",title:"Los Sacerdotes que Gobiernan en las Sombras",
   desc:"El Imperio ha terminado, aunque nadie lo proclama oficialmente. Los sumos sacerdotes de Amón en Tebas controlan el 30% de las tierras de Egipto, tienen su propio ejército, recaudan sus propios impuestos y consultan su propio oráculo antes de tomar decisiones de Estado. El faraón en Memphis es un símbolo dorado vacío de poder. El sumo sacerdote Herhor ha dado el paso final: ha adoptado la titulatura real completa. Egipto tiene dos faraones.",
