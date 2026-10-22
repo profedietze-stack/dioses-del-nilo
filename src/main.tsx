@@ -16,7 +16,7 @@ import '@fontsource/crimson-pro/latin-300-italic.css'
 
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { MotionConfig } from 'framer-motion'
+import { AjustesProvider } from './hooks/useAjustes'
 import './styles/globals.css'
 import { App } from './App'
 import { ErrorBoundary } from './components/dev/ErrorBoundary'
@@ -32,9 +32,9 @@ initErrorBanner()
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
-      <MotionConfig reducedMotion="user">
+      <AjustesProvider>
         <App />
-      </MotionConfig>
+      </AjustesProvider>
     </ErrorBoundary>
   </StrictMode>,
 )

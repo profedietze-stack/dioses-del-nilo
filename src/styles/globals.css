@@ -17,7 +17,7 @@
 
 /* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body, #root { height: 100%; background: var(--stone); color: var(--txt); font-family: 'Crimson Pro', Georgia, serif; font-size: 18px; overflow-x: hidden; }
+html, body, #root { height: 100%; background: var(--stone); color: var(--txt); font-family: 'Crimson Pro', Georgia, serif; font-size: var(--fs-base, 18px); overflow-x: hidden; }
 button { font-family: inherit; cursor: pointer; }
 
 /* ── BUTTONS ── */
@@ -1889,7 +1889,7 @@ button:focus-visible, [role="button"]:focus-visible, a:focus-visible, [tabindex]
    400 px antes del evento. Papiros, Menu y Musica pasan a un encabezado con el nombre del juego. */
 .game-hd { background: var(--stone); border-bottom: 1px solid var(--stone-l); padding: 6px 16px; flex-shrink: 0; }
 .game-hd-in { display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 1100px; margin: 0 auto; }
-.game-hd-title { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 600; letter-spacing: .06em; color: var(--gold); margin: 0; white-space: nowrap; }
+.game-hd-title { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 600; letter-spacing: .06em; color: var(--gold); margin: 0; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .game-hd-actions { display: flex; gap: 8px; }
 .hd-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
@@ -1949,4 +1949,69 @@ button:focus-visible, [role="button"]:focus-visible, a:focus-visible, [tabindex]
   .hd-btn, .sp-toggle { min-height: 44px; }
   .hd-btn { min-width: 44px; }
   .stat-chip { min-height: 44px; }
+}
+
+/* ── OPCIONES (menú de ajustes dentro de la partida) ──
+   El tamaño de letra es `--fs-base` en <html>: casi todo el CSS está en rem y escala solo.
+   Tema, tipo de letra, espaciado y movimiento son atributos data-* de <html> (ver utils/ajustes.ts). */
+.aj-modal { max-width: 580px; }
+.aj-sec { margin-bottom: 20px; }
+.aj-sec h4 { font-family: 'Cinzel', serif; color: var(--gold-l); font-size: .93rem; letter-spacing: .06em; margin: 0 0 4px; }
+.aj-fila {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 8px 16px; padding: 10px 0; border-bottom: 1px solid var(--stone-l);
+}
+.aj-fila-txt { flex: 1 1 160px; min-width: 0; }
+.aj-fila-txt strong { display: block; font-size: .95rem; color: var(--txt); font-weight: 600; }
+.aj-fila-txt small { display: block; font-size: .78rem; color: var(--dim); }
+.aj-seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.aj-seg-btn {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; min-width: 44px; padding: 6px 14px;
+  background: var(--stone); color: var(--txt); border: 1px solid var(--stone-l); border-radius: var(--r); font-size: .85rem;
+}
+.aj-seg-btn:hover { border-color: var(--gold-d); }
+.aj-seg-btn.on { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); background: rgba(212,160,23,.18); color: var(--gold-l); font-weight: 600; }
+.aj-seg-btn.on::before { content: '✓'; }
+.aj-sw {
+  display: inline-flex; flex-direction: row-reverse; align-items: center; justify-content: center; gap: 8px;
+  min-width: 78px; min-height: 44px; padding: 4px 12px; border-radius: 22px;
+  background: var(--stone); color: var(--txt); border: 1px solid var(--stone-l); font-size: .85rem;
+}
+.aj-sw.on { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); background: rgba(212,160,23,.18); color: var(--gold-l); font-weight: 600; }
+.aj-sw-knob { width: 18px; height: 18px; border-radius: 50%; background: var(--dim); flex-shrink: 0; }
+.aj-sw.on .aj-sw-knob { background: var(--gold); }
+.aj-sw:not(.on) { flex-direction: row; }
+.aj-vol { display: flex; align-items: center; gap: 10px; flex: 1 1 200px; max-width: 280px; }
+.aj-vol input[type=range] { flex: 1; min-height: 44px; accent-color: var(--gold); cursor: pointer; }
+.aj-vol input[type=range]:disabled { opacity: .4; cursor: not-allowed; }
+.aj-vol-n { min-width: 3.2em; text-align: right; font-size: .85rem; color: var(--dim); }
+.aj-prueba { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--gold-d); background: var(--stone); font-size: 1rem; }
+.aj-pie { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; padding-top: 4px; }
+.aj-pie .btn-o, .aj-pie .btn-g { min-height: 44px; }
+
+/* Temas */
+:root[data-tema="contraste"] {
+  --stone: #000; --stone-m: #0B0B0B; --stone-l: #A8A8A8; --txt: #fff; --dim: #E6E6E6;
+  --gold: #FFD84D; --gold-l: #FFE98A; --gold-d: #FFD84D; --papyrus-d: #FFE9A8; --nile-l: #7FD3FF; --red: #FF8A7A;
+}
+/* Tema claro: hay decenas de superficies oscuras escritas a mano, así que en vez de reescribirlas una
+   por una se invierte la página entera y se vuelven a invertir las imágenes (invert + hue-rotate de
+   180° aplicados dos veces son la identidad: las imágenes quedan como son). */
+:root[data-tema="claro"] { filter: invert(1) hue-rotate(180deg); --dim: #CDBD93; --papyrus-d: #E0CE9C; }
+:root[data-tema="claro"] :is(img, video, canvas) { filter: invert(1) hue-rotate(180deg); }
+
+/* Tipo de letra: sin adornos, ancha y de contornos claros */
+:root[data-fuente="legible"] body, :root[data-fuente="legible"] body * {
+  font-family: Verdana, Tahoma, 'Segoe UI', system-ui, sans-serif !important;
+}
+
+/* Espaciado amplio de líneas, palabras y letras en los textos de lectura */
+:root[data-interlineado="amplio"] :is(p, li, .opt-txt, .ev-desc, .tl-card, .cmod-adv-line, .adv-bubble-line, .gd-desc, .puz-q) {
+  line-height: 1.95 !important; letter-spacing: .02em; word-spacing: .12em;
+}
+
+/* Movimiento reducido (framer-motion lo recibe por MotionConfig) */
+:root[data-movimiento="reducido"] *, :root[data-movimiento="reducido"] *::before, :root[data-movimiento="reducido"] *::after {
+  animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important; scroll-behavior: auto !important;
 }

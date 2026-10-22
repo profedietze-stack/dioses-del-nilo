@@ -15,6 +15,39 @@ function getCtx(): AudioContext {
   return audioCtx
 }
 
+// Volúmenes que elige el jugador (0..1). La música y los efectos tienen cada uno su control.
+const MUSIC_BASE = 0.55
+let volMusica = 0.8
+let volEfectos = 0.8
+let efectosOn = true
+let sfxBus: GainNode | null = null
+
+function getSfx(ctx: AudioContext): GainNode {
+  if (!sfxBus) {
+    sfxBus = ctx.createGain()
+    sfxBus.gain.value = efectosOn ? volEfectos : 0
+    sfxBus.connect(ctx.destination)
+  }
+  return sfxBus
+}
+
+export function setVolumenMusica(v: number) {
+  volMusica = Math.min(1, Math.max(0, v))
+  if (!musicGain) return
+  try {
+    const ctx = getCtx()
+    musicGain.gain.cancelScheduledValues(ctx.currentTime)
+    musicGain.gain.setTargetAtTime(MUSIC_BASE * volMusica, ctx.currentTime, 0.05)
+  } catch { /* ignore */ }
+}
+
+export function setVolumenEfectos(v: number, activos = efectosOn) {
+  volEfectos = Math.min(1, Math.max(0, v))
+  efectosOn = activos
+  if (!sfxBus) return
+  try { sfxBus.gain.setTargetAtTime(efectosOn ? volEfectos : 0, getCtx().currentTime, 0.02) } catch { /* ignore */ }
+}
+
 function pluckNote(ctx: AudioContext, freq: number, time: number, dur: number, vol: number, gain: GainNode) {
   const osc1 = ctx.createOscillator()
   const osc2 = ctx.createOscillator()
@@ -141,7 +174,7 @@ export function startMusic() {
     musicPlaying = true
     musicGain = ctx.createGain()
     musicGain.gain.setValueAtTime(0, ctx.currentTime)
-    musicGain.gain.linearRampToValueAtTime(0.55, ctx.currentTime + 2)
+    musicGain.gain.linearRampToValueAtTime(MUSIC_BASE * volMusica, ctx.currentTime + 2)
     const delay = ctx.createDelay(0.3)
     const delayGain = ctx.createGain()
     delay.delayTime.value = 0.18; delayGain.gain.value = 0.18
@@ -210,10 +243,12 @@ export function isMusicPlaying(): boolean {
 }
 
 export function playSound(type: string) {
+  if (!efectosOn || volEfectos === 0) return
   try {
     const ctx = getCtx()
+    const bus = getSfx(ctx)
     const g = ctx.createGain()
-    g.connect(ctx.destination)
+    g.connect(bus)
     const now = ctx.currentTime
     if (type === 'click') {
       const o = ctx.createOscillator(); o.type = 'sine'
@@ -230,7 +265,7 @@ export function playSound(type: string) {
         o.type = 'triangle'; o.frequency.value = freq
         og.gain.setValueAtTime(0, now + i * 0.1); og.gain.linearRampToValueAtTime(0.2, now + i * 0.1 + 0.04)
         og.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.35)
-        o.connect(og); og.connect(ctx.destination); o.start(now + i * 0.1); o.stop(now + i * 0.1 + 0.35)
+        o.connect(og); og.connect(bus); o.start(now + i * 0.1); o.stop(now + i * 0.1 + 0.35)
       })
     } else if (type === 'error') {
       const o = ctx.createOscillator(); o.type = 'sawtooth'
@@ -242,7 +277,7 @@ export function playSound(type: string) {
         const o = ctx.createOscillator(); const og = ctx.createGain()
         o.type = 'sine'; o.frequency.value = freq
         og.gain.setValueAtTime(0.18 - i * 0.04, now); og.gain.exponentialRampToValueAtTime(0.001, now + 1.5)
-        o.connect(og); og.connect(ctx.destination); o.start(now); o.stop(now + 1.5)
+        o.connect(og); og.connect(bus); o.start(now); o.stop(now + 1.5)
       })
     } else if (type === 'puzzle_open') {
       ;[523, 659, 784, 1047].forEach((freq, i) => {
@@ -250,7 +285,7 @@ export function playSound(type: string) {
         o.type = 'sine'; o.frequency.value = freq
         og.gain.setValueAtTime(0, now + i * 0.06); og.gain.linearRampToValueAtTime(0.12, now + i * 0.06 + 0.05)
         og.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.5)
-        o.connect(og); og.connect(ctx.destination); o.start(now + i * 0.06); o.stop(now + i * 0.06 + 0.5)
+        o.connect(og); og.connect(bus); o.start(now + i * 0.06); o.stop(now + i * 0.06 + 0.5)
       })
     } else if (type === 'event_result') {
       const buf = ctx.createBuffer(1, ctx.sampleRate * 0.1, ctx.sampleRate)
