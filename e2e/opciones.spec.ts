@@ -24,11 +24,11 @@ async function aLaPartida(page: Page, ajustes?: unknown) {
   }, [save, ajustes ?? null, CLAVE] as const)
   await page.goto('/')
   await page.getByRole('button', { name: /Continuar Partida/ }).click()
-  await page.getByRole('button', { name: 'Opciones' }).waitFor()
+  await page.locator('.game-hd').getByRole('button', { name: 'Opciones' }).waitFor()
 }
 
 const abrir = async (page: Page) => {
-  await page.getByRole('button', { name: 'Opciones' }).click()
+  await page.locator('.game-hd').getByRole('button', { name: 'Opciones' }).click()
   await expect(page.getByRole('dialog', { name: 'Opciones' })).toBeVisible()
 }
 const guardado = (page: Page) => page.evaluate(k => JSON.parse(localStorage.getItem(k) ?? 'null'), CLAVE)
@@ -40,7 +40,7 @@ const html = (page: Page) => page.evaluate(() => ({
 
 test('se abre desde el encabezado y se cierra con Escape, devolviendo el foco', async ({ page }) => {
   await aLaPartida(page)
-  const boton = page.getByRole('button', { name: 'Opciones' })
+  const boton = page.locator('.game-hd').getByRole('button', { name: 'Opciones' })
   await boton.click()
   const dlg = page.getByRole('dialog', { name: 'Opciones' })
   await expect(dlg).toBeVisible()
@@ -64,7 +64,7 @@ test('tema, letra y tipo de letra cambian el documento y se recuerdan al recarga
 
   await page.reload()
   await page.getByRole('button', { name: /Continuar Partida/ }).click()
-  await page.getByRole('button', { name: 'Opciones' }).waitFor()
+  await page.locator('.game-hd').getByRole('button', { name: 'Opciones' }).waitFor()
   expect(await html(page)).toMatchObject({ tema: 'contraste', fuente: 'legible' })
   await abrir(page)
   await expect(page.getByRole('radio', { name: 'Enorme' })).toHaveAttribute('aria-checked', 'true')
@@ -112,16 +112,55 @@ test('un guardado dañado o con tipos cambiados no rompe el juego', async ({ pag
   await page.evaluate(k => localStorage.setItem(k, JSON.stringify({ tema: 5, tamano: 'gigante', volMusica: 'alto', musica: 'si', imagenes: false })), CLAVE)
   await page.reload()
   await page.getByRole('button', { name: /Continuar Partida/ }).click()
-  await page.getByRole('button', { name: 'Opciones' }).waitFor()
+  await page.locator('.game-hd').getByRole('button', { name: 'Opciones' }).waitFor()
   expect(await html(page)).toMatchObject({ tema: 'clasico', base: 18 })
   await expect(page.locator('.ev-cat-img')).toHaveCount(0)   // el único campo válido sí se respeta
   expect(errores).toEqual([])
+})
+
+test('desde el menú principal: se abre, cambia el aspecto y se recuerda al empezar la partida', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: /Opciones/ }).click()
+  const dlg = page.getByRole('dialog', { name: 'Opciones' })
+  await expect(dlg).toBeVisible()
+  await page.getByRole('radio', { name: 'Grande' }).click()
+  await page.getByRole('radio', { name: /Alto contraste/ }).click()
+  await page.getByRole('switch', { name: 'Música' }).click()
+  await page.keyboard.press('Escape')
+  await expect(dlg).toBeHidden()
+  expect(await html(page)).toMatchObject({ tema: 'contraste', base: 20.7 })
+  expect(await guardado(page)).toMatchObject({ tamano: 'grande', tema: 'contraste', musica: false })
+  // Lo elegido en el menú rige en la partida: con la música apagada el botón del encabezado ofrece activarla.
+  await page.getByRole('button', { name: /Nueva Partida/ }).click()
+  await page.getByPlaceholder('Escribe tu nombre...').fill('Test')
+  await page.getByRole('button', { name: /Comenzar mi Reinado/ }).click()
+  await page.getByRole('button', { name: /Saltar intro/ }).click()
+  await page.getByRole('button', { name: /Encarnar/ }).waitFor()
+  await page.waitForTimeout(1200)
+  await page.evaluate(() => [...document.querySelectorAll('button')].find(b => /Encarnar/.test(b.textContent ?? ''))!.click())
+  await expect(page.getByRole('button', { name: 'Activar música' })).toBeVisible()
+  expect(await html(page)).toMatchObject({ tema: 'contraste', base: 20.7 })
 })
 
 test.describe('en teléfono', () => {
   test.skip(({ isMobile }) => !isMobile, 'solo en el proyecto móvil')
 
   for (const [ancho, alto] of [[390, 844], [360, 740]] as const) {
+    test(`con la letra enorme el menú principal sigue usable en ${ancho}x${alto}`, async ({ page }) => {
+      await page.setViewportSize({ width: ancho, height: alto })
+      await page.addInitScript(k => localStorage.setItem(k, JSON.stringify({ tamano: 'enorme' })), CLAVE)
+      await page.goto('/')
+      const boton = page.getByRole('button', { name: /Opciones/ })
+      await boton.scrollIntoViewIfNeeded()
+      const r = await boton.boundingBox()
+      expect(r!.height).toBeGreaterThanOrEqual(43.5)
+      expect(r!.x).toBeGreaterThanOrEqual(0)
+      expect(r!.x + r!.width).toBeLessThanOrEqual(ancho)
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0)
+      await boton.click()
+      await expect(page.getByRole('dialog', { name: 'Opciones' })).toBeVisible()
+    })
+
     test(`con la letra enorme el encabezado y el menú caben en ${ancho}x${alto}`, async ({ page }) => {
       await page.setViewportSize({ width: ancho, height: alto })
       await aLaPartida(page, { tamano: 'enorme', fuente: 'legible', interlineado: 'amplio' })

@@ -108,8 +108,10 @@ export function App() {
   const musicOn = ajustes.musica
   const [showAjustes, setShowAjustes] = useState(false)
   // La música la arranca y la para la partida; el ajuste solo guarda lo que el jugador prefiere.
+  // Desde el menú principal (donde no suena nada) solo se guarda la preferencia.
   const alternarMusica = (activa: boolean) => {
     cambiar({ musica: activa })
+    if (screen !== 'game') return
     if (activa) startMusic(); else stopMusic()
   }
   const [gs, setGs] = useState<GameStats>(EMPTY_GS)
@@ -571,7 +573,7 @@ export function App() {
   })
 
   function renderScreen() {
-    if (screen === 'menu')      return <MenuScreen      key="menu"      hasSave={hasSave} onNew={() => setScreen('name')} onContinue={continueGame} onAchievements={() => { setPapirosPrev('menu'); setScreen('papiros') }} onInfo={() => setShowModal(true)} onDeleteSave={() => { clearSave(); setScreen('menu') }} />
+    if (screen === 'menu')      return <MenuScreen      key="menu"      hasSave={hasSave} onNew={() => setScreen('name')} onContinue={continueGame} onAchievements={() => { setPapirosPrev('menu'); setScreen('papiros') }} onOpciones={() => setShowAjustes(true)} onInfo={() => setShowModal(true)} onDeleteSave={() => { clearSave(); setScreen('menu') }} />
     if (screen === 'name')      return <NameScreen      key="name"      onFinish={n => { setPlayerName(n); setScreen('intro') }} onBack={() => setScreen('menu')} />
     if (screen === 'intro')     return <IntroScreen     key="intro"     playerName={playerName} onFinish={() => setScreen('godSelect')} />
     if (screen === 'godSelect') return <GodSelectScreen key="godSelect" onSelect={startGame} onBack={() => setScreen('menu')} />

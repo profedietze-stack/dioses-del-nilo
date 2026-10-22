@@ -8,6 +8,7 @@ interface Props {
   onNew: () => void
   onContinue: () => void
   onAchievements: () => void
+  onOpciones: () => void
   onInfo: () => void
   onDeleteSave: () => void
 }
@@ -24,7 +25,7 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
 }
 
-export function MenuScreen({ hasSave, onNew, onContinue, onAchievements, onInfo, onDeleteSave }: Props) {
+export function MenuScreen({ hasSave, onNew, onContinue, onAchievements, onOpciones, onInfo, onDeleteSave }: Props) {
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [bgImgErr, setBgImgErr] = useState(false)
 
@@ -74,6 +75,7 @@ export function MenuScreen({ hasSave, onNew, onContinue, onAchievements, onInfo,
           <motion.button variants={itemVariants} className="btn-g lg" onClick={onNew}>⚡ Nueva Partida</motion.button>
           <motion.button variants={itemVariants} className="btn-g lg" onClick={onContinue} disabled={!hasSave}>📖 Continuar Partida</motion.button>
           <motion.button variants={itemVariants} className="btn-o" onClick={onAchievements}>📜 Papiros</motion.button>
+          <motion.button variants={itemVariants} className="btn-o" onClick={onOpciones}>⚙️ Opciones</motion.button>
           <motion.button variants={itemVariants} className="btn-o" onClick={onInfo}>📚 Info Didáctica</motion.button>
           {hasSave && (
             <motion.button
