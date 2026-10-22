@@ -13,7 +13,9 @@ import { barajar } from './utils/barajar'
 import { EMPTY_GS, resolverDecision, resolverCoronacion, aplicarPuzzle } from './utils/turnos'
 import type { EstadoTurno, ResultadoTurno } from './utils/turnos'
 import { evaluateAchievements } from './utils/achievements'
-import { startMusic, stopMusic, toggleMusic, playSound } from './audio/musicEngine'
+import { startMusic, stopMusic, playSound } from './audio/musicEngine'
+import { useAjustes } from './hooks/useAjustes'
+import { AjustesModal } from './components/ui/AjustesModal'
 import { SplashScreen } from './components/screens/SplashScreen'
 import { MenuScreen } from './components/screens/MenuScreen'
 import { NameScreen } from './components/screens/NameScreen'
@@ -62,8 +64,9 @@ function requestFS() {
 }
 
 function CatImage({ cat }: { cat: string }) {
+  const { ajustes } = useAjustes()
   const [err, setErr] = useState(false)
-  if (err) return null
+  if (err || !ajustes.imagenes) return null
   return (
     <img
       key={cat}
@@ -101,7 +104,14 @@ export function App() {
   const [animKey, setAnimKey] = useState(0)
   const [consejer, setConsejer] = useState<{ fx: Partial<Stats>; choice: string; power: { name: string; note: Partial<Stats> } | null; card: TimelineCard } | null>(null)
   const [glossWord, setGlossWord] = useState<string | null>(null)
-  const [musicOn, setMusicOn] = useState(true)
+  const { ajustes, cambiar } = useAjustes()
+  const musicOn = ajustes.musica
+  const [showAjustes, setShowAjustes] = useState(false)
+  // La música la arranca y la para la partida; el ajuste solo guarda lo que el jugador prefiere.
+  const alternarMusica = (activa: boolean) => {
+    cambiar({ musica: activa })
+    if (activa) startMusic(); else stopMusic()
+  }
   const [gs, setGs] = useState<GameStats>(EMPTY_GS)
   const [periodTransData, setPeriodTransData] = useState<PeriodTransitionData | null>(null)
   const [godModalData, setGodModalData] = useState<{ approval: string; encouragement: string; fact: string } | null>(null)
@@ -188,7 +198,7 @@ export function App() {
   const startGame = (g: God) => {
     requestFS()
     playSound('select_god')
-    startMusic()
+    if (ajustes.musica) startMusic()
     const s = { ...INIT }
     for (const k in g.bon) s[k as keyof Stats] = clamp(50 + g.bon[k as keyof Stats])
     const events = buildGameEvents(8, g.id)
@@ -211,7 +221,7 @@ export function App() {
     const events = resolved ?? buildGameEvents(8, g.id)
     const savedIdx = resolved ? Math.min(sv.evIdx ?? 0, events.length) : 0
     requestFS()
-    startMusic()
+    if (ajustes.musica) startMusic()
     setGod(g); setStats(sv.stats ?? INIT)
     setPlayerName(sv.playerName || 'Faraón')
     setGameEvents(events)
@@ -295,7 +305,7 @@ export function App() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Encabezado: nombre del juego y los tres botones de siempre a mano (Papiros, Menú, Música) */}
+      {/* Encabezado: nombre del juego y los botones a mano (Papiros, Opciones, Menú, Música) */}
       <header className="game-hd">
         <div className="game-hd-in">
           <h1 className="game-hd-title">𓆣 Dioses del Nilo</h1>
@@ -303,10 +313,13 @@ export function App() {
             <button className="hd-btn" aria-label="Papiros" title="Papiros" onClick={() => { setPapirosPrev('game'); setScreen('papiros') }}>
               <span aria-hidden="true">📜</span><span className="hd-txt">Papiros</span>
             </button>
+            <button className="hd-btn hd-btn--opc" aria-label="Opciones" title="Opciones" onClick={() => setShowAjustes(true)}>
+              <span aria-hidden="true">⚙️</span><span className="hd-txt">Opciones</span>
+            </button>
             <button className="hd-btn hd-btn--menu" aria-label="Menú" title="Menú" onClick={() => setConfirmMenu(true)}>
               <span aria-hidden="true">🏠</span><span className="hd-txt">Menú</span>
             </button>
-            <button className="hd-btn hd-btn--music" onClick={() => { const on = toggleMusic(); setMusicOn(on) }} title={musicOn ? 'Silenciar música' : 'Activar música'} aria-label={musicOn ? 'Silenciar música' : 'Activar música'}>
+            <button className="hd-btn hd-btn--music" onClick={() => alternarMusica(!musicOn)} title={musicOn ? 'Silenciar música' : 'Activar música'} aria-label={musicOn ? 'Silenciar música' : 'Activar música'}>
               <span aria-hidden="true">{musicOn ? '🔊' : '🔇'}</span>
             </button>
           </div>
@@ -603,6 +616,7 @@ export function App() {
         />
       )}
       {showModal && <InfoModal onClose={() => setShowModal(false)} />}
+      {showAjustes && <AjustesModal onClose={() => setShowAjustes(false)} onMusica={alternarMusica} />}
       {import.meta.env.DEV && (
         <DebugPanel actions={{
           evIdx, totalEvents, stats, god, screen,
